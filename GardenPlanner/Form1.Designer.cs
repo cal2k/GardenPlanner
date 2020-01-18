@@ -61,6 +61,7 @@
             this.btnRemoveJournalPost = new System.Windows.Forms.Button();
             this.btnRemoveNote = new System.Windows.Forms.Button();
             this.btnRemoveJob = new System.Windows.Forms.Button();
+            this.btnAddPlant = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // lblUserName
@@ -77,7 +78,7 @@
             this.listBoxJournal.FormattingEnabled = true;
             this.listBoxJournal.Location = new System.Drawing.Point(15, 53);
             this.listBoxJournal.Name = "listBoxJournal";
-            this.listBoxJournal.Size = new System.Drawing.Size(1428, 173);
+            this.listBoxJournal.Size = new System.Drawing.Size(924, 173);
             this.listBoxJournal.TabIndex = 1;
             this.listBoxJournal.SelectedIndexChanged += new System.EventHandler(this.listBoxJournal_SelectedIndexChanged);
             // 
@@ -375,11 +376,22 @@
             this.btnRemoveJob.UseVisualStyleBackColor = true;
             this.btnRemoveJob.Click += new System.EventHandler(this.btnRemoveJob_Click);
             // 
+            // btnAddPlant
+            // 
+            this.btnAddPlant.Location = new System.Drawing.Point(1351, 12);
+            this.btnAddPlant.Name = "btnAddPlant";
+            this.btnAddPlant.Size = new System.Drawing.Size(92, 23);
+            this.btnAddPlant.TabIndex = 32;
+            this.btnAddPlant.Text = "Add new plant";
+            this.btnAddPlant.UseVisualStyleBackColor = true;
+            this.btnAddPlant.Click += new System.EventHandler(this.btnAddPlant_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1455, 919);
+            this.Controls.Add(this.btnAddPlant);
             this.Controls.Add(this.btnRemoveJob);
             this.Controls.Add(this.btnRemoveNote);
             this.Controls.Add(this.btnRemoveJournalPost);
@@ -454,6 +466,7 @@
         private System.Windows.Forms.Button btnRemoveJournalPost;
         private System.Windows.Forms.Button btnRemoveNote;
         private System.Windows.Forms.Button btnRemoveJob;
+        private System.Windows.Forms.Button btnAddPlant;
     }
 }
 

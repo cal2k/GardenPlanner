@@ -186,8 +186,7 @@ namespace GardenPlanner
                 conn.Close();
             }
         }
-
-
+        
         //Journal
         private void listBoxJournal_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -261,8 +260,7 @@ namespace GardenPlanner
             tbJournalEntiry.Text = "Journal Entiry Details";
             ClearLists();
         }
-
-
+        
         //Notes
         private void listBoxNotes_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -337,19 +335,19 @@ namespace GardenPlanner
             tbNoteEntiry.Text = "Note Details";
             ClearLists();
         }
-
         
-
-
-
-
-
-
         //Jobs
         private void listBoxJobs_SelectedIndexChanged(object sender, EventArgs e)
         {
             btnRemoveJob.Enabled = true;
         }
+
+        private void btnAddPlant_Click(object sender, EventArgs e)
+        {
+            AddPlant addPlant = new AddPlant();
+            addPlant.Show();
+        }
+
         private void tbJobTitle_Click(object sender, EventArgs e)
         {
             if (tbJobTitle.Text == "Job Title")
