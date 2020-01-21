@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Data.SQLite;
+using System.IO;
 
 namespace GardenPlanner
 {
@@ -18,17 +19,19 @@ namespace GardenPlanner
         string[] UserNameSplit = new string[2];
         int count = 0;
         DateTime date;
-
-        SQLiteConnection conn = new SQLiteConnection("Data Source = GardenDB.db; version =3;");
+          
+        static string path = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
+            pathComplete = path + @"\CGP\GardenDB.db";
+        SQLiteConnection conn = new SQLiteConnection("Data Source ="+ pathComplete + "; version =3;");
         SQLiteCommand cmd;
         SQLiteDataReader reader;
-
         
-
         public Form1()
         {
             InitializeComponent();
             GatherUserName();
+            CheckDatabase();
+            CheckUserTable();
         }
 
         private void GatherUserName()
@@ -36,9 +39,20 @@ namespace GardenPlanner
             UserNameCollection = System.Security.Principal.WindowsIdentity.GetCurrent().Name;
             UserNameSplit = UserNameCollection.Split('\\');
             userName = UserNameSplit[1].ToLower();
-            CheckUserTable();
         }
+        private void CheckDatabase()
+        {
+            string fileToCopy = "GardenDB.db";
+            
 
+            if (File.Exists(pathComplete) == false)
+            {
+                System.IO.Directory.CreateDirectory(path + @"\CGP");
+                File.Copy(fileToCopy, pathComplete);
+            }
+
+
+        }
         private void CheckUserTable()
         {
             query = "CREATE TABLE IF NOT EXISTS '" + userName + "' (ID INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE, Journal TEXT, Jobs TEXT, Selected TEXT, Notes TEXT, Date TEXT, Tag TEXT)";
