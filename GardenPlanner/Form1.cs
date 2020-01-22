@@ -14,7 +14,7 @@ namespace GardenPlanner
 {
     public partial class Form1 : Form
     {
-        private string UserNameCollection, userName, query, temp, journalTitle,
+        private string userName, query, temp, journalTitle,
             journalDetails, journalEntiry, noteTitle, noteDetails, noteEntiry, jobTitle, jobDetails, jobEntiry, SelectedVegName, SelectedVegSpecies;
         string[] UserNameSplit = new string[2];
         int count = 0;
@@ -29,21 +29,18 @@ namespace GardenPlanner
         public Form1()
         {
             InitializeComponent();
-            GatherUserName();
-            CheckDatabase();
-            CheckUserTable();
+            Startup();
         }
 
-        private void GatherUserName()
+        private void Startup()
         {
-            UserNameCollection = System.Security.Principal.WindowsIdentity.GetCurrent().Name;
-            UserNameSplit = UserNameCollection.Split('\\');
+            temp = System.Security.Principal.WindowsIdentity.GetCurrent().Name;
+            UserNameSplit = temp.Split('\\');
             userName = UserNameSplit[1].ToLower();
-        }
-        private void CheckDatabase()
-        {
+
+            lblUserName.Text = "Welcome, " + userName;
+
             string fileToCopy = "GardenDB.db";
-            
 
             if (File.Exists(pathComplete) == false)
             {
@@ -51,10 +48,6 @@ namespace GardenPlanner
                 File.Copy(fileToCopy, pathComplete);
             }
 
-
-        }
-        private void CheckUserTable()
-        {
             query = "CREATE TABLE IF NOT EXISTS '" + userName + "' (ID INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE, Journal TEXT, Jobs TEXT, Selected TEXT, Notes TEXT, Date TEXT, Tag TEXT)";
             using (conn)
             {
@@ -75,7 +68,6 @@ namespace GardenPlanner
 
         private void LoadUserData()
         {
-            lblUserName.Text = "Welcome, " + userName;
 
             query = "Select Journal FROM '" + userName + "' WHERE Journal IS NOT NULL ORDER BY ID DESC";
 
