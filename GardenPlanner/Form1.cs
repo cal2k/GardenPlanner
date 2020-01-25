@@ -37,8 +37,7 @@ namespace GardenPlanner
             InitializeComponent();
             Startup();
         }
-
-
+        
         private void Startup()
         {
             string[] UserNameSplit = new string[2];
@@ -413,6 +412,31 @@ namespace GardenPlanner
         {
             btnRemoveVeg.Enabled = true;
             btnRemoveVeg.Text = "Remove " + listBoxSelectedVeg.SelectedItem.ToString();
+
+            temp = listBoxSelectedVeg.SelectedItem.ToString();
+            string[] tempArray = new string[2];
+
+            tempArray = temp.Split('(', ')');
+            List<string> vegDetails = new List<string>();
+
+            query = "Select Name, Species FROM Vegs WHERE Species = '"+ tempArray[1] +"'";
+            cmd = new SQLiteCommand(query, conn);
+            using (conn)
+            {
+                conn.Open();
+                using (cmd)
+                {
+                    using (reader = cmd.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            temp = reader.GetString(0);
+                            listboxVegDetails.Items.Add(temp);
+                        }
+                    }
+                }
+                conn.Close();
+            }
         }
         private void listBoxNotes_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -501,7 +525,6 @@ namespace GardenPlanner
             if (tbJournalTitle.Text.Length > 3)
             {
                 tbJournalEntiry.Enabled = true;
-                btnDiscardJournalEntiry.Enabled = true;
             }
         }
         private void tbJournalEntiry_Click(object sender, EventArgs e)
@@ -509,13 +532,14 @@ namespace GardenPlanner
             if (tbJournalEntiry.Text == "Details")
             {
                 tbJournalEntiry.Text = "";
+                btnDiscardJournalEntiry.Text = "Discard " + tbJournalTitle.Text;
+                btnDiscardJournalEntiry.Enabled = true;
             }
         }
         private void tbJournalEntiry_TextChanged(object sender, EventArgs e)
             {
                 if(tbJournalEntiry.Text.Length > 3)
                 {
-                    btnDiscardJournalEntiry.Text = "Discard " + tbJournalTitle.Text;
                     btnSaveJournalEntiry.Enabled = true;
                     btnSaveJournalEntiry.Text = "Save " + tbJournalTitle.Text;
                 }
@@ -559,9 +583,9 @@ namespace GardenPlanner
         //Note
         private void tbNoteTitle_Click(object sender, EventArgs e)
             {
-                if (tbJournalTitle.Text == "Title")
+                if (tbNoteTitle.Text == "Title")
                 {
-                    tbJournalTitle.Text = "";
+                tbNoteTitle.Text = "";
                 }
             }
         private void tbNoteTitle_TextChanged(object sender, EventArgs e)
@@ -569,21 +593,21 @@ namespace GardenPlanner
             if(tbNoteTitle.Text.Length > 3)
             {
                 tbNoteEntiry.Enabled = true;
-                btnDiscardNote.Enabled = true;
             }
         }
         private void tbNoteEntiry_Click(object sender, EventArgs e)
         {
-            if (tbJournalTitle.Text == "Details")
+            if (tbNoteEntiry.Text == "Details")
             {
-                tbJournalTitle.Text = "";
+                tbNoteEntiry.Text = "";
+                btnDiscardNote.Text = "Discard " + tbNoteTitle.Text;
+                btnDiscardNote.Enabled = true;
             }
         }
         private void tbNoteEntiry_TextChanged(object sender, EventArgs e)
             {
                 if(tbNoteEntiry.Text.Length > 3)
                 {
-                    btnDiscardNote.Text = "Discard " + tbNoteTitle.Text;
                     btnSaveNote.Enabled = true;
                     btnSaveNote.Text = "Save " + tbNoteTitle.Text;
                 }
@@ -602,7 +626,6 @@ namespace GardenPlanner
             if(tbJobTitle.Text.Length > 3)
             {
                 tbJobDetails.Enabled = true;
-                btnDiscardJob.Enabled = true;;
             }
         }
         private void tbJobDetails_Click(object sender, EventArgs e)
@@ -610,13 +633,14 @@ namespace GardenPlanner
             if (tbJobDetails.Text == "Details")
             {
                 tbJobDetails.Text = "";
+                btnDiscardJob.Text = "Discard " + tbJobTitle.Text;
+                btnDiscardJob.Enabled = true;
             }
         }
         private void tbJobDetails_TextChanged(object sender, EventArgs e)
             {
                 if(tbJobDetails.Text.Length > 3)
                 {
-                    btnDiscardJob.Text = "Discard " + tbJobTitle.Text;
                     btnSaveJob.Enabled = true;
                     btnSaveJob.Text = "Save " + tbJobTitle.Text;
                 }
