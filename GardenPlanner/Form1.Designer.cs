@@ -411,6 +411,7 @@
             this.cbVegSpecies.Name = "cbVegSpecies";
             this.cbVegSpecies.Size = new System.Drawing.Size(400, 21);
             this.cbVegSpecies.TabIndex = 37;
+            this.cbVegSpecies.SelectedIndexChanged += new System.EventHandler(this.cbVegSpecies_SelectedIndexChanged);
             // 
             // Form1
             // 

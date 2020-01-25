@@ -14,23 +14,30 @@ namespace GardenPlanner
 {
     public partial class Form1 : Form
     {
-        private string userName, query, temp, journalTitle,journalDetails, journalEntiry, noteTitle, noteDetails, noteEntiry, jobEntiry,SelectedVegName, SelectedVegSpecies;
-                
+        private string userName, query, temp, journalTitle, journalDetails, journalEntiry, noteTitle, noteDetails, noteEntiry, jobEntiry, SelectedVegName, SelectedVegSpecies;
+
         int count = 0;
         DateTime date;
-          
+
         static string path = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
             pathComplete = path + @"\CGP\GardenDB.db";
-        SQLiteConnection conn = new SQLiteConnection("Data Source ="+ pathComplete + "; version =3;");
+        SQLiteConnection conn = new SQLiteConnection("Data Source =" + pathComplete + "; version =3;");
         SQLiteCommand cmd;
         SQLiteDataReader reader;
-
         
+        //Tools
+        private void btnAddPlant_Click(object sender, EventArgs e)
+        {
+            AddPlant addPlant = new AddPlant();
+            addPlant.Show();
+        }
+                
         public Form1()
         {
             InitializeComponent();
             Startup();
         }
+
 
         private void Startup()
         {
@@ -70,12 +77,6 @@ namespace GardenPlanner
                 count++;
             }
 
-        }
-
-        private void btnAddPlant_Click(object sender, EventArgs e)
-        {
-            AddPlant addPlant = new AddPlant();
-            addPlant.Show();
         }
 
         private void LoadUserData(int i)
@@ -217,6 +218,8 @@ namespace GardenPlanner
                     cbVegName.Items.Clear();
                     cbVegName.Text = "Choose vegetables";
                     cbVegSpecies.Items.Clear();
+                    cbVegSpecies.Text = "";
+                    cbVegSpecies.Enabled = false;
                     listBoxSelectedVeg.Items.Clear();
                     LoadUserData(i);
                     break;
@@ -251,7 +254,7 @@ namespace GardenPlanner
 
         }
 
-        private void insertQuery()
+        private void Query()
         {
             using (conn)
             {
@@ -282,17 +285,13 @@ namespace GardenPlanner
 
             query = "INSERT INTO " + userName + "(Journal, Date) VALUES ('" + journalEntiry + "', '" + date + "')";
 
-            insertQuery();
+            Query();
 
             count = 0;
             Reset(count);
         }
         private void btnAddSelectedVeg_Click(object sender, EventArgs e)
         {
-            btnAddSelectedVeg.Enabled = false;
-            cbVegName.Items.Clear();
-            cbVegSpecies.Items.Clear();
-
             date = DateTime.Now;
             temp = SelectedVegName + " (" + SelectedVegSpecies + ")";
             query = "SELECT COUNT (Selected) from '" + userName + "' WHERE Selected = '" + temp + "'";
@@ -345,7 +344,7 @@ namespace GardenPlanner
             {
                 MessageBox.Show(temp + " has already been added to your list. Please select somthing differnt.");
             }
-            count = 2;
+            count = 1;
             Reset(count);
         }
         private void btnSaveNote_Click(object sender, EventArgs e)
@@ -358,7 +357,7 @@ namespace GardenPlanner
 
             query = "INSERT INTO " + userName + "(Notes, Date) VALUES ('" + noteEntiry + "', '" + date + "')";
 
-            insertQuery();
+            Query();
             count = 2;
             Reset(count);
         }
@@ -370,7 +369,7 @@ namespace GardenPlanner
 
             query = "INSERT INTO " + userName + "(Jobs, Date) VALUES ('" + jobEntiry + "', '" + date + "')";
 
-            insertQuery();
+            Query();
             count = 3;
             Reset(count);
         }
@@ -430,116 +429,65 @@ namespace GardenPlanner
         private void btnRemoveJournalPost_Click(object sender, EventArgs e)
         {
             temp = listBoxJournal.SelectedItem.ToString();
-            query = " Delete from '" + userName + "' where Journal = '" + temp + "'";
-            cmd = new SQLiteCommand(query, conn);
-            using (conn)
+            DialogResult confirmation = MessageBox.Show("Are you sure you want to Delete " + temp, "Confirmation", MessageBoxButtons.YesNo);
+            if (confirmation == DialogResult.Yes)
             {
-                conn.Open();
-                using (cmd)
-                {
-                    try
-                    {
-                        cmd.ExecuteNonQuery();
-                    }
-                    catch (Exception ex)
-                    {
-                        MessageBox.Show(ex.ToString());
-                    }
-                }
+                query = " Delete from '" + userName + "' where Journal = '" + temp + "'";
+                Query();
 
-                conn.Close();
+                btnDeleteJournalPost.Enabled = false;
+                count = 0;
+                Reset(count);
             }
-
-            btnDeleteJournalPost.Enabled = false;
-            count = 0;
-            Reset(count);
+            
+            
         }
         private void btnRemoveVeg_Click(object sender, EventArgs e)
         {
             temp = listBoxSelectedVeg.SelectedItem.ToString();
-            query = " Delete from '" + userName + "' where Selected = '" + temp + "'";
-            cmd = new SQLiteCommand(query, conn);
-            using (conn)
+            DialogResult confirmation = MessageBox.Show("Are you sure you want to Delete " + temp, "Confirmation", MessageBoxButtons.YesNo);
+            if (confirmation == DialogResult.Yes)
             {
-                conn.Open();
-                using (cmd)
-                {
-                    try
-                    {
-                        cmd.ExecuteNonQuery();
-                    }
-                    catch (Exception ex)
-                    {
-                        MessageBox.Show(ex.ToString());
-                    }
-                }
+                query = " Delete from '" + userName + "' where Selected = '" + temp + "'";
+                Query();
 
-                conn.Close();
+                btnRemoveVeg.Enabled = false;
+                count = 1;
+                Reset(count);
             }
-
-            btnRemoveVeg.Enabled = false;
-            count = 1;
-            Reset(count);
         }
         private void btnRemoveNote_Click(object sender, EventArgs e)
         {
             temp = listBoxNotes.SelectedItem.ToString();
-            query = " Delete from '" + userName + "' where Notes = '" + temp + "'";
-            cmd = new SQLiteCommand(query, conn);
-            using (conn)
+            DialogResult confirmation = MessageBox.Show("Are you sure you want to Delete " + temp, "Confirmation", MessageBoxButtons.YesNo);
+            if (confirmation == DialogResult.Yes)
             {
-                conn.Open();
-                using (cmd)
-                {
-                    try
-                    {
-                        cmd.ExecuteNonQuery();
-                    }
-                    catch (Exception ex)
-                    {
-                        MessageBox.Show(ex.ToString());
-                    }
-                }
+                query = " Delete from '" + userName + "' where Notes = '" + temp + "'";
+                Query();
 
-                conn.Close();
+                btnRemoveNote.Enabled = false;
+                count = 2;
+                Reset(count);
             }
-
-            btnRemoveNote.Enabled = false;
-            count = 2;
-            Reset(count);
         }
         private void btnRemoveJob_Click(object sender, EventArgs e)
         {
             temp = listBoxJobs.SelectedItem.ToString();
-            query = " Delete from '" + userName + "' where Jobs = '" + temp + "'";
-            cmd = new SQLiteCommand(query, conn);
-            using (conn)
+            DialogResult confirmation = MessageBox.Show("Are you sure you want to Delete " + temp, "Confirmation", MessageBoxButtons.YesNo);
+            if (confirmation == DialogResult.Yes)
             {
-                conn.Open();
-                using (cmd)
-                {
-                    try
-                    {
-                        cmd.ExecuteNonQuery();
-                    }
-                    catch (Exception ex)
-                    {
-                        MessageBox.Show(ex.ToString());
-                    }
-                }
+                query = " Delete from '" + userName + "' where Jobs = '" + temp + "'";
 
-                conn.Close();
+                Query();
+
+                btnRemoveJob.Enabled = false;
+                count = 3;
+                Reset(count);
             }
-
-            btnRemoveJob.Enabled = false;
-            count = 3;
-            Reset(count);
         }
-
         
 
         //NEW ENTIRYS
-
         //Journal
         private void tbJournalTitle_Click(object sender, EventArgs e)
             {
@@ -576,10 +524,36 @@ namespace GardenPlanner
         //Veg
         private void cbVegName_SelectedIndexChanged(object sender, EventArgs e)
         {
-            temp = cbVegName.SelectedItem.ToString();
+            SelectedVegName = cbVegName.SelectedItem.ToString();
+            cbVegSpecies.Items.Clear();
+
+            query = "Select Species FROM Vegs WHERE Name = '" + SelectedVegName + "' ORDER BY Species ASC";
+            cmd = new SQLiteCommand(query, conn);
+            using (conn)
+            {
+                conn.Open();
+                using (cmd)
+                {
+                    using (reader = cmd.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            temp = reader.GetString(0);
+                            cbVegSpecies.Items.Add(temp);
+                        }
+                    }
+                }
+                conn.Close();
+            }
             //select species
             cbVegSpecies.Enabled = true;
-            cbVegSpecies.Text = "Select " + cbVegName.SelectedItem.ToString() + " species";
+            cbVegSpecies.Text = "Select " + SelectedVegName + " species";
+        }
+        private void cbVegSpecies_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            SelectedVegSpecies = cbVegSpecies.SelectedItem.ToString();
+            btnAddSelectedVeg.Enabled = true;
+            btnAddSelectedVeg.Text = "Add " + SelectedVegName + " (" + SelectedVegSpecies + ") to your selected vegetable list";
         }
 
         //Note
