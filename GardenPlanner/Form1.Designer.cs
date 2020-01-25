@@ -46,7 +46,6 @@
             this.btnSaveJob = new System.Windows.Forms.Button();
             this.btnDiscardJob = new System.Windows.Forms.Button();
             this.listBoxSelectedVeg = new System.Windows.Forms.ListBox();
-            this.btnSelectVeg = new System.Windows.Forms.Button();
             this.btnRemoveVeg = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
@@ -55,13 +54,16 @@
             this.label5 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
-            this.listBoxSelecVegName = new System.Windows.Forms.ListBox();
-            this.listBoxSelectVegSpecies = new System.Windows.Forms.ListBox();
             this.btnAddSelectedVeg = new System.Windows.Forms.Button();
-            this.btnRemoveJournalPost = new System.Windows.Forms.Button();
+            this.btnDeleteJournalPost = new System.Windows.Forms.Button();
             this.btnRemoveNote = new System.Windows.Forms.Button();
             this.btnRemoveJob = new System.Windows.Forms.Button();
             this.btnAddPlant = new System.Windows.Forms.Button();
+            this.label8 = new System.Windows.Forms.Label();
+            this.tbVegDetails = new System.Windows.Forms.RichTextBox();
+            this.label9 = new System.Windows.Forms.Label();
+            this.cbVegName = new System.Windows.Forms.ComboBox();
+            this.cbVegSpecies = new System.Windows.Forms.ComboBox();
             this.SuspendLayout();
             // 
             // lblUserName
@@ -78,169 +80,167 @@
             this.listBoxJournal.FormattingEnabled = true;
             this.listBoxJournal.Location = new System.Drawing.Point(15, 53);
             this.listBoxJournal.Name = "listBoxJournal";
-            this.listBoxJournal.Size = new System.Drawing.Size(924, 173);
+            this.listBoxJournal.Size = new System.Drawing.Size(400, 524);
             this.listBoxJournal.TabIndex = 1;
             this.listBoxJournal.SelectedIndexChanged += new System.EventHandler(this.listBoxJournal_SelectedIndexChanged);
             // 
             // btnSaveJournalEntiry
             // 
-            this.btnSaveJournalEntiry.Location = new System.Drawing.Point(15, 447);
+            this.btnSaveJournalEntiry.Enabled = false;
+            this.btnSaveJournalEntiry.Location = new System.Drawing.Point(15, 880);
             this.btnSaveJournalEntiry.Name = "btnSaveJournalEntiry";
-            this.btnSaveJournalEntiry.Size = new System.Drawing.Size(118, 23);
+            this.btnSaveJournalEntiry.Size = new System.Drawing.Size(197, 23);
             this.btnSaveJournalEntiry.TabIndex = 2;
-            this.btnSaveJournalEntiry.Text = "Save Entiry";
             this.btnSaveJournalEntiry.UseVisualStyleBackColor = true;
             this.btnSaveJournalEntiry.Click += new System.EventHandler(this.btnSaveJournalEntiry_Click);
             // 
             // tbJournalTitle
             // 
-            this.tbJournalTitle.Location = new System.Drawing.Point(15, 274);
+            this.tbJournalTitle.Location = new System.Drawing.Point(15, 625);
             this.tbJournalTitle.Name = "tbJournalTitle";
-            this.tbJournalTitle.Size = new System.Drawing.Size(577, 20);
+            this.tbJournalTitle.Size = new System.Drawing.Size(400, 20);
             this.tbJournalTitle.TabIndex = 3;
-            this.tbJournalTitle.Text = "Journal Entiry Title";
+            this.tbJournalTitle.Text = "Title";
             this.tbJournalTitle.Click += new System.EventHandler(this.tbJournalTitle_Click);
+            this.tbJournalTitle.TextChanged += new System.EventHandler(this.tbJournalTitle_TextChanged);
             // 
             // tbJournalEntiry
             // 
-            this.tbJournalEntiry.Location = new System.Drawing.Point(15, 300);
+            this.tbJournalEntiry.Enabled = false;
+            this.tbJournalEntiry.Location = new System.Drawing.Point(15, 651);
             this.tbJournalEntiry.Name = "tbJournalEntiry";
-            this.tbJournalEntiry.Size = new System.Drawing.Size(577, 141);
+            this.tbJournalEntiry.Size = new System.Drawing.Size(400, 223);
             this.tbJournalEntiry.TabIndex = 4;
-            this.tbJournalEntiry.Text = "Journal Entiry Details";
+            this.tbJournalEntiry.Text = "Details";
             this.tbJournalEntiry.Click += new System.EventHandler(this.tbJournalEntiry_Click);
+            this.tbJournalEntiry.TextChanged += new System.EventHandler(this.tbJournalEntiry_TextChanged);
             // 
             // btnDiscardJournalEntiry
             // 
-            this.btnDiscardJournalEntiry.Location = new System.Drawing.Point(139, 447);
+            this.btnDiscardJournalEntiry.Enabled = false;
+            this.btnDiscardJournalEntiry.Location = new System.Drawing.Point(218, 880);
             this.btnDiscardJournalEntiry.Name = "btnDiscardJournalEntiry";
-            this.btnDiscardJournalEntiry.Size = new System.Drawing.Size(118, 23);
+            this.btnDiscardJournalEntiry.Size = new System.Drawing.Size(197, 23);
             this.btnDiscardJournalEntiry.TabIndex = 5;
-            this.btnDiscardJournalEntiry.Text = "Discard Entiry";
             this.btnDiscardJournalEntiry.UseVisualStyleBackColor = true;
             this.btnDiscardJournalEntiry.Click += new System.EventHandler(this.btnDiscardJournalEntiry_Click);
             // 
             // listBoxNotes
             // 
             this.listBoxNotes.FormattingEnabled = true;
-            this.listBoxNotes.Location = new System.Drawing.Point(15, 493);
+            this.listBoxNotes.Location = new System.Drawing.Point(827, 404);
             this.listBoxNotes.Name = "listBoxNotes";
-            this.listBoxNotes.Size = new System.Drawing.Size(577, 173);
+            this.listBoxNotes.Size = new System.Drawing.Size(400, 173);
             this.listBoxNotes.TabIndex = 6;
             this.listBoxNotes.SelectedIndexChanged += new System.EventHandler(this.listBoxNotes_SelectedIndexChanged);
             // 
             // btnDiscardNote
             // 
-            this.btnDiscardNote.Location = new System.Drawing.Point(474, 887);
+            this.btnDiscardNote.Enabled = false;
+            this.btnDiscardNote.Location = new System.Drawing.Point(1030, 880);
             this.btnDiscardNote.Name = "btnDiscardNote";
-            this.btnDiscardNote.Size = new System.Drawing.Size(118, 23);
+            this.btnDiscardNote.Size = new System.Drawing.Size(197, 23);
             this.btnDiscardNote.TabIndex = 10;
-            this.btnDiscardNote.Text = "Discard Note";
             this.btnDiscardNote.UseVisualStyleBackColor = true;
             this.btnDiscardNote.Click += new System.EventHandler(this.btnDiscardNote_Click);
             // 
             // tbNoteEntiry
             // 
-            this.tbNoteEntiry.Location = new System.Drawing.Point(15, 740);
+            this.tbNoteEntiry.Enabled = false;
+            this.tbNoteEntiry.Location = new System.Drawing.Point(827, 651);
             this.tbNoteEntiry.Name = "tbNoteEntiry";
-            this.tbNoteEntiry.Size = new System.Drawing.Size(577, 141);
+            this.tbNoteEntiry.Size = new System.Drawing.Size(400, 223);
             this.tbNoteEntiry.TabIndex = 9;
-            this.tbNoteEntiry.Text = "Note Details";
+            this.tbNoteEntiry.Text = "Details";
             this.tbNoteEntiry.Click += new System.EventHandler(this.tbNoteEntiry_Click);
+            this.tbNoteEntiry.TextChanged += new System.EventHandler(this.tbNoteEntiry_TextChanged);
             // 
             // tbNoteTitle
             // 
-            this.tbNoteTitle.Location = new System.Drawing.Point(15, 714);
+            this.tbNoteTitle.Location = new System.Drawing.Point(827, 625);
             this.tbNoteTitle.Name = "tbNoteTitle";
-            this.tbNoteTitle.Size = new System.Drawing.Size(577, 20);
+            this.tbNoteTitle.Size = new System.Drawing.Size(400, 20);
             this.tbNoteTitle.TabIndex = 8;
-            this.tbNoteTitle.Text = "Note Title";
+            this.tbNoteTitle.Text = "Title";
             this.tbNoteTitle.Click += new System.EventHandler(this.tbNoteTitle_Click);
+            this.tbNoteTitle.TextChanged += new System.EventHandler(this.tbNoteTitle_TextChanged);
             // 
             // btnSaveNote
             // 
-            this.btnSaveNote.Location = new System.Drawing.Point(15, 887);
+            this.btnSaveNote.Enabled = false;
+            this.btnSaveNote.Location = new System.Drawing.Point(827, 880);
             this.btnSaveNote.Name = "btnSaveNote";
-            this.btnSaveNote.Size = new System.Drawing.Size(118, 23);
+            this.btnSaveNote.Size = new System.Drawing.Size(197, 23);
             this.btnSaveNote.TabIndex = 7;
-            this.btnSaveNote.Text = "Save Note";
             this.btnSaveNote.UseVisualStyleBackColor = true;
             this.btnSaveNote.Click += new System.EventHandler(this.btnSaveNote_Click);
             // 
             // listBoxJobs
             // 
             this.listBoxJobs.FormattingEnabled = true;
-            this.listBoxJobs.Location = new System.Drawing.Point(598, 249);
+            this.listBoxJobs.Location = new System.Drawing.Point(1233, 53);
             this.listBoxJobs.Name = "listBoxJobs";
-            this.listBoxJobs.Size = new System.Drawing.Size(341, 420);
+            this.listBoxJobs.Size = new System.Drawing.Size(400, 524);
             this.listBoxJobs.TabIndex = 11;
             this.listBoxJobs.SelectedIndexChanged += new System.EventHandler(this.listBoxJobs_SelectedIndexChanged);
             // 
             // tbJobDetails
             // 
-            this.tbJobDetails.Location = new System.Drawing.Point(598, 740);
+            this.tbJobDetails.Enabled = false;
+            this.tbJobDetails.Location = new System.Drawing.Point(1233, 651);
             this.tbJobDetails.Name = "tbJobDetails";
-            this.tbJobDetails.Size = new System.Drawing.Size(341, 141);
+            this.tbJobDetails.Size = new System.Drawing.Size(400, 223);
             this.tbJobDetails.TabIndex = 13;
-            this.tbJobDetails.Text = "Job Details";
+            this.tbJobDetails.Text = "Details";
             this.tbJobDetails.Click += new System.EventHandler(this.tbJobDetails_Click);
+            this.tbJobDetails.TextChanged += new System.EventHandler(this.tbJobDetails_TextChanged);
             // 
             // tbJobTitle
             // 
-            this.tbJobTitle.Location = new System.Drawing.Point(598, 714);
+            this.tbJobTitle.Location = new System.Drawing.Point(1233, 625);
             this.tbJobTitle.Name = "tbJobTitle";
-            this.tbJobTitle.Size = new System.Drawing.Size(341, 20);
+            this.tbJobTitle.Size = new System.Drawing.Size(400, 20);
             this.tbJobTitle.TabIndex = 12;
-            this.tbJobTitle.Text = "Job Title";
+            this.tbJobTitle.Text = "Title";
             this.tbJobTitle.Click += new System.EventHandler(this.tbJobTitle_Click);
+            this.tbJobTitle.TextChanged += new System.EventHandler(this.tbJobTitle_TextChanged);
             // 
             // btnSaveJob
             // 
-            this.btnSaveJob.Location = new System.Drawing.Point(598, 887);
+            this.btnSaveJob.Enabled = false;
+            this.btnSaveJob.Location = new System.Drawing.Point(1233, 880);
             this.btnSaveJob.Name = "btnSaveJob";
-            this.btnSaveJob.Size = new System.Drawing.Size(118, 23);
+            this.btnSaveJob.Size = new System.Drawing.Size(197, 23);
             this.btnSaveJob.TabIndex = 14;
-            this.btnSaveJob.Text = "Save Job";
             this.btnSaveJob.UseVisualStyleBackColor = true;
             this.btnSaveJob.Click += new System.EventHandler(this.btnSaveJob_Click);
             // 
             // btnDiscardJob
             // 
-            this.btnDiscardJob.Location = new System.Drawing.Point(821, 887);
+            this.btnDiscardJob.Enabled = false;
+            this.btnDiscardJob.Location = new System.Drawing.Point(1436, 880);
             this.btnDiscardJob.Name = "btnDiscardJob";
-            this.btnDiscardJob.Size = new System.Drawing.Size(118, 23);
+            this.btnDiscardJob.Size = new System.Drawing.Size(197, 23);
             this.btnDiscardJob.TabIndex = 15;
-            this.btnDiscardJob.Text = "Discard Job";
             this.btnDiscardJob.UseVisualStyleBackColor = true;
             this.btnDiscardJob.Click += new System.EventHandler(this.btnDiscardJob_Click);
             // 
             // listBoxSelectedVeg
             // 
             this.listBoxSelectedVeg.FormattingEnabled = true;
-            this.listBoxSelectedVeg.Location = new System.Drawing.Point(945, 249);
+            this.listBoxSelectedVeg.Location = new System.Drawing.Point(421, 53);
             this.listBoxSelectedVeg.Name = "listBoxSelectedVeg";
-            this.listBoxSelectedVeg.Size = new System.Drawing.Size(236, 628);
+            this.listBoxSelectedVeg.Size = new System.Drawing.Size(400, 719);
             this.listBoxSelectedVeg.TabIndex = 16;
             this.listBoxSelectedVeg.SelectedIndexChanged += new System.EventHandler(this.listBoxSelectedVeg_SelectedIndexChanged);
-            // 
-            // btnSelectVeg
-            // 
-            this.btnSelectVeg.Location = new System.Drawing.Point(945, 887);
-            this.btnSelectVeg.Name = "btnSelectVeg";
-            this.btnSelectVeg.Size = new System.Drawing.Size(82, 23);
-            this.btnSelectVeg.TabIndex = 17;
-            this.btnSelectVeg.Text = "Select Veg";
-            this.btnSelectVeg.UseVisualStyleBackColor = true;
-            this.btnSelectVeg.Click += new System.EventHandler(this.btnSelectVeg_Click);
             // 
             // btnRemoveVeg
             // 
             this.btnRemoveVeg.Enabled = false;
-            this.btnRemoveVeg.Location = new System.Drawing.Point(1099, 887);
+            this.btnRemoveVeg.Location = new System.Drawing.Point(421, 778);
             this.btnRemoveVeg.Name = "btnRemoveVeg";
-            this.btnRemoveVeg.Size = new System.Drawing.Size(82, 23);
+            this.btnRemoveVeg.Size = new System.Drawing.Size(400, 23);
             this.btnRemoveVeg.TabIndex = 18;
-            this.btnRemoveVeg.Text = "Remove Veg";
             this.btnRemoveVeg.UseVisualStyleBackColor = true;
             this.btnRemoveVeg.Click += new System.EventHandler(this.btnRemoveVeg_Click);
             // 
@@ -258,7 +258,7 @@
             // 
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Underline))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.Location = new System.Drawing.Point(12, 258);
+            this.label2.Location = new System.Drawing.Point(12, 609);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(117, 13);
             this.label2.TabIndex = 20;
@@ -268,7 +268,7 @@
             // 
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Underline))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.Location = new System.Drawing.Point(595, 229);
+            this.label3.Location = new System.Drawing.Point(1230, 33);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(42, 17);
             this.label3.TabIndex = 21;
@@ -278,7 +278,7 @@
             // 
             this.label4.AutoSize = true;
             this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Underline))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label4.Location = new System.Drawing.Point(942, 229);
+            this.label4.Location = new System.Drawing.Point(418, 33);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(104, 17);
             this.label4.TabIndex = 22;
@@ -288,7 +288,7 @@
             // 
             this.label5.AutoSize = true;
             this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Underline))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label5.Location = new System.Drawing.Point(12, 473);
+            this.label5.Location = new System.Drawing.Point(827, 384);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(50, 17);
             this.label5.TabIndex = 23;
@@ -298,7 +298,7 @@
             // 
             this.label6.AutoSize = true;
             this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Underline))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label6.Location = new System.Drawing.Point(12, 698);
+            this.label6.Location = new System.Drawing.Point(824, 609);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(67, 13);
             this.label6.TabIndex = 24;
@@ -308,77 +308,55 @@
             // 
             this.label7.AutoSize = true;
             this.label7.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Underline))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label7.Location = new System.Drawing.Point(595, 698);
+            this.label7.Location = new System.Drawing.Point(1230, 609);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(60, 13);
             this.label7.TabIndex = 25;
             this.label7.Text = "New Job:";
             // 
-            // listBoxSelecVegName
-            // 
-            this.listBoxSelecVegName.FormattingEnabled = true;
-            this.listBoxSelecVegName.Location = new System.Drawing.Point(1187, 249);
-            this.listBoxSelecVegName.Name = "listBoxSelecVegName";
-            this.listBoxSelecVegName.Size = new System.Drawing.Size(125, 628);
-            this.listBoxSelecVegName.TabIndex = 26;
-            this.listBoxSelecVegName.SelectedIndexChanged += new System.EventHandler(this.listBoxSelecVegName_SelectedIndexChanged);
-            // 
-            // listBoxSelectVegSpecies
-            // 
-            this.listBoxSelectVegSpecies.FormattingEnabled = true;
-            this.listBoxSelectVegSpecies.Location = new System.Drawing.Point(1318, 249);
-            this.listBoxSelectVegSpecies.Name = "listBoxSelectVegSpecies";
-            this.listBoxSelectVegSpecies.Size = new System.Drawing.Size(125, 628);
-            this.listBoxSelectVegSpecies.TabIndex = 27;
-            this.listBoxSelectVegSpecies.SelectedIndexChanged += new System.EventHandler(this.listBoxSelectVegSpecies_SelectedIndexChanged);
-            // 
             // btnAddSelectedVeg
             // 
             this.btnAddSelectedVeg.Enabled = false;
-            this.btnAddSelectedVeg.Location = new System.Drawing.Point(1318, 887);
+            this.btnAddSelectedVeg.Location = new System.Drawing.Point(421, 880);
             this.btnAddSelectedVeg.Name = "btnAddSelectedVeg";
-            this.btnAddSelectedVeg.Size = new System.Drawing.Size(125, 23);
+            this.btnAddSelectedVeg.Size = new System.Drawing.Size(400, 23);
             this.btnAddSelectedVeg.TabIndex = 28;
-            this.btnAddSelectedVeg.Text = "Add veg to list";
             this.btnAddSelectedVeg.UseVisualStyleBackColor = true;
             this.btnAddSelectedVeg.Click += new System.EventHandler(this.btnAddSelectedVeg_Click);
             // 
-            // btnRemoveJournalPost
+            // btnDeleteJournalPost
             // 
-            this.btnRemoveJournalPost.Enabled = false;
-            this.btnRemoveJournalPost.Location = new System.Drawing.Point(15, 232);
-            this.btnRemoveJournalPost.Name = "btnRemoveJournalPost";
-            this.btnRemoveJournalPost.Size = new System.Drawing.Size(131, 23);
-            this.btnRemoveJournalPost.TabIndex = 29;
-            this.btnRemoveJournalPost.Text = "Remove Journal Entiry";
-            this.btnRemoveJournalPost.UseVisualStyleBackColor = true;
-            this.btnRemoveJournalPost.Click += new System.EventHandler(this.btnRemoveJournalPost_Click);
+            this.btnDeleteJournalPost.Enabled = false;
+            this.btnDeleteJournalPost.Location = new System.Drawing.Point(15, 583);
+            this.btnDeleteJournalPost.Name = "btnDeleteJournalPost";
+            this.btnDeleteJournalPost.Size = new System.Drawing.Size(400, 23);
+            this.btnDeleteJournalPost.TabIndex = 29;
+            this.btnDeleteJournalPost.UseVisualStyleBackColor = true;
+            this.btnDeleteJournalPost.Click += new System.EventHandler(this.btnRemoveJournalPost_Click);
             // 
             // btnRemoveNote
             // 
             this.btnRemoveNote.Enabled = false;
-            this.btnRemoveNote.Location = new System.Drawing.Point(15, 672);
+            this.btnRemoveNote.Location = new System.Drawing.Point(827, 583);
             this.btnRemoveNote.Name = "btnRemoveNote";
-            this.btnRemoveNote.Size = new System.Drawing.Size(85, 23);
+            this.btnRemoveNote.Size = new System.Drawing.Size(400, 23);
             this.btnRemoveNote.TabIndex = 30;
-            this.btnRemoveNote.Text = "Remove Note";
             this.btnRemoveNote.UseVisualStyleBackColor = true;
             this.btnRemoveNote.Click += new System.EventHandler(this.btnRemoveNote_Click);
             // 
             // btnRemoveJob
             // 
             this.btnRemoveJob.Enabled = false;
-            this.btnRemoveJob.Location = new System.Drawing.Point(598, 672);
+            this.btnRemoveJob.Location = new System.Drawing.Point(1233, 583);
             this.btnRemoveJob.Name = "btnRemoveJob";
-            this.btnRemoveJob.Size = new System.Drawing.Size(85, 23);
+            this.btnRemoveJob.Size = new System.Drawing.Size(400, 23);
             this.btnRemoveJob.TabIndex = 31;
-            this.btnRemoveJob.Text = "Remove Job";
             this.btnRemoveJob.UseVisualStyleBackColor = true;
             this.btnRemoveJob.Click += new System.EventHandler(this.btnRemoveJob_Click);
             // 
             // btnAddPlant
             // 
-            this.btnAddPlant.Location = new System.Drawing.Point(1351, 12);
+            this.btnAddPlant.Location = new System.Drawing.Point(1555, 9);
             this.btnAddPlant.Name = "btnAddPlant";
             this.btnAddPlant.Size = new System.Drawing.Size(92, 23);
             this.btnAddPlant.TabIndex = 32;
@@ -386,18 +364,69 @@
             this.btnAddPlant.UseVisualStyleBackColor = true;
             this.btnAddPlant.Click += new System.EventHandler(this.btnAddPlant_Click);
             // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Underline))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label8.Location = new System.Drawing.Point(827, 33);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(58, 17);
+            this.label8.TabIndex = 33;
+            this.label8.Text = "Details";
+            // 
+            // tbVegDetails
+            // 
+            this.tbVegDetails.Location = new System.Drawing.Point(827, 53);
+            this.tbVegDetails.Name = "tbVegDetails";
+            this.tbVegDetails.ReadOnly = true;
+            this.tbVegDetails.Size = new System.Drawing.Size(400, 328);
+            this.tbVegDetails.TabIndex = 34;
+            this.tbVegDetails.Text = "";
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Underline))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label9.Location = new System.Drawing.Point(421, 804);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(73, 13);
+            this.label9.TabIndex = 35;
+            this.label9.Text = "Select Veg:";
+            // 
+            // cbVegName
+            // 
+            this.cbVegName.FormattingEnabled = true;
+            this.cbVegName.Location = new System.Drawing.Point(421, 820);
+            this.cbVegName.Name = "cbVegName";
+            this.cbVegName.Size = new System.Drawing.Size(400, 21);
+            this.cbVegName.TabIndex = 36;
+            this.cbVegName.Text = "Choose vegetables";
+            this.cbVegName.SelectedIndexChanged += new System.EventHandler(this.cbVegName_SelectedIndexChanged);
+            // 
+            // cbVegSpecies
+            // 
+            this.cbVegSpecies.Enabled = false;
+            this.cbVegSpecies.FormattingEnabled = true;
+            this.cbVegSpecies.Location = new System.Drawing.Point(421, 853);
+            this.cbVegSpecies.Name = "cbVegSpecies";
+            this.cbVegSpecies.Size = new System.Drawing.Size(400, 21);
+            this.cbVegSpecies.TabIndex = 37;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1455, 919);
+            this.ClientSize = new System.Drawing.Size(1694, 919);
+            this.Controls.Add(this.cbVegSpecies);
+            this.Controls.Add(this.cbVegName);
+            this.Controls.Add(this.label9);
+            this.Controls.Add(this.tbVegDetails);
+            this.Controls.Add(this.label8);
             this.Controls.Add(this.btnAddPlant);
             this.Controls.Add(this.btnRemoveJob);
             this.Controls.Add(this.btnRemoveNote);
-            this.Controls.Add(this.btnRemoveJournalPost);
+            this.Controls.Add(this.btnDeleteJournalPost);
             this.Controls.Add(this.btnAddSelectedVeg);
-            this.Controls.Add(this.listBoxSelectVegSpecies);
-            this.Controls.Add(this.listBoxSelecVegName);
             this.Controls.Add(this.label7);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.label5);
@@ -406,7 +435,6 @@
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.btnRemoveVeg);
-            this.Controls.Add(this.btnSelectVeg);
             this.Controls.Add(this.listBoxSelectedVeg);
             this.Controls.Add(this.btnDiscardJob);
             this.Controls.Add(this.btnSaveJob);
@@ -451,7 +479,6 @@
         private System.Windows.Forms.Button btnSaveJob;
         private System.Windows.Forms.Button btnDiscardJob;
         private System.Windows.Forms.ListBox listBoxSelectedVeg;
-        private System.Windows.Forms.Button btnSelectVeg;
         private System.Windows.Forms.Button btnRemoveVeg;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
@@ -460,13 +487,16 @@
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label label7;
-        private System.Windows.Forms.ListBox listBoxSelecVegName;
-        private System.Windows.Forms.ListBox listBoxSelectVegSpecies;
         private System.Windows.Forms.Button btnAddSelectedVeg;
-        private System.Windows.Forms.Button btnRemoveJournalPost;
+        private System.Windows.Forms.Button btnDeleteJournalPost;
         private System.Windows.Forms.Button btnRemoveNote;
         private System.Windows.Forms.Button btnRemoveJob;
         private System.Windows.Forms.Button btnAddPlant;
+        private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.RichTextBox tbVegDetails;
+        private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.ComboBox cbVegName;
+        private System.Windows.Forms.ComboBox cbVegSpecies;
     }
 }
 

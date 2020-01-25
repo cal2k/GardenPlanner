@@ -14,9 +14,8 @@ namespace GardenPlanner
 {
     public partial class Form1 : Form
     {
-        private string userName, query, temp, journalTitle,
-            journalDetails, journalEntiry, noteTitle, noteDetails, noteEntiry, jobTitle, jobDetails, jobEntiry, SelectedVegName, SelectedVegSpecies;
-        string[] UserNameSplit = new string[2];
+        private string userName, query, temp, journalTitle,journalDetails, journalEntiry, noteTitle, noteDetails, noteEntiry, jobEntiry,SelectedVegName, SelectedVegSpecies;
+                
         int count = 0;
         DateTime date;
           
@@ -25,6 +24,7 @@ namespace GardenPlanner
         SQLiteConnection conn = new SQLiteConnection("Data Source ="+ pathComplete + "; version =3;");
         SQLiteCommand cmd;
         SQLiteDataReader reader;
+
         
         public Form1()
         {
@@ -34,6 +34,7 @@ namespace GardenPlanner
 
         private void Startup()
         {
+            string[] UserNameSplit = new string[2];
             temp = System.Security.Principal.WindowsIdentity.GetCurrent().Name;
             UserNameSplit = temp.Split('\\');
             userName = UserNameSplit[1].ToLower();
@@ -62,114 +63,192 @@ namespace GardenPlanner
                     MessageBox.Show(ex.ToString());
                 }
             }
+            count = 0;
+            while (count <= 3)
+            {
+                LoadUserData(count);
+                count++;
+            }
 
-            LoadUserData();
         }
 
-        private void LoadUserData()
+        private void btnAddPlant_Click(object sender, EventArgs e)
         {
+            AddPlant addPlant = new AddPlant();
+            addPlant.Show();
+        }
 
-            query = "Select Journal FROM '" + userName + "' WHERE Journal IS NOT NULL ORDER BY ID DESC";
-
-            cmd = new SQLiteCommand(query, conn);
-
-
-            using (conn)
+        private void LoadUserData(int i)
+        {
+            switch(i)
             {
-                conn.Open();
-                using (cmd)
-                {
-                    using (reader = cmd.ExecuteReader())
+                case 0:
+                    query = "Select Journal FROM '" + userName + "' WHERE Journal IS NOT NULL ORDER BY ID DESC";
+                    cmd = new SQLiteCommand(query, conn);
+                    using (conn)
                     {
-                        while (reader.Read())
+                        conn.Open();
+                        using (cmd)
                         {
-                            temp = reader.GetString(0);
-                            listBoxJournal.Items.Add(temp);
+                            using (reader = cmd.ExecuteReader())
+                            {
+                                while (reader.Read())
+                                {
+                                    temp = reader.GetString(0);
+                                    listBoxJournal.Items.Add(temp);
+                                }
+                            }
                         }
+                        conn.Close();
                     }
-                }
-                conn.Close();
-            }
+                    break;
+                case 1:
+                    query = "Select Selected FROM '" + userName + "' WHERE Selected IS NOT NULL ORDER BY Selected ASC";
 
-            //Notes
-            query = "Select Notes FROM '" + userName + "' WHERE Notes IS NOT NULL ORDER BY ID DESC";
-
-            cmd = new SQLiteCommand(query, conn);
+                    cmd = new SQLiteCommand(query, conn);
 
 
-            using (conn)
-            {
-                conn.Open();
-                using (cmd)
-                {
-                    using (reader = cmd.ExecuteReader())
+                    using (conn)
                     {
-                        while (reader.Read())
+                        conn.Open();
+                        using (cmd)
                         {
-                            temp = reader.GetString(0);
-                            listBoxNotes.Items.Add(temp);
+                            using (reader = cmd.ExecuteReader())
+                            {
+                                while (reader.Read())
+                                {
+                                    temp = reader.GetString(0);
+                                    listBoxSelectedVeg.Items.Add(temp);
+                                }
+                            }
                         }
+                        conn.Close();
                     }
-                }
-                conn.Close();
-            }
 
-
-            query = "Select Jobs FROM '" + userName + "' WHERE Jobs IS NOT NULL ORDER BY ID DESC";
-
-            cmd = new SQLiteCommand(query, conn);
-
-
-            using (conn)
-            {
-                conn.Open();
-                using (cmd)
-                {
-                    using (reader = cmd.ExecuteReader())
+                    query = "Select Distinct Name FROM Vegs WHERE Name IS NOT NULL ORDER BY Name ASC";
+                    cmd = new SQLiteCommand(query, conn);
+                    using (conn)
                     {
-                        while (reader.Read())
+                        conn.Open();
+                        using (cmd)
                         {
-                            temp = reader.GetString(0);
-                            listBoxJobs.Items.Add(temp);
+                            using (reader = cmd.ExecuteReader())
+                            {
+                                while (reader.Read())
+                                {
+                                    temp = reader.GetString(0);
+                                    cbVegName.Items.Add(temp);
+                                }
+                            }
                         }
+                        conn.Close();
                     }
-                }
-                conn.Close();
-            }
+                    break;
+                case 2:
+                    query = "Select Notes FROM '" + userName + "' WHERE Notes IS NOT NULL ORDER BY ID DESC";
+
+                    cmd = new SQLiteCommand(query, conn);
 
 
-
-            query = "Select Selected FROM '" + userName + "' WHERE Selected IS NOT NULL ORDER BY Selected ASC";
-
-            cmd = new SQLiteCommand(query, conn);
-
-
-            using (conn)
-            {
-                conn.Open();
-                using (cmd)
-                {
-                    using (reader = cmd.ExecuteReader())
+                    using (conn)
                     {
-                        while (reader.Read())
+                        conn.Open();
+                        using (cmd)
                         {
-                            temp = reader.GetString(0);
-                            listBoxSelectedVeg.Items.Add(temp);
+                            using (reader = cmd.ExecuteReader())
+                            {
+                                while (reader.Read())
+                                {
+                                    temp = reader.GetString(0);
+                                    listBoxNotes.Items.Add(temp);
+                                }
+                            }
                         }
+                        conn.Close();
                     }
-                }
-                conn.Close();
+                    break;
+                case 3:
+                    query = "Select Jobs FROM '" + userName + "' WHERE Jobs IS NOT NULL ORDER BY ID DESC";
+
+                    cmd = new SQLiteCommand(query, conn);
+
+
+                    using (conn)
+                    {
+                        conn.Open();
+                        using (cmd)
+                        {
+                            using (reader = cmd.ExecuteReader())
+                            {
+                                while (reader.Read())
+                                {
+                                    temp = reader.GetString(0);
+                                    listBoxJobs.Items.Add(temp);
+                                }
+                            }
+                        }
+                        conn.Close();
+                    }
+                    break;
             }
         }
 
-        public void ClearLists()
+        private void Reset(int i)
         {
-            listBoxJournal.Items.Clear();
-            listBoxNotes.Items.Clear();
-            listBoxJobs.Items.Clear();
-            listBoxSelectedVeg.Items.Clear();
+            switch (i)
+            {
+                case 0:
+                    btnDeleteJournalPost.Enabled = false;
+                    btnDeleteJournalPost.Text = "";
+                    tbJournalTitle.Text = "Title";
+                    tbJournalEntiry.Text = "Details";
+                    tbJournalEntiry.Enabled = false;
+                    btnSaveJournalEntiry.Enabled = false;
+                    btnSaveJournalEntiry.Text = "";
+                    btnDiscardJournalEntiry.Enabled = false;
+                    btnDiscardJournalEntiry.Text = "";
+                    listBoxJournal.Items.Clear();
+                    LoadUserData(i);
+                    break;
+                case 1:
+                    btnRemoveVeg.Enabled = false;
+                    btnRemoveVeg.Text = "";
+                    tbVegDetails.Text = "";
+                    cbVegName.Items.Clear();
+                    cbVegName.Text = "Choose vegetables";
+                    cbVegSpecies.Items.Clear();
+                    listBoxSelectedVeg.Items.Clear();
+                    LoadUserData(i);
+                    break;
+                case 2:
+                    btnRemoveNote.Enabled = false;
+                    btnRemoveNote.Text = "";
+                    tbNoteTitle.Text = "Title";
+                    tbNoteEntiry.Text = "Details";
+                    tbNoteEntiry.Enabled = false;
+                    btnSaveNote.Enabled = false;
+                    btnSaveNote.Text = "";
+                    btnDiscardNote.Enabled = false;
+                    btnDiscardNote.Text = "";
+                    listBoxNotes.Items.Clear();
+                    LoadUserData(i);
+                    break;
+                case 3:
+                    btnRemoveJob.Enabled = false;
+                    btnRemoveJob.Text = "";
+                    tbJobTitle.Text = "Title";
+                    tbJobDetails.Text = "Details";
+                    tbJobDetails.Enabled = false;
+                    btnSaveJob.Enabled = false;
+                    btnSaveJob.Text = "";
+                    btnDiscardJob.Enabled = false;
+                    btnDiscardJob.Text = "";
+                    listBoxJobs.Items.Clear();
+                    LoadUserData(i);
+                    break;
 
-            LoadUserData();
+            }
+
         }
 
         private void insertQuery()
@@ -193,25 +272,7 @@ namespace GardenPlanner
             }
         }
         
-        //Journal
-        private void listBoxJournal_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            btnRemoveJournalPost.Enabled = true;
-        }
-        private void tbJournalTitle_Click(object sender, EventArgs e)
-        {
-            if (tbJournalTitle.Text == "Journal Entiry Title")
-            {
-                tbJournalTitle.Text = "";
-            }
-        }
-        private void tbJournalEntiry_Click(object sender, EventArgs e)
-        {
-            if (tbJournalEntiry.Text == "Journal Entiry Details")
-            {
-                tbJournalEntiry.Text = "";
-            }
-        }
+        //Save Buttons
         private void btnSaveJournalEntiry_Click(object sender, EventArgs e)
         {
             journalTitle = tbJournalTitle.Text;
@@ -223,290 +284,15 @@ namespace GardenPlanner
 
             insertQuery();
 
-            resetJournal();
-        }
-        private void btnDiscardJournalEntiry_Click(object sender, EventArgs e)
-        {
-            DialogResult confirmation = MessageBox.Show("Are you sure you want to discard " + tbJournalTitle.Text, "Confirmation", MessageBoxButtons.YesNo);
-            if (confirmation == DialogResult.Yes)
-            {
-                resetJournal();
-            }
-        }
-        private void btnRemoveJournalPost_Click(object sender, EventArgs e)
-        {
-            temp = listBoxJournal.SelectedItem.ToString();
-            query = " Delete from '" + userName + "' where Journal = '" + temp + "'";
-            cmd = new SQLiteCommand(query, conn);
-            using (conn)
-            {
-                conn.Open();
-                using (cmd)
-                {
-                    try
-                    {
-                        cmd.ExecuteNonQuery();
-                    }
-                    catch (Exception ex)
-                    {
-                        MessageBox.Show(ex.ToString());
-                    }
-                }
-
-                conn.Close();
-            }
-
-            btnRemoveJournalPost.Enabled = false;
-
-            ClearLists();
-        }
-        private void resetJournal()
-        {
-            tbJournalTitle.Text = "Journal Entiry Title";
-            tbJournalEntiry.Text = "Journal Entiry Details";
-            ClearLists();
-        }
-        
-        //Notes
-        private void listBoxNotes_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            btnRemoveNote.Enabled = true;
-        }
-        private void tbNoteTitle_Click(object sender, EventArgs e)
-        {
-            if (tbJournalTitle.Text == "Note Title")
-            {
-                tbJournalTitle.Text = "";
-            }
-        }
-        private void tbNoteEntiry_Click(object sender, EventArgs e)
-        {
-            if (tbJournalTitle.Text == "Note Details")
-            {
-                tbJournalTitle.Text = "";
-            }
-        }
-        private void btnSaveNote_Click(object sender, EventArgs e)
-        {
-            noteTitle = tbNoteTitle.Text;
-            noteDetails = tbNoteEntiry.Text;
-            noteEntiry = noteTitle + "," + noteDetails;
-
-            date = DateTime.Now;
-
-            query = "INSERT INTO " + userName + "(Notes, Date) VALUES ('" + noteEntiry + "', '" + date + "')";
-
-            insertQuery();
-
-            resetNotes();
-        }
-        private void btnDiscardNote_Click(object sender, EventArgs e)
-        {
-            DialogResult confirmation = MessageBox.Show("Are you sure you want to discard " + tbNoteTitle.Text, "Confirmation", MessageBoxButtons.YesNo);
-            if (confirmation == DialogResult.Yes)
-            {
-                resetNotes();
-            }
-        }
-        private void btnRemoveNote_Click(object sender, EventArgs e)
-        {
-            temp = listBoxNotes.SelectedItem.ToString();
-            query = " Delete from '" + userName + "' where Notes = '" + temp + "'";
-            cmd = new SQLiteCommand(query, conn);
-            using (conn)
-            {
-                conn.Open();
-                using (cmd)
-                {
-                    try
-                    {
-                        cmd.ExecuteNonQuery();
-                    }
-                    catch (Exception ex)
-                    {
-                        MessageBox.Show(ex.ToString());
-                    }
-                }
-
-                conn.Close();
-            }
-
-            btnRemoveNote.Enabled = false;
-
-            ClearLists();
-        }
-        private void resetNotes()
-        {
-            tbNoteTitle.Text = "Note Title";
-            tbNoteEntiry.Text = "Note Details";
-            ClearLists();
-        }
-        
-        //Jobs
-        private void listBoxJobs_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            btnRemoveJob.Enabled = true;
-        }
-
-        private void btnAddPlant_Click(object sender, EventArgs e)
-        {
-            AddPlant addPlant = new AddPlant();
-            addPlant.Show();
-        }
-
-        private void tbJobTitle_Click(object sender, EventArgs e)
-        {
-            if (tbJobTitle.Text == "Job Title")
-            {
-                tbJobTitle.Text = "";
-            }
-        }
-        private void tbJobDetails_Click(object sender, EventArgs e)
-        {
-            if (tbJobDetails.Text == "Job Details")
-            {
-                tbJobDetails.Text = "";
-            }
-        }
-        private void btnSaveJob_Click(object sender, EventArgs e)
-        {
-            jobTitle = tbJobTitle.Text;
-            jobDetails = tbJobDetails.Text;
-            jobEntiry = jobTitle + "," + jobDetails;
-
-            date = DateTime.Now;
-
-            query = "INSERT INTO " + userName + "(Jobs, Date) VALUES ('" + jobEntiry + "', '" + date + "')";
-
-            insertQuery();
-
-            resetJobs();
-        }
-        private void btnDiscardJob_Click(object sender, EventArgs e)
-        {
-            DialogResult confirmation = MessageBox.Show("Are you sure you want to discard " + tbJobTitle.Text, "Confirmation", MessageBoxButtons.YesNo);
-            if (confirmation == DialogResult.Yes)
-            {
-                resetJobs();
-            }
-        }
-        private void resetJobs()
-        {
-            tbJobTitle.Text = "Job Title";
-            tbJobDetails.Text = "Job Details";
-            ClearLists();
-        }
-        private void btnRemoveJob_Click(object sender, EventArgs e)
-        {
-            temp = listBoxJobs.SelectedItem.ToString();
-            query = " Delete from '" + userName + "' where Jobs = '" + temp + "'";
-            cmd = new SQLiteCommand(query, conn);
-            using (conn)
-            {
-                conn.Open();
-                using (cmd)
-                {
-                    try
-                    {
-                        cmd.ExecuteNonQuery();
-                    }
-                    catch (Exception ex)
-                    {
-                        MessageBox.Show(ex.ToString());
-                    }
-                }
-
-                conn.Close();
-            }
-
-            btnRemoveJob.Enabled = false;
-
-            ClearLists();
-        }
-        
-
-        //Select Veg
-        private void listBoxSelectedVeg_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            listBoxSelecVegName.Items.Clear();
-            listBoxSelectVegSpecies.Items.Clear();
-            btnRemoveVeg.Enabled = true;
-        }
-        private void btnSelectVeg_Click(object sender, EventArgs e)
-        {
-            listBoxSelecVegName.Items.Clear();
-            listBoxSelectVegSpecies.Items.Clear();
-            loadVegNames();
-        }
-        private void loadVegNames()
-        {
-            query = "Select Distinct Name FROM Vegs WHERE Name IS NOT NULL ORDER BY Name ASC";
-            cmd = new SQLiteCommand(query, conn);
-            using (conn)
-            {
-                conn.Open();
-                using (cmd)
-                {
-                    using (reader = cmd.ExecuteReader())
-                    {
-                        while (reader.Read())
-                        {
-                            temp = reader.GetString(0);
-                            listBoxSelecVegName.Items.Add(temp);
-                        }
-                    }
-                }
-                conn.Close();
-            }
-        }
-        private void listBoxSelecVegName_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            SelectedVegName = listBoxSelecVegName.SelectedItem.ToString();
-            btnAddSelectedVeg.Enabled = false;
-            listBoxSelectVegSpecies.Items.Clear();
-
-            count = temp.Length;
-            if(count > 0)
-            {
-                query = "Select Species FROM Vegs WHERE Name  = '" + SelectedVegName + "' ORDER BY Species ASC";
-                cmd = new SQLiteCommand(query, conn);
-                using (conn)
-                {
-                    conn.Open();
-                    using (cmd)
-                    {
-                        using (reader = cmd.ExecuteReader())
-                        {
-                            while (reader.Read())
-                            {
-                                temp = reader.GetString(0);
-                                listBoxSelectVegSpecies.Items.Add(temp);
-                            }
-                        }
-                    }
-                    conn.Close();
-                }
-            }
-        }
-        private void listBoxSelectVegSpecies_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            SelectedVegSpecies = listBoxSelectVegSpecies.SelectedItem.ToString();
-            count = temp.Length;
-            if (count > 0)
-            {
-                btnAddSelectedVeg.Enabled = true;
-            }
+            count = 0;
+            Reset(count);
         }
         private void btnAddSelectedVeg_Click(object sender, EventArgs e)
         {
-            addVeg();
-        }
-        //Write chosen veg into database after checking if the selected veg is present
-        public void addVeg()
-        {
             btnAddSelectedVeg.Enabled = false;
-            listBoxSelecVegName.Items.Clear();
-            listBoxSelectVegSpecies.Items.Clear();
+            cbVegName.Items.Clear();
+            cbVegSpecies.Items.Clear();
+
             date = DateTime.Now;
             temp = SelectedVegName + " (" + SelectedVegSpecies + ")";
             query = "SELECT COUNT (Selected) from '" + userName + "' WHERE Selected = '" + temp + "'";
@@ -535,9 +321,10 @@ namespace GardenPlanner
                 conn.Close();
             }
 
+
             if (count == 0)
             {
-                query = "INSERT INTO " + userName + "(Selected, Date) VALUES ('" + temp + "', '" + date +"')";
+                query = "INSERT INTO " + userName + "(Selected, Date) VALUES ('" + temp + "', '" + date + "')";
                 cmd = new SQLiteCommand(query, conn);
 
                 using (conn)
@@ -558,8 +345,114 @@ namespace GardenPlanner
             {
                 MessageBox.Show(temp + " has already been added to your list. Please select somthing differnt.");
             }
+            count = 2;
+            Reset(count);
+        }
+        private void btnSaveNote_Click(object sender, EventArgs e)
+        {
+            noteTitle = tbNoteTitle.Text;
+            noteDetails = tbNoteEntiry.Text;
+            noteEntiry = noteTitle + "," + noteDetails;
 
-            ClearLists();
+            date = DateTime.Now;
+
+            query = "INSERT INTO " + userName + "(Notes, Date) VALUES ('" + noteEntiry + "', '" + date + "')";
+
+            insertQuery();
+            count = 2;
+            Reset(count);
+        }
+        private void btnSaveJob_Click(object sender, EventArgs e)
+        {
+            jobEntiry = tbJobTitle.Text +","+ tbJobDetails.Text;
+
+            date = DateTime.Now;
+
+            query = "INSERT INTO " + userName + "(Jobs, Date) VALUES ('" + jobEntiry + "', '" + date + "')";
+
+            insertQuery();
+            count = 3;
+            Reset(count);
+        }
+
+        //Discard Buttons
+        private void btnDiscardJournalEntiry_Click(object sender, EventArgs e)
+        {
+            DialogResult confirmation = MessageBox.Show("Are you sure you want to discard " + tbJournalTitle.Text, "Confirmation", MessageBoxButtons.YesNo);
+            if (confirmation == DialogResult.Yes)
+            {
+                count = 0;
+                Reset(count);
+            }
+        }
+        private void btnDiscardNote_Click(object sender, EventArgs e)
+        {
+            DialogResult confirmation = MessageBox.Show("Are you sure you want to discard " + tbNoteTitle.Text, "Confirmation", MessageBoxButtons.YesNo);
+            if (confirmation == DialogResult.Yes)
+            {
+                count = 2;
+                Reset(count);
+            }
+        }
+        private void btnDiscardJob_Click(object sender, EventArgs e)
+        {
+            DialogResult confirmation = MessageBox.Show("Are you sure you want to discard " + tbJobTitle.Text, "Confirmation", MessageBoxButtons.YesNo);
+            if (confirmation == DialogResult.Yes)
+            {
+                count = 3;
+                Reset(count);
+            }
+        }
+
+        //List Events
+        private void listBoxJournal_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            btnDeleteJournalPost.Enabled = true;
+            btnDeleteJournalPost.Text = "Remove " + listBoxJournal.SelectedItem.ToString();
+        }
+        private void listBoxSelectedVeg_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            btnRemoveVeg.Enabled = true;
+            btnRemoveVeg.Text = "Remove " + listBoxSelectedVeg.SelectedItem.ToString();
+        }
+        private void listBoxNotes_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            btnRemoveNote.Enabled = true;
+            btnRemoveNote.Text = "Remove " + listBoxNotes.SelectedItem.ToString();
+        }
+        private void listBoxJobs_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            btnRemoveJob.Enabled = true;
+            btnRemoveJob.Text = "Remove " + listBoxJobs.SelectedItem.ToString();
+        }
+
+        //Remove Buttons
+        private void btnRemoveJournalPost_Click(object sender, EventArgs e)
+        {
+            temp = listBoxJournal.SelectedItem.ToString();
+            query = " Delete from '" + userName + "' where Journal = '" + temp + "'";
+            cmd = new SQLiteCommand(query, conn);
+            using (conn)
+            {
+                conn.Open();
+                using (cmd)
+                {
+                    try
+                    {
+                        cmd.ExecuteNonQuery();
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show(ex.ToString());
+                    }
+                }
+
+                conn.Close();
+            }
+
+            btnDeleteJournalPost.Enabled = false;
+            count = 0;
+            Reset(count);
         }
         private void btnRemoveVeg_Click(object sender, EventArgs e)
         {
@@ -575,7 +468,7 @@ namespace GardenPlanner
                     {
                         cmd.ExecuteNonQuery();
                     }
-                    catch(Exception ex)
+                    catch (Exception ex)
                     {
                         MessageBox.Show(ex.ToString());
                     }
@@ -585,9 +478,175 @@ namespace GardenPlanner
             }
 
             btnRemoveVeg.Enabled = false;
-
-            ClearLists();
+            count = 1;
+            Reset(count);
         }
-    }
+        private void btnRemoveNote_Click(object sender, EventArgs e)
+        {
+            temp = listBoxNotes.SelectedItem.ToString();
+            query = " Delete from '" + userName + "' where Notes = '" + temp + "'";
+            cmd = new SQLiteCommand(query, conn);
+            using (conn)
+            {
+                conn.Open();
+                using (cmd)
+                {
+                    try
+                    {
+                        cmd.ExecuteNonQuery();
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show(ex.ToString());
+                    }
+                }
+
+                conn.Close();
+            }
+
+            btnRemoveNote.Enabled = false;
+            count = 2;
+            Reset(count);
+        }
+        private void btnRemoveJob_Click(object sender, EventArgs e)
+        {
+            temp = listBoxJobs.SelectedItem.ToString();
+            query = " Delete from '" + userName + "' where Jobs = '" + temp + "'";
+            cmd = new SQLiteCommand(query, conn);
+            using (conn)
+            {
+                conn.Open();
+                using (cmd)
+                {
+                    try
+                    {
+                        cmd.ExecuteNonQuery();
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show(ex.ToString());
+                    }
+                }
+
+                conn.Close();
+            }
+
+            btnRemoveJob.Enabled = false;
+            count = 3;
+            Reset(count);
+        }
+
+        
+
+        //NEW ENTIRYS
+
+        //Journal
+        private void tbJournalTitle_Click(object sender, EventArgs e)
+            {
+                if (tbJournalTitle.Text == "Title")
+                {
+                    tbJournalTitle.Text = "";
+                }
+            }
+        private void tbJournalTitle_TextChanged(object sender, EventArgs e)
+        {
+            if (tbJournalTitle.Text.Length > 3)
+            {
+                tbJournalEntiry.Enabled = true;
+                btnDiscardJournalEntiry.Enabled = true;
+            }
+        }
+        private void tbJournalEntiry_Click(object sender, EventArgs e)
+        {
+            if (tbJournalEntiry.Text == "Details")
+            {
+                tbJournalEntiry.Text = "";
+            }
+        }
+        private void tbJournalEntiry_TextChanged(object sender, EventArgs e)
+            {
+                if(tbJournalEntiry.Text.Length > 3)
+                {
+                    btnDiscardJournalEntiry.Text = "Discard " + tbJournalTitle.Text;
+                    btnSaveJournalEntiry.Enabled = true;
+                    btnSaveJournalEntiry.Text = "Save " + tbJournalTitle.Text;
+                }
+            }
+
+        //Veg
+        private void cbVegName_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            temp = cbVegName.SelectedItem.ToString();
+            //select species
+            cbVegSpecies.Enabled = true;
+            cbVegSpecies.Text = "Select " + cbVegName.SelectedItem.ToString() + " species";
+        }
+
+        //Note
+        private void tbNoteTitle_Click(object sender, EventArgs e)
+            {
+                if (tbJournalTitle.Text == "Title")
+                {
+                    tbJournalTitle.Text = "";
+                }
+            }
+        private void tbNoteTitle_TextChanged(object sender, EventArgs e)
+        {
+            if(tbNoteTitle.Text.Length > 3)
+            {
+                tbNoteEntiry.Enabled = true;
+                btnDiscardNote.Enabled = true;
+            }
+        }
+        private void tbNoteEntiry_Click(object sender, EventArgs e)
+        {
+            if (tbJournalTitle.Text == "Details")
+            {
+                tbJournalTitle.Text = "";
+            }
+        }
+        private void tbNoteEntiry_TextChanged(object sender, EventArgs e)
+            {
+                if(tbNoteEntiry.Text.Length > 3)
+                {
+                    btnDiscardNote.Text = "Discard " + tbNoteTitle.Text;
+                    btnSaveNote.Enabled = true;
+                    btnSaveNote.Text = "Save " + tbNoteTitle.Text;
+                }
+            }
+
+        //Job
+        private void tbJobTitle_Click(object sender, EventArgs e)
+        {
+            if (tbJobTitle.Text == "Title")
+            {
+                tbJobTitle.Text = "";
+            }
+        }
+        private void tbJobTitle_TextChanged(object sender, EventArgs e)
+        {
+            if(tbJobTitle.Text.Length > 3)
+            {
+                tbJobDetails.Enabled = true;
+                btnDiscardJob.Enabled = true;;
+            }
+        }
+        private void tbJobDetails_Click(object sender, EventArgs e)
+        {
+            if (tbJobDetails.Text == "Details")
+            {
+                tbJobDetails.Text = "";
+            }
+        }
+        private void tbJobDetails_TextChanged(object sender, EventArgs e)
+            {
+                if(tbJobDetails.Text.Length > 3)
+                {
+                    btnDiscardJob.Text = "Discard " + tbJobTitle.Text;
+                    btnSaveJob.Enabled = true;
+                    btnSaveJob.Text = "Save " + tbJobTitle.Text;
+                }
+            }
+    }           
 }
 
