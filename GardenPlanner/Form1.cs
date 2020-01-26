@@ -25,7 +25,8 @@ namespace GardenPlanner
         SQLiteConnection conn = new SQLiteConnection("Data Source =" + pathComplete + "; version =3;");
         SQLiteCommand cmd;
         SQLiteDataReader reader;
-        
+
+        DisplayJournal ds = new DisplayJournal();
         //Tools
         private void btnAddPlant_Click(object sender, EventArgs e)
         {
@@ -283,7 +284,7 @@ namespace GardenPlanner
             }
         }
 
-        private void Reset(int i)
+        public void Reset(int i)
         {
             switch (i)
             {
@@ -495,65 +496,107 @@ namespace GardenPlanner
         //List Events
         private void listBoxJournal_SelectedIndexChanged(object sender, EventArgs e)
         {
-            btnDeleteJournalPost.Enabled = true;
-            btnDeleteJournalPost.Text = "Remove " + listBoxJournal.SelectedItem.ToString();
+            if (listBoxJournal.SelectedItem.ToString().Length > 0)
+            {
+                btnDeleteJournalPost.Enabled = true;
+                btnDeleteJournalPost.Text = "Remove " + listBoxJournal.SelectedItem.ToString();
+            }
         }
-        private void listBoxSelectedVeg_SelectedIndexChanged(object sender, EventArgs e)
+        private void listBoxJournal_DoubleClick(object sender, EventArgs e)
         {
-            btnRemoveVeg.Enabled = true;
-            btnRemoveVeg.Text = "Remove " + listBoxSelectedVeg.SelectedItem.ToString();
+            temp = listBoxJournal.SelectedItem.ToString();
+            ds.load(temp);
+            ds.FormClosed += new FormClosedEventHandler(DisplayJournnal_FormClosed);
+            ds.Show();
+            
+        }
+        private void DisplayJournnal_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            count = 0;
+            Reset(count);
+        }
 
-            temp = listBoxSelectedVeg.SelectedItem.ToString();
-            string[] tempArray = new string[2];
-
-            tempArray = temp.Split('(', ')');
+    private void listBoxSelectedVeg_SelectedIndexChanged(object sender, EventArgs e)
+        {
             List<string> vegDetails = new List<string>();
+            List<string> titles = new List<string>();
             StringBuilder sb = new StringBuilder();
 
-            query = "Select * FROM TEST WHERE test1 = 'test'";
-            cmd = new SQLiteCommand(query, conn);
-            try
+            tbVegDetails.Text = "";
+            vegDetails.Clear();
+            sb.Clear();
+
+
+
+            if (listBoxSelectedVeg.SelectedItem.ToString().Length > 0)
             {
-                using (conn)
+                btnRemoveVeg.Enabled = true;
+                btnRemoveVeg.Text = "Remove " + listBoxSelectedVeg.SelectedItem.ToString();
+
+                temp = listBoxSelectedVeg.SelectedItem.ToString();
+                string[] tempArray = new string[2];
+                tempArray = temp.Split('(', ')');
+
+                titles.Add("Sowing:\n");
+                titles.Add("\nGrowing:\n");
+                titles.Add("\nHarvest:\n");
+                titles.Add("\nCommon Problems:\n");
+
+                query = "Select Sowing, Growing, Harvest, CommonProblems, Companion FROM Vegs WHERE Species = '" + tempArray[1].ToString() +"'";
+                cmd = new SQLiteCommand(query, conn);
+                try
                 {
-                    conn.Open();
-                    using (cmd)
+                    using (conn)
                     {
-                        using (reader = cmd.ExecuteReader())
+                        conn.Open();
+                        using (cmd)
                         {
-                            while (reader.Read())
+                            using (reader = cmd.ExecuteReader())
                             {
-                            
-                                temp = reader.GetString(0);
-                                vegDetails.Add(temp);
-                                sb.Append(temp + " ");
+                                while (reader.Read())
+                                {
+
+                                    temp = reader.GetString(0);
+                                    vegDetails.Add(temp);
+                                    temp = reader.GetString(1);
+                                    vegDetails.Add(temp);
+                                    temp = reader.GetString(2);
+                                    vegDetails.Add(temp);
+                                    temp = reader.GetString(3);
+                                    vegDetails.Add(temp);
+                                }
                             }
                         }
+                        conn.Close();
                     }
-                    conn.Close();
+                    count = vegDetails.Count();
+                    for (int i = 0; i < count; i++)
+                    {
+                        sb.Append(titles[i] + vegDetails[i] + "\n");
+                    }
+                    tbVegDetails.Text = sb.ToString();
                 }
-                count = vegDetails.Count();
-                for(int i = 0; i < count; i++)
+                catch (Exception ex)
                 {
-                    listboxVegDetails.Items.Add(vegDetails[i]);
+                    MessageBox.Show(ex.ToString());
                 }
-
-                tbVegDetails.Text = sb.ToString();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.ToString());
             }
         }
         private void listBoxNotes_SelectedIndexChanged(object sender, EventArgs e)
         {
-            btnRemoveNote.Enabled = true;
-            btnRemoveNote.Text = "Remove " + listBoxNotes.SelectedItem.ToString();
+            if (listBoxNotes.SelectedItem.ToString().Length > 0)
+            {
+                btnRemoveNote.Enabled = true;
+                btnRemoveNote.Text = "Remove " + listBoxNotes.SelectedItem.ToString();
+            }
         }
         private void listBoxJobs_SelectedIndexChanged(object sender, EventArgs e)
         {
-            btnRemoveJob.Enabled = true;
-            btnRemoveJob.Text = "Remove " + listBoxJobs.SelectedItem.ToString();
+            if (listBoxJobs.SelectedItem.ToString().Length > 0)
+            {
+                btnRemoveJob.Enabled = true;
+                btnRemoveJob.Text = "Remove " + listBoxJobs.SelectedItem.ToString();
+            }
         }
 
         //Remove Buttons

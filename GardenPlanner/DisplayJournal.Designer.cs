@@ -40,15 +40,17 @@
             // 
             this.tbTitle.Location = new System.Drawing.Point(12, 12);
             this.tbTitle.Name = "tbTitle";
+            this.tbTitle.ReadOnly = true;
             this.tbTitle.Size = new System.Drawing.Size(480, 20);
-            this.tbTitle.TabIndex = 0;
+            this.tbTitle.TabIndex = 1;
             // 
             // tbDetails
             // 
             this.tbDetails.Location = new System.Drawing.Point(12, 38);
             this.tbDetails.Name = "tbDetails";
+            this.tbDetails.ReadOnly = true;
             this.tbDetails.Size = new System.Drawing.Size(500, 257);
-            this.tbDetails.TabIndex = 1;
+            this.tbDetails.TabIndex = 2;
             this.tbDetails.Text = "";
             // 
             // btnSave
@@ -57,7 +59,7 @@
             this.btnSave.Location = new System.Drawing.Point(138, 301);
             this.btnSave.Name = "btnSave";
             this.btnSave.Size = new System.Drawing.Size(120, 23);
-            this.btnSave.TabIndex = 2;
+            this.btnSave.TabIndex = 5;
             this.btnSave.Text = "Save";
             this.btnSave.UseVisualStyleBackColor = true;
             this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
@@ -77,7 +79,7 @@
             this.btnCancle.Location = new System.Drawing.Point(392, 301);
             this.btnCancle.Name = "btnCancle";
             this.btnCancle.Size = new System.Drawing.Size(120, 23);
-            this.btnCancle.TabIndex = 4;
+            this.btnCancle.TabIndex = 0;
             this.btnCancle.Text = "Close";
             this.btnCancle.UseVisualStyleBackColor = true;
             this.btnCancle.Click += new System.EventHandler(this.btnCancle_Click);
@@ -88,7 +90,7 @@
             this.btnDiscard.Location = new System.Drawing.Point(266, 301);
             this.btnDiscard.Name = "btnDiscard";
             this.btnDiscard.Size = new System.Drawing.Size(120, 23);
-            this.btnDiscard.TabIndex = 5;
+            this.btnDiscard.TabIndex = 4;
             this.btnDiscard.Text = "Discard";
             this.btnDiscard.UseVisualStyleBackColor = true;
             this.btnDiscard.Click += new System.EventHandler(this.btnDiscard_Click);

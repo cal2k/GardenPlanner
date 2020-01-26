@@ -64,7 +64,6 @@
             this.label9 = new System.Windows.Forms.Label();
             this.cbVegName = new System.Windows.Forms.ComboBox();
             this.cbVegSpecies = new System.Windows.Forms.ComboBox();
-            this.listboxVegDetails = new System.Windows.Forms.ListBox();
             this.lblJournalTitleRemaining = new System.Windows.Forms.Label();
             this.lblJournalContentRemaing = new System.Windows.Forms.Label();
             this.lblNoteContentRemaining = new System.Windows.Forms.Label();
@@ -90,6 +89,7 @@
             this.listBoxJournal.Size = new System.Drawing.Size(400, 524);
             this.listBoxJournal.TabIndex = 1;
             this.listBoxJournal.SelectedIndexChanged += new System.EventHandler(this.listBoxJournal_SelectedIndexChanged);
+            this.listBoxJournal.DoubleClick += new System.EventHandler(this.listBoxJournal_DoubleClick);
             // 
             // btnSaveJournalEntiry
             // 
@@ -389,10 +389,10 @@
             // 
             // tbVegDetails
             // 
-            this.tbVegDetails.Location = new System.Drawing.Point(827, 141);
+            this.tbVegDetails.Location = new System.Drawing.Point(827, 53);
             this.tbVegDetails.Name = "tbVegDetails";
             this.tbVegDetails.ReadOnly = true;
-            this.tbVegDetails.Size = new System.Drawing.Size(400, 149);
+            this.tbVegDetails.Size = new System.Drawing.Size(400, 328);
             this.tbVegDetails.TabIndex = 34;
             this.tbVegDetails.Text = "";
             // 
@@ -425,14 +425,6 @@
             this.cbVegSpecies.Size = new System.Drawing.Size(400, 21);
             this.cbVegSpecies.TabIndex = 37;
             this.cbVegSpecies.SelectedIndexChanged += new System.EventHandler(this.cbVegSpecies_SelectedIndexChanged);
-            // 
-            // listboxVegDetails
-            // 
-            this.listboxVegDetails.FormattingEnabled = true;
-            this.listboxVegDetails.Location = new System.Drawing.Point(827, 53);
-            this.listboxVegDetails.Name = "listboxVegDetails";
-            this.listboxVegDetails.Size = new System.Drawing.Size(400, 82);
-            this.listboxVegDetails.TabIndex = 38;
             // 
             // lblJournalTitleRemaining
             // 
@@ -499,7 +491,6 @@
             this.Controls.Add(this.lblNoteTitleRemaining);
             this.Controls.Add(this.lblJournalContentRemaing);
             this.Controls.Add(this.lblJournalTitleRemaining);
-            this.Controls.Add(this.listboxVegDetails);
             this.Controls.Add(this.cbVegSpecies);
             this.Controls.Add(this.cbVegName);
             this.Controls.Add(this.label9);
@@ -580,7 +571,6 @@
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.ComboBox cbVegName;
         private System.Windows.Forms.ComboBox cbVegSpecies;
-        private System.Windows.Forms.ListBox listboxVegDetails;
         private System.Windows.Forms.Label lblJournalTitleRemaining;
         private System.Windows.Forms.Label lblJournalContentRemaing;
         private System.Windows.Forms.Label lblNoteContentRemaining;
