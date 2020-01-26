@@ -17,7 +17,7 @@ namespace GardenPlanner
 
         private string userName, query, temp,preview, journalTitle, journalDetails, journalEntiry, noteTitle, noteDetails, noteEntiry, jobEntiry, SelectedVegName, SelectedVegSpecies;
         List<string> list = new List<string>();
-        int count = 0, userID = 0;
+        int count = 0, userID = 0, remaingTitle = 50, remaingContent = 500, usedTitle = 0, usedContent = 0, countJournalTitle, countJournalContent;
         DateTime date;
 
         static string path = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
@@ -73,7 +73,6 @@ namespace GardenPlanner
                             try
                             {
                                 count = reader.GetInt16(0) ;
-                                MessageBox.Show(count.ToString());
                             }
                             catch (Exception ex)
                             {
@@ -113,7 +112,6 @@ namespace GardenPlanner
                             try
                             {
                                 userID = reader.GetInt32(0);
-                                MessageBox.Show(userID.ToString());
                             }
                             catch(Exception ex)
                             {
@@ -157,7 +155,7 @@ namespace GardenPlanner
             switch(i)
             {
                 case 0:
-                    query = "Select Journal FROM '" + userName + "' WHERE Journal IS NOT NULL ORDER BY ID DESC";
+                    query = "Select Title FROM Journal WHERE userid = '" + userID +"'ORDER BY date DESC";
                     cmd = new SQLiteCommand(query, conn);
                     using (conn)
                     {
@@ -169,13 +167,13 @@ namespace GardenPlanner
                                 while (reader.Read())
                                 {
                                     temp = reader.GetString(0);
-                                    list.Add(temp);
+                                    listBoxJournal.Items.Add(temp);
                                 }
                             }
                         }
                         conn.Close();
                     }
-                    count = list.Count();
+                    /*count = list.Count();
                     for(int ii = 0; ii < count; ii++)
                     {
                         temp = list[ii].ToString();
@@ -192,8 +190,7 @@ namespace GardenPlanner
                             preview = journalTitle + " - " + journalEntiry;
                         }
                         listBoxJournal.Items.Add(preview);
-
-                    }
+                    }*/
                     break;
                 case 1:
                     query = "Select Selected FROM '" + userName + "' WHERE Selected IS NOT NULL ORDER BY Selected ASC";
@@ -293,11 +290,12 @@ namespace GardenPlanner
                 case 0:
 
                     listBoxJournal.Items.Clear();
-                    list.Clear();
                     btnDeleteJournalPost.Enabled = false;
                     btnDeleteJournalPost.Text = "";
                     tbJournalTitle.Text = "Title";
+                    lblJournalTitleRemaining.Text = "(50)";
                     tbJournalEntiry.Text = "Details";
+                    lblJournalContentRemaing.Text = "(500)";
                     tbJournalEntiry.Enabled = false;
                     btnSaveJournalEntiry.Enabled = false;
                     btnSaveJournalEntiry.Text = "";
@@ -621,16 +619,21 @@ namespace GardenPlanner
         
 
         //NEW ENTIRYS
+
         //Journal
         private void tbJournalTitle_Click(object sender, EventArgs e)
+        {
+            if (tbJournalTitle.Text == "Title")
             {
-                if (tbJournalTitle.Text == "Title")
-                {
-                    tbJournalTitle.Text = "";
-                }
+                tbJournalTitle.Text = "";
             }
+        }
         private void tbJournalTitle_TextChanged(object sender, EventArgs e)
         {
+            usedTitle = tbJournalTitle.Text.Length;
+            count = remaingTitle - usedTitle;
+            lblJournalTitleRemaining.Text = "(" + count.ToString() + ")";
+
             if (tbJournalTitle.Text.Length > 3)
             {
                 tbJournalEntiry.Enabled = true;
@@ -646,13 +649,17 @@ namespace GardenPlanner
             }
         }
         private void tbJournalEntiry_TextChanged(object sender, EventArgs e)
+        {
+            usedContent = tbJournalEntiry.Text.Length;
+            countJournalContent = remaingContent - usedContent;
+            lblJournalContentRemaing.Text = ("(" + countJournalContent + ")");
+
+            if(tbJournalEntiry.Text.Length > 3)
             {
-                if(tbJournalEntiry.Text.Length > 3)
-                {
-                    btnSaveJournalEntiry.Enabled = true;
-                    btnSaveJournalEntiry.Text = "Save " + tbJournalTitle.Text;
-                }
+                btnSaveJournalEntiry.Enabled = true;
+                btnSaveJournalEntiry.Text = "Save " + tbJournalTitle.Text;
             }
+        }
 
         //Veg
         private void cbVegName_SelectedIndexChanged(object sender, EventArgs e)

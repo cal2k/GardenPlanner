@@ -65,6 +65,12 @@
             this.cbVegName = new System.Windows.Forms.ComboBox();
             this.cbVegSpecies = new System.Windows.Forms.ComboBox();
             this.listboxVegDetails = new System.Windows.Forms.ListBox();
+            this.lblJournalTitleRemaining = new System.Windows.Forms.Label();
+            this.lblJournalContentRemaing = new System.Windows.Forms.Label();
+            this.lblNoteContentRemaining = new System.Windows.Forms.Label();
+            this.lblNoteTitleRemaining = new System.Windows.Forms.Label();
+            this.lblJobContentRemaining = new System.Windows.Forms.Label();
+            this.lblJobTitleRemaining = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // lblUserName
@@ -98,8 +104,9 @@
             // tbJournalTitle
             // 
             this.tbJournalTitle.Location = new System.Drawing.Point(15, 625);
+            this.tbJournalTitle.MaxLength = 50;
             this.tbJournalTitle.Name = "tbJournalTitle";
-            this.tbJournalTitle.Size = new System.Drawing.Size(400, 20);
+            this.tbJournalTitle.Size = new System.Drawing.Size(363, 20);
             this.tbJournalTitle.TabIndex = 3;
             this.tbJournalTitle.Text = "Title";
             this.tbJournalTitle.Click += new System.EventHandler(this.tbJournalTitle_Click);
@@ -109,8 +116,9 @@
             // 
             this.tbJournalEntiry.Enabled = false;
             this.tbJournalEntiry.Location = new System.Drawing.Point(15, 651);
+            this.tbJournalEntiry.MaxLength = 500;
             this.tbJournalEntiry.Name = "tbJournalEntiry";
-            this.tbJournalEntiry.Size = new System.Drawing.Size(400, 223);
+            this.tbJournalEntiry.Size = new System.Drawing.Size(363, 223);
             this.tbJournalEntiry.TabIndex = 4;
             this.tbJournalEntiry.Text = "Details";
             this.tbJournalEntiry.Click += new System.EventHandler(this.tbJournalEntiry_Click);
@@ -149,8 +157,9 @@
             // 
             this.tbNoteEntiry.Enabled = false;
             this.tbNoteEntiry.Location = new System.Drawing.Point(827, 651);
+            this.tbNoteEntiry.MaxLength = 500;
             this.tbNoteEntiry.Name = "tbNoteEntiry";
-            this.tbNoteEntiry.Size = new System.Drawing.Size(400, 223);
+            this.tbNoteEntiry.Size = new System.Drawing.Size(363, 223);
             this.tbNoteEntiry.TabIndex = 9;
             this.tbNoteEntiry.Text = "Details";
             this.tbNoteEntiry.Click += new System.EventHandler(this.tbNoteEntiry_Click);
@@ -159,8 +168,9 @@
             // tbNoteTitle
             // 
             this.tbNoteTitle.Location = new System.Drawing.Point(827, 625);
+            this.tbNoteTitle.MaxLength = 50;
             this.tbNoteTitle.Name = "tbNoteTitle";
-            this.tbNoteTitle.Size = new System.Drawing.Size(400, 20);
+            this.tbNoteTitle.Size = new System.Drawing.Size(363, 20);
             this.tbNoteTitle.TabIndex = 8;
             this.tbNoteTitle.Text = "Title";
             this.tbNoteTitle.Click += new System.EventHandler(this.tbNoteTitle_Click);
@@ -189,8 +199,9 @@
             // 
             this.tbJobDetails.Enabled = false;
             this.tbJobDetails.Location = new System.Drawing.Point(1233, 651);
+            this.tbJobDetails.MaxLength = 500;
             this.tbJobDetails.Name = "tbJobDetails";
-            this.tbJobDetails.Size = new System.Drawing.Size(400, 223);
+            this.tbJobDetails.Size = new System.Drawing.Size(363, 223);
             this.tbJobDetails.TabIndex = 13;
             this.tbJobDetails.Text = "Details";
             this.tbJobDetails.Click += new System.EventHandler(this.tbJobDetails_Click);
@@ -199,8 +210,9 @@
             // tbJobTitle
             // 
             this.tbJobTitle.Location = new System.Drawing.Point(1233, 625);
+            this.tbJobTitle.MaxLength = 50;
             this.tbJobTitle.Name = "tbJobTitle";
-            this.tbJobTitle.Size = new System.Drawing.Size(400, 20);
+            this.tbJobTitle.Size = new System.Drawing.Size(363, 20);
             this.tbJobTitle.TabIndex = 12;
             this.tbJobTitle.Text = "Title";
             this.tbJobTitle.Click += new System.EventHandler(this.tbJobTitle_Click);
@@ -422,11 +434,71 @@
             this.listboxVegDetails.Size = new System.Drawing.Size(400, 82);
             this.listboxVegDetails.TabIndex = 38;
             // 
+            // lblJournalTitleRemaining
+            // 
+            this.lblJournalTitleRemaining.AutoSize = true;
+            this.lblJournalTitleRemaining.Location = new System.Drawing.Point(384, 628);
+            this.lblJournalTitleRemaining.Name = "lblJournalTitleRemaining";
+            this.lblJournalTitleRemaining.Size = new System.Drawing.Size(25, 13);
+            this.lblJournalTitleRemaining.TabIndex = 39;
+            this.lblJournalTitleRemaining.Text = "(50)";
+            // 
+            // lblJournalContentRemaing
+            // 
+            this.lblJournalContentRemaing.AutoSize = true;
+            this.lblJournalContentRemaing.Location = new System.Drawing.Point(384, 654);
+            this.lblJournalContentRemaing.Name = "lblJournalContentRemaing";
+            this.lblJournalContentRemaing.Size = new System.Drawing.Size(31, 13);
+            this.lblJournalContentRemaing.TabIndex = 40;
+            this.lblJournalContentRemaing.Text = "(500)";
+            // 
+            // lblNoteContentRemaining
+            // 
+            this.lblNoteContentRemaining.AutoSize = true;
+            this.lblNoteContentRemaining.Location = new System.Drawing.Point(1196, 654);
+            this.lblNoteContentRemaining.Name = "lblNoteContentRemaining";
+            this.lblNoteContentRemaining.Size = new System.Drawing.Size(31, 13);
+            this.lblNoteContentRemaining.TabIndex = 42;
+            this.lblNoteContentRemaining.Text = "(500)";
+            // 
+            // lblNoteTitleRemaining
+            // 
+            this.lblNoteTitleRemaining.AutoSize = true;
+            this.lblNoteTitleRemaining.Location = new System.Drawing.Point(1196, 628);
+            this.lblNoteTitleRemaining.Name = "lblNoteTitleRemaining";
+            this.lblNoteTitleRemaining.Size = new System.Drawing.Size(25, 13);
+            this.lblNoteTitleRemaining.TabIndex = 41;
+            this.lblNoteTitleRemaining.Text = "(50)";
+            // 
+            // lblJobContentRemaining
+            // 
+            this.lblJobContentRemaining.AutoSize = true;
+            this.lblJobContentRemaining.Location = new System.Drawing.Point(1602, 654);
+            this.lblJobContentRemaining.Name = "lblJobContentRemaining";
+            this.lblJobContentRemaining.Size = new System.Drawing.Size(31, 13);
+            this.lblJobContentRemaining.TabIndex = 44;
+            this.lblJobContentRemaining.Text = "(500)";
+            // 
+            // lblJobTitleRemaining
+            // 
+            this.lblJobTitleRemaining.AutoSize = true;
+            this.lblJobTitleRemaining.Location = new System.Drawing.Point(1602, 628);
+            this.lblJobTitleRemaining.Name = "lblJobTitleRemaining";
+            this.lblJobTitleRemaining.Size = new System.Drawing.Size(25, 13);
+            this.lblJobTitleRemaining.TabIndex = 43;
+            this.lblJobTitleRemaining.Text = "(50)";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1645, 919);
+            this.Controls.Add(this.lblJobContentRemaining);
+            this.Controls.Add(this.lblJobTitleRemaining);
+            this.Controls.Add(this.lblNoteContentRemaining);
+            this.Controls.Add(this.lblNoteTitleRemaining);
+            this.Controls.Add(this.lblJournalContentRemaing);
+            this.Controls.Add(this.lblJournalTitleRemaining);
             this.Controls.Add(this.listboxVegDetails);
             this.Controls.Add(this.cbVegSpecies);
             this.Controls.Add(this.cbVegName);
@@ -509,6 +581,12 @@
         private System.Windows.Forms.ComboBox cbVegName;
         private System.Windows.Forms.ComboBox cbVegSpecies;
         private System.Windows.Forms.ListBox listboxVegDetails;
+        private System.Windows.Forms.Label lblJournalTitleRemaining;
+        private System.Windows.Forms.Label lblJournalContentRemaing;
+        private System.Windows.Forms.Label lblNoteContentRemaining;
+        private System.Windows.Forms.Label lblNoteTitleRemaining;
+        private System.Windows.Forms.Label lblJobContentRemaining;
+        private System.Windows.Forms.Label lblJobTitleRemaining;
     }
 }
 
