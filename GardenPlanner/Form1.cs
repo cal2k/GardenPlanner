@@ -374,7 +374,7 @@ namespace GardenPlanner
         {
             date = DateTime.Now;
 
-            query = "INSERT INTO Journal (Journal, Date) VALUES ('" + journalEntiry + "', '" + date + "')";
+            query = "INSERT INTO Journal (userid, title, content, date) VALUES ('" + userID + "', '" + tbJournalTitle.Text + "', '" + tbJournalEntiry.Text + "', '" + date + "')";
 
             Query();
 
