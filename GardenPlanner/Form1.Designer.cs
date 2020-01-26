@@ -357,7 +357,7 @@
             // 
             // btnAddPlant
             // 
-            this.btnAddPlant.Location = new System.Drawing.Point(1555, 9);
+            this.btnAddPlant.Location = new System.Drawing.Point(1541, 4);
             this.btnAddPlant.Name = "btnAddPlant";
             this.btnAddPlant.Size = new System.Drawing.Size(92, 23);
             this.btnAddPlant.TabIndex = 32;
@@ -377,10 +377,10 @@
             // 
             // tbVegDetails
             // 
-            this.tbVegDetails.Location = new System.Drawing.Point(1187, 108);
+            this.tbVegDetails.Location = new System.Drawing.Point(827, 141);
             this.tbVegDetails.Name = "tbVegDetails";
             this.tbVegDetails.ReadOnly = true;
-            this.tbVegDetails.Size = new System.Drawing.Size(400, 328);
+            this.tbVegDetails.Size = new System.Drawing.Size(400, 149);
             this.tbVegDetails.TabIndex = 34;
             this.tbVegDetails.Text = "";
             // 
@@ -419,14 +419,14 @@
             this.listboxVegDetails.FormattingEnabled = true;
             this.listboxVegDetails.Location = new System.Drawing.Point(827, 53);
             this.listboxVegDetails.Name = "listboxVegDetails";
-            this.listboxVegDetails.Size = new System.Drawing.Size(400, 329);
+            this.listboxVegDetails.Size = new System.Drawing.Size(400, 82);
             this.listboxVegDetails.TabIndex = 38;
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1694, 919);
+            this.ClientSize = new System.Drawing.Size(1645, 919);
             this.Controls.Add(this.listboxVegDetails);
             this.Controls.Add(this.cbVegSpecies);
             this.Controls.Add(this.cbVegName);

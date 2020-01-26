@@ -14,8 +14,9 @@ namespace GardenPlanner
 {
     public partial class Form1 : Form
     {
-        private string userName, query, temp, journalTitle, journalDetails, journalEntiry, noteTitle, noteDetails, noteEntiry, jobEntiry, SelectedVegName, SelectedVegSpecies;
 
+        private string userName, query, temp,preview, journalTitle, journalDetails, journalEntiry, noteTitle, noteDetails, noteEntiry, jobEntiry, SelectedVegName, SelectedVegSpecies;
+        List<string> list = new List<string>();
         int count = 0;
         DateTime date;
 
@@ -41,19 +42,64 @@ namespace GardenPlanner
         private void Startup()
         {
             string[] UserNameSplit = new string[2];
+            string fileToCopy = "GardenDB.db";
+
+            //gather username
             temp = System.Security.Principal.WindowsIdentity.GetCurrent().Name;
             UserNameSplit = temp.Split('\\');
             userName = UserNameSplit[1].ToLower();
-
             lblUserName.Text = "Welcome, " + userName;
 
-            string fileToCopy = "GardenDB.db";
-
+            //check if database exists 
             if (File.Exists(pathComplete) == false)
             {
                 System.IO.Directory.CreateDirectory(path + @"\CGP");
                 File.Copy(fileToCopy, pathComplete);
             }
+            
+            using (conn)
+            {
+                conn.Open();
+
+                query = "SELECT COUNT (username) from users WHERE username = '" + userName + "'";
+                cmd = new SQLiteCommand(query, conn);
+
+                using (cmd)
+                {
+                    try
+                    {
+                        count = cmd.ExecuteNonQuery();
+                        if(count == 0)
+                        {
+                            query = "INSERT INTO  users (username) VALUES ('" + userName + "')";
+
+                            cmd = new SQLiteCommand(query, conn);
+                            using (cmd)
+                            {
+                                try
+                                {
+                                    cmd.ExecuteNonQuery();
+                                }
+                                catch(Exception ex)
+                                {
+                                    MessageBox.Show(ex.ToString());
+                                }
+                            }
+                            
+                        }
+                    }
+                    catch(Exception ex)
+                    {
+                        MessageBox.Show(ex.ToString());
+                    }
+                }
+
+
+
+                conn.Close();
+            }
+
+             
 
             query = "CREATE TABLE IF NOT EXISTS '" + userName + "' (ID INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE, Journal TEXT, Jobs TEXT, Selected TEXT, Notes TEXT, Date TEXT, Tag TEXT)";
             using (conn)
@@ -68,6 +114,7 @@ namespace GardenPlanner
                 {
                     MessageBox.Show(ex.ToString());
                 }
+                conn.Close();
             }
             count = 0;
             while (count <= 3)
@@ -80,6 +127,7 @@ namespace GardenPlanner
 
         private void LoadUserData(int i)
         {
+            string[] array = new string[2];
             switch(i)
             {
                 case 0:
@@ -95,11 +143,30 @@ namespace GardenPlanner
                                 while (reader.Read())
                                 {
                                     temp = reader.GetString(0);
-                                    listBoxJournal.Items.Add(temp);
+                                    list.Add(temp);
                                 }
                             }
                         }
                         conn.Close();
+                    }
+                    count = list.Count();
+                    for(int ii = 0; ii < count; ii++)
+                    {
+                        temp = list[ii].ToString();
+                        array = temp.Split(',');
+                        journalTitle = array[0];
+                        journalDetails = array[1];
+                        if (journalDetails.Length > 20)
+                        {
+                            journalEntiry = journalDetails.Substring(0, 20);
+                            preview = journalTitle + " - " + journalEntiry;
+                        }
+                        else
+                        {
+                            preview = journalTitle + " - " + journalEntiry;
+                        }
+                        listBoxJournal.Items.Add(preview);
+
                     }
                     break;
                 case 1:
@@ -198,6 +265,9 @@ namespace GardenPlanner
             switch (i)
             {
                 case 0:
+
+                    listBoxJournal.Items.Clear();
+                    list.Clear();
                     btnDeleteJournalPost.Enabled = false;
                     btnDeleteJournalPost.Text = "";
                     tbJournalTitle.Text = "Title";
@@ -207,7 +277,6 @@ namespace GardenPlanner
                     btnSaveJournalEntiry.Text = "";
                     btnDiscardJournalEntiry.Enabled = false;
                     btnDiscardJournalEntiry.Text = "";
-                    listBoxJournal.Items.Clear();
                     LoadUserData(i);
                     break;
                 case 1:
@@ -272,7 +341,7 @@ namespace GardenPlanner
 
                 conn.Close();
             }
-        }
+        } 
         
         //Save Buttons
         private void btnSaveJournalEntiry_Click(object sender, EventArgs e)
@@ -418,24 +487,41 @@ namespace GardenPlanner
 
             tempArray = temp.Split('(', ')');
             List<string> vegDetails = new List<string>();
+            StringBuilder sb = new StringBuilder();
 
-            query = "Select Name, Species FROM Vegs WHERE Species = '"+ tempArray[1] +"'";
+            query = "Select * FROM TEST WHERE test1 = 'test'";
             cmd = new SQLiteCommand(query, conn);
-            using (conn)
+            try
             {
-                conn.Open();
-                using (cmd)
+                using (conn)
                 {
-                    using (reader = cmd.ExecuteReader())
+                    conn.Open();
+                    using (cmd)
                     {
-                        while (reader.Read())
+                        using (reader = cmd.ExecuteReader())
                         {
-                            temp = reader.GetString(0);
-                            listboxVegDetails.Items.Add(temp);
+                            while (reader.Read())
+                            {
+                            
+                                temp = reader.GetString(0);
+                                vegDetails.Add(temp);
+                                sb.Append(temp + " ");
+                            }
                         }
                     }
+                    conn.Close();
                 }
-                conn.Close();
+                count = vegDetails.Count();
+                for(int i = 0; i < count; i++)
+                {
+                    listboxVegDetails.Items.Add(vegDetails[i]);
+                }
+
+                tbVegDetails.Text = sb.ToString();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString());
             }
         }
         private void listBoxNotes_SelectedIndexChanged(object sender, EventArgs e)
