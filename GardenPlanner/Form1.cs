@@ -17,7 +17,7 @@ namespace GardenPlanner
 
         private string userName, query, temp,preview, journalTitle, journalDetails, journalEntiry, noteTitle, noteDetails, noteEntiry, jobEntiry, SelectedVegName, SelectedVegSpecies;
         List<string> list = new List<string>();
-        int count = 0;
+        int count = 0, userID = 0;
         DateTime date;
 
         static string path = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
@@ -57,45 +57,71 @@ namespace GardenPlanner
                 File.Copy(fileToCopy, pathComplete);
             }
             
+            //checks for username
             using (conn)
             {
                 conn.Open();
-
                 query = "SELECT COUNT (username) from users WHERE username = '" + userName + "'";
                 cmd = new SQLiteCommand(query, conn);
 
                 using (cmd)
                 {
-                    try
+                    using (reader = cmd.ExecuteReader())
                     {
-                        count = cmd.ExecuteNonQuery();
-                        if(count == 0)
+                        while(reader.Read())
                         {
-                            query = "INSERT INTO  users (username) VALUES ('" + userName + "')";
-
-                            cmd = new SQLiteCommand(query, conn);
-                            using (cmd)
+                            try
                             {
-                                try
-                                {
-                                    cmd.ExecuteNonQuery();
-                                }
-                                catch(Exception ex)
-                                {
-                                    MessageBox.Show(ex.ToString());
-                                }
+                                count = reader.GetInt16(0) ;
+                                MessageBox.Show(count.ToString());
                             }
-                            
+                            catch (Exception ex)
+                            {
+                                MessageBox.Show(ex.ToString());
+                            }
                         }
-                    }
-                    catch(Exception ex)
-                    {
-                        MessageBox.Show(ex.ToString());
                     }
                 }
 
+                //adding username if not present
+                if (count == 0)
+                {
+                    query = "INSERT INTO  users (username) VALUES ('" + userName + "')";
+                    cmd = new SQLiteCommand(query, conn);
+                    using (cmd)
+                    {
+                        try
+                        {
+                            cmd.ExecuteNonQuery();
+                        }
+                        catch (Exception ex)
+                        {
+                            MessageBox.Show(ex.ToString());
+                        }
+                    }
+                }
 
-
+                //gather users id
+                query = "select ID from users where username = '" + userName + "'";
+                cmd = new SQLiteCommand(query, conn);
+                using (cmd)
+                {
+                    using (reader = cmd.ExecuteReader())
+                    {
+                        while(reader.Read())
+                        {
+                            try
+                            {
+                                userID = reader.GetInt32(0);
+                                MessageBox.Show(userID.ToString());
+                            }
+                            catch(Exception ex)
+                            {
+                                MessageBox.Show(ex.ToString());
+                            }
+                        }
+                    }
+                }
                 conn.Close();
             }
 
@@ -346,12 +372,9 @@ namespace GardenPlanner
         //Save Buttons
         private void btnSaveJournalEntiry_Click(object sender, EventArgs e)
         {
-            journalTitle = tbJournalTitle.Text;
-            journalDetails = tbJournalEntiry.Text;
-            journalEntiry = journalTitle + "," + journalDetails;
             date = DateTime.Now;
 
-            query = "INSERT INTO " + userName + "(Journal, Date) VALUES ('" + journalEntiry + "', '" + date + "')";
+            query = "INSERT INTO Journal (Journal, Date) VALUES ('" + journalEntiry + "', '" + date + "')";
 
             Query();
 
