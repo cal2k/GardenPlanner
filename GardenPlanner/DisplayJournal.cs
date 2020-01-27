@@ -76,10 +76,12 @@ namespace GardenPlanner
         {
             tbTitle.ReadOnly = false;
             tbDetails.ReadOnly = false;
+            //set colour to white as it dosnt change the colour back when 
             tbDetails.BackColor = Color.White;
             btnDiscard.Enabled = true;
             btnSave.Enabled = true;
         }
+
         private void btnSave_Click(object sender, EventArgs e)
         {
             DateTime date = new DateTime();
@@ -99,6 +101,13 @@ namespace GardenPlanner
                     }
                     conn.Close();
                 }
+                tbTitle.ReadOnly = true;
+                tbDetails.ReadOnly = true;
+                btnSave.Enabled = false;
+                btnDiscard.Enabled = false;
+
+                //change back from white when read only
+                tbDetails.BackColor = Color.Empty;
             }
             catch(Exception ex)
             {
@@ -106,7 +115,6 @@ namespace GardenPlanner
             }
         }
         
-
         private void btnDiscard_Click(object sender, EventArgs e)
         {
             tbTitle.Text = title;
@@ -115,6 +123,7 @@ namespace GardenPlanner
             tbDetails.ReadOnly = true;
             btnDiscard.Enabled = false;
             btnSave.Enabled = false;
+            tbDetails.BackColor = Color.Empty;
         }
 
         private void btnCancle_Click(object sender, EventArgs e)

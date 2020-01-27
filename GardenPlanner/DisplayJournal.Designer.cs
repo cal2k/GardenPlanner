@@ -39,14 +39,16 @@
             // tbTitle
             // 
             this.tbTitle.Location = new System.Drawing.Point(12, 12);
+            this.tbTitle.MaxLength = 50;
             this.tbTitle.Name = "tbTitle";
             this.tbTitle.ReadOnly = true;
-            this.tbTitle.Size = new System.Drawing.Size(480, 20);
+            this.tbTitle.Size = new System.Drawing.Size(500, 20);
             this.tbTitle.TabIndex = 1;
             // 
             // tbDetails
             // 
             this.tbDetails.Location = new System.Drawing.Point(12, 38);
+            this.tbDetails.MaxLength = 500;
             this.tbDetails.Name = "tbDetails";
             this.tbDetails.ReadOnly = true;
             this.tbDetails.Size = new System.Drawing.Size(500, 257);

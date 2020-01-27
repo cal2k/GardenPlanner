@@ -56,6 +56,12 @@
     <Compile Include="AddPlant.Designer.cs">
       <DependentUpon>AddPlant.cs</DependentUpon>
     </Compile>
+    <Compile Include="CreateTag.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CreateTag.Designer.cs">
+      <DependentUpon>CreateTag.cs</DependentUpon>
+    </Compile>
     <Compile Include="DisplayJournal.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -72,6 +78,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="AddPlant.resx">
       <DependentUpon>AddPlant.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CreateTag.resx">
+      <DependentUpon>CreateTag.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="DisplayJournal.resx">
       <DependentUpon>DisplayJournal.cs</DependentUpon>

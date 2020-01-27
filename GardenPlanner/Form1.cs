@@ -15,8 +15,8 @@ namespace GardenPlanner
     public partial class Form1 : Form
     {
 
-        private string userName, query, temp,preview, journalTitle, journalDetails, journalEntiry, noteTitle, noteDetails, noteEntiry, jobEntiry, SelectedVegName, SelectedVegSpecies;
-        List<string> list = new List<string>();
+        private string userName, query, temp, noteTitle, noteDetails, noteEntiry, jobEntiry, SelectedVegName, SelectedVegSpecies, currentTag;
+        List<string> list = new List<string>(), listTags = new List<string>();
         int count = 0, userID = 0, remaingTitle = 50, remaingContent = 500, usedTitle = 0, usedContent = 0, countJournalTitle, countJournalContent;
         DateTime date;
 
@@ -33,7 +33,20 @@ namespace GardenPlanner
             AddPlant addPlant = new AddPlant();
             addPlant.Show();
         }
-                
+        private void btnCreateTag_Click(object sender, EventArgs e)
+        {
+            CreateTag tag = new CreateTag();
+            tag.setID(userID);
+            tag.FormClosed += new FormClosedEventHandler(CreateTag_FormClosed);
+            tag.Show();
+
+        }
+        private void CreateTag_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            count = 4;
+            Reset(count);
+        }
+
         public Form1()
         {
             InitializeComponent();
@@ -142,7 +155,7 @@ namespace GardenPlanner
                 conn.Close();
             }
             count = 0;
-            while (count <= 3)
+            while (count <= 4)
             {
                 LoadUserData(count);
                 count++;
@@ -174,24 +187,6 @@ namespace GardenPlanner
                         }
                         conn.Close();
                     }
-                    /*count = list.Count();
-                    for(int ii = 0; ii < count; ii++)
-                    {
-                        temp = list[ii].ToString();
-                        array = temp.Split(',');
-                        journalTitle = array[0];
-                        journalDetails = array[1];
-                        if (journalDetails.Length > 20)
-                        {
-                            journalEntiry = journalDetails.Substring(0, 20);
-                            preview = journalTitle + " - " + journalEntiry;
-                        }
-                        else
-                        {
-                            preview = journalTitle + " - " + journalEntiry;
-                        }
-                        listBoxJournal.Items.Add(preview);
-                    }*/
                     break;
                 case 1:
                     query = "Select Selected FROM '" + userName + "' WHERE Selected IS NOT NULL ORDER BY Selected ASC";
@@ -281,6 +276,35 @@ namespace GardenPlanner
                         conn.Close();
                     }
                     break;
+                case 4:
+                    query = "Select tag FROM Tags where userid = '" + userID + "'";
+                    cmd = new SQLiteCommand(query, conn);
+                    try
+                    {
+                        using (conn)
+                        {
+                            conn.Open();
+                            using (cmd)
+                            {
+                                using (reader = cmd.ExecuteReader())
+                                {
+                                    while(reader.Read())
+                                    {
+                                        temp = reader.GetString(0);
+                                        cbJournalTags.Items.Add(temp);
+                                        cbNoteTags.Items.Add(temp);
+                                        cbJobTags.Items.Add(temp);
+                                    }
+                                }
+                            }
+                                conn.Close();
+                        }
+                    }
+                    catch(Exception ex)
+                    {
+                        MessageBox.Show(ex.ToString());
+                    }
+                    break;
             }
         }
 
@@ -342,6 +366,13 @@ namespace GardenPlanner
                     listBoxJobs.Items.Clear();
                     LoadUserData(i);
                     break;
+                case 4:
+                    listTags.Clear();
+                    cbJournalTags.Items.Clear();
+                    cbNoteTags.Items.Clear();
+                    cbJobTags.Items.Clear();
+                    LoadUserData(i);
+                    break;
 
             }
 
@@ -371,9 +402,15 @@ namespace GardenPlanner
         //Save Buttons
         private void btnSaveJournalEntiry_Click(object sender, EventArgs e)
         {
+            currentTag = cbJournalTags.SelectedItem.ToString();
+            if(currentTag.ToString() == "Tags")
+            {
+                currentTag = "";
+            }
             date = DateTime.Now;
 
-            query = "INSERT INTO Journal (userid, title, content, date) VALUES ('" + userID + "', '" + tbJournalTitle.Text + "', '" + tbJournalEntiry.Text + "', '" + date + "')";
+            query = "INSERT INTO Journal (userid, title, content, date, tag) VALUES ('" + userID + "', '" + 
+                tbJournalTitle.Text + "', '" + tbJournalEntiry.Text + "', '" + date + "', '" + currentTag + "')";
 
             Query();
 
@@ -516,7 +553,7 @@ namespace GardenPlanner
             Reset(count);
         }
 
-    private void listBoxSelectedVeg_SelectedIndexChanged(object sender, EventArgs e)
+        private void listBoxSelectedVeg_SelectedIndexChanged(object sender, EventArgs e)
         {
             List<string> vegDetails = new List<string>();
             List<string> titles = new List<string>();
@@ -630,6 +667,7 @@ namespace GardenPlanner
                 Reset(count);
             }
         }
+        
         private void btnRemoveNote_Click(object sender, EventArgs e)
         {
             temp = listBoxNotes.SelectedItem.ToString();

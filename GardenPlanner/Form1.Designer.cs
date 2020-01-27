@@ -70,6 +70,10 @@
             this.lblNoteTitleRemaining = new System.Windows.Forms.Label();
             this.lblJobContentRemaining = new System.Windows.Forms.Label();
             this.lblJobTitleRemaining = new System.Windows.Forms.Label();
+            this.btnCreateTag = new System.Windows.Forms.Button();
+            this.cbJournalTags = new System.Windows.Forms.ComboBox();
+            this.cbNoteTags = new System.Windows.Forms.ComboBox();
+            this.cbJobTags = new System.Windows.Forms.ComboBox();
             this.SuspendLayout();
             // 
             // lblUserName
@@ -115,10 +119,10 @@
             // tbJournalEntiry
             // 
             this.tbJournalEntiry.Enabled = false;
-            this.tbJournalEntiry.Location = new System.Drawing.Point(15, 651);
+            this.tbJournalEntiry.Location = new System.Drawing.Point(15, 678);
             this.tbJournalEntiry.MaxLength = 500;
             this.tbJournalEntiry.Name = "tbJournalEntiry";
-            this.tbJournalEntiry.Size = new System.Drawing.Size(363, 223);
+            this.tbJournalEntiry.Size = new System.Drawing.Size(363, 196);
             this.tbJournalEntiry.TabIndex = 4;
             this.tbJournalEntiry.Text = "Details";
             this.tbJournalEntiry.Click += new System.EventHandler(this.tbJournalEntiry_Click);
@@ -156,10 +160,10 @@
             // tbNoteEntiry
             // 
             this.tbNoteEntiry.Enabled = false;
-            this.tbNoteEntiry.Location = new System.Drawing.Point(827, 651);
+            this.tbNoteEntiry.Location = new System.Drawing.Point(827, 678);
             this.tbNoteEntiry.MaxLength = 500;
             this.tbNoteEntiry.Name = "tbNoteEntiry";
-            this.tbNoteEntiry.Size = new System.Drawing.Size(363, 223);
+            this.tbNoteEntiry.Size = new System.Drawing.Size(363, 196);
             this.tbNoteEntiry.TabIndex = 9;
             this.tbNoteEntiry.Text = "Details";
             this.tbNoteEntiry.Click += new System.EventHandler(this.tbNoteEntiry_Click);
@@ -198,10 +202,10 @@
             // tbJobDetails
             // 
             this.tbJobDetails.Enabled = false;
-            this.tbJobDetails.Location = new System.Drawing.Point(1233, 651);
+            this.tbJobDetails.Location = new System.Drawing.Point(1233, 678);
             this.tbJobDetails.MaxLength = 500;
             this.tbJobDetails.Name = "tbJobDetails";
-            this.tbJobDetails.Size = new System.Drawing.Size(363, 223);
+            this.tbJobDetails.Size = new System.Drawing.Size(363, 196);
             this.tbJobDetails.TabIndex = 13;
             this.tbJobDetails.Text = "Details";
             this.tbJobDetails.Click += new System.EventHandler(this.tbJobDetails_Click);
@@ -438,7 +442,7 @@
             // lblJournalContentRemaing
             // 
             this.lblJournalContentRemaing.AutoSize = true;
-            this.lblJournalContentRemaing.Location = new System.Drawing.Point(384, 654);
+            this.lblJournalContentRemaing.Location = new System.Drawing.Point(384, 678);
             this.lblJournalContentRemaing.Name = "lblJournalContentRemaing";
             this.lblJournalContentRemaing.Size = new System.Drawing.Size(31, 13);
             this.lblJournalContentRemaing.TabIndex = 40;
@@ -447,7 +451,7 @@
             // lblNoteContentRemaining
             // 
             this.lblNoteContentRemaining.AutoSize = true;
-            this.lblNoteContentRemaining.Location = new System.Drawing.Point(1196, 654);
+            this.lblNoteContentRemaining.Location = new System.Drawing.Point(1196, 678);
             this.lblNoteContentRemaining.Name = "lblNoteContentRemaining";
             this.lblNoteContentRemaining.Size = new System.Drawing.Size(31, 13);
             this.lblNoteContentRemaining.TabIndex = 42;
@@ -465,7 +469,7 @@
             // lblJobContentRemaining
             // 
             this.lblJobContentRemaining.AutoSize = true;
-            this.lblJobContentRemaining.Location = new System.Drawing.Point(1602, 654);
+            this.lblJobContentRemaining.Location = new System.Drawing.Point(1602, 678);
             this.lblJobContentRemaining.Name = "lblJobContentRemaining";
             this.lblJobContentRemaining.Size = new System.Drawing.Size(31, 13);
             this.lblJobContentRemaining.TabIndex = 44;
@@ -480,11 +484,52 @@
             this.lblJobTitleRemaining.TabIndex = 43;
             this.lblJobTitleRemaining.Text = "(50)";
             // 
+            // btnCreateTag
+            // 
+            this.btnCreateTag.Location = new System.Drawing.Point(1443, 4);
+            this.btnCreateTag.Name = "btnCreateTag";
+            this.btnCreateTag.Size = new System.Drawing.Size(92, 23);
+            this.btnCreateTag.TabIndex = 45;
+            this.btnCreateTag.Text = "Create Tag";
+            this.btnCreateTag.UseVisualStyleBackColor = true;
+            this.btnCreateTag.Click += new System.EventHandler(this.btnCreateTag_Click);
+            // 
+            // cbJournalTags
+            // 
+            this.cbJournalTags.FormattingEnabled = true;
+            this.cbJournalTags.Location = new System.Drawing.Point(15, 651);
+            this.cbJournalTags.Name = "cbJournalTags";
+            this.cbJournalTags.Size = new System.Drawing.Size(363, 21);
+            this.cbJournalTags.TabIndex = 47;
+            this.cbJournalTags.Text = "Tags";
+            // 
+            // cbNoteTags
+            // 
+            this.cbNoteTags.FormattingEnabled = true;
+            this.cbNoteTags.Location = new System.Drawing.Point(827, 651);
+            this.cbNoteTags.Name = "cbNoteTags";
+            this.cbNoteTags.Size = new System.Drawing.Size(363, 21);
+            this.cbNoteTags.TabIndex = 48;
+            this.cbNoteTags.Text = "Tags";
+            // 
+            // cbJobTags
+            // 
+            this.cbJobTags.FormattingEnabled = true;
+            this.cbJobTags.Location = new System.Drawing.Point(1233, 651);
+            this.cbJobTags.Name = "cbJobTags";
+            this.cbJobTags.Size = new System.Drawing.Size(363, 21);
+            this.cbJobTags.TabIndex = 49;
+            this.cbJobTags.Text = "Tags";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1645, 919);
+            this.Controls.Add(this.cbJobTags);
+            this.Controls.Add(this.cbNoteTags);
+            this.Controls.Add(this.cbJournalTags);
+            this.Controls.Add(this.btnCreateTag);
             this.Controls.Add(this.lblJobContentRemaining);
             this.Controls.Add(this.lblJobTitleRemaining);
             this.Controls.Add(this.lblNoteContentRemaining);
@@ -577,6 +622,10 @@
         private System.Windows.Forms.Label lblNoteTitleRemaining;
         private System.Windows.Forms.Label lblJobContentRemaining;
         private System.Windows.Forms.Label lblJobTitleRemaining;
+        private System.Windows.Forms.Button btnCreateTag;
+        private System.Windows.Forms.ComboBox cbJournalTags;
+        private System.Windows.Forms.ComboBox cbNoteTags;
+        private System.Windows.Forms.ComboBox cbJobTags;
     }
 }
 
