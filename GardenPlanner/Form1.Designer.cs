@@ -74,6 +74,8 @@
             this.cbJournalTags = new System.Windows.Forms.ComboBox();
             this.cbNoteTags = new System.Windows.Forms.ComboBox();
             this.cbJobTags = new System.Windows.Forms.ComboBox();
+            this.cbJournalFilterTags = new System.Windows.Forms.ComboBox();
+            this.btnJournalFilterRemove = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // lblUserName
@@ -88,9 +90,9 @@
             // listBoxJournal
             // 
             this.listBoxJournal.FormattingEnabled = true;
-            this.listBoxJournal.Location = new System.Drawing.Point(15, 53);
+            this.listBoxJournal.Location = new System.Drawing.Point(15, 79);
             this.listBoxJournal.Name = "listBoxJournal";
-            this.listBoxJournal.Size = new System.Drawing.Size(400, 524);
+            this.listBoxJournal.Size = new System.Drawing.Size(400, 498);
             this.listBoxJournal.TabIndex = 1;
             this.listBoxJournal.SelectedIndexChanged += new System.EventHandler(this.listBoxJournal_SelectedIndexChanged);
             this.listBoxJournal.DoubleClick += new System.EventHandler(this.listBoxJournal_DoubleClick);
@@ -521,11 +523,33 @@
             this.cbJobTags.TabIndex = 49;
             this.cbJobTags.Text = "Tags";
             // 
+            // cbJournalFilterTags
+            // 
+            this.cbJournalFilterTags.FormattingEnabled = true;
+            this.cbJournalFilterTags.Location = new System.Drawing.Point(15, 53);
+            this.cbJournalFilterTags.Name = "cbJournalFilterTags";
+            this.cbJournalFilterTags.Size = new System.Drawing.Size(312, 21);
+            this.cbJournalFilterTags.TabIndex = 50;
+            this.cbJournalFilterTags.Text = "Tags";
+            this.cbJournalFilterTags.SelectedIndexChanged += new System.EventHandler(this.cbJournalFilterTags_SelectedIndexChanged);
+            // 
+            // btnJournalFilterRemove
+            // 
+            this.btnJournalFilterRemove.Location = new System.Drawing.Point(333, 51);
+            this.btnJournalFilterRemove.Name = "btnJournalFilterRemove";
+            this.btnJournalFilterRemove.Size = new System.Drawing.Size(82, 23);
+            this.btnJournalFilterRemove.TabIndex = 51;
+            this.btnJournalFilterRemove.Text = "Remove Filter";
+            this.btnJournalFilterRemove.UseVisualStyleBackColor = true;
+            this.btnJournalFilterRemove.Click += new System.EventHandler(this.btnJournalFilterRemove_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1645, 919);
+            this.Controls.Add(this.btnJournalFilterRemove);
+            this.Controls.Add(this.cbJournalFilterTags);
             this.Controls.Add(this.cbJobTags);
             this.Controls.Add(this.cbNoteTags);
             this.Controls.Add(this.cbJournalTags);
@@ -626,6 +650,8 @@
         private System.Windows.Forms.ComboBox cbJournalTags;
         private System.Windows.Forms.ComboBox cbNoteTags;
         private System.Windows.Forms.ComboBox cbJobTags;
+        private System.Windows.Forms.ComboBox cbJournalFilterTags;
+        private System.Windows.Forms.Button btnJournalFilterRemove;
     }
 }
 

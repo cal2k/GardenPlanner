@@ -292,6 +292,7 @@ namespace GardenPlanner
                                     {
                                         temp = reader.GetString(0);
                                         cbJournalTags.Items.Add(temp);
+                                        cbJournalFilterTags.Items.Add(temp);
                                         cbNoteTags.Items.Add(temp);
                                         cbJobTags.Items.Add(temp);
                                     }
@@ -303,6 +304,26 @@ namespace GardenPlanner
                     catch(Exception ex)
                     {
                         MessageBox.Show(ex.ToString());
+                    }
+                    break;
+                case 5:
+                    query = "Select title from Journal where tag = '" + currentTag + "';";
+                    cmd = new SQLiteCommand(query, conn);
+                    using (conn)
+                    {
+                        conn.Open();
+                        using (cmd)
+                        {
+                            using (reader = cmd.ExecuteReader())
+                            {
+                                while (reader.Read())
+                                {
+                                    temp = reader.GetString(0);
+                                    listBoxJournal.Items.Add(temp);
+                                }
+                            }
+                        }
+                        conn.Close();
                     }
                     break;
             }
@@ -369,8 +390,13 @@ namespace GardenPlanner
                 case 4:
                     listTags.Clear();
                     cbJournalTags.Items.Clear();
+                    cbJournalFilterTags.Items.Clear();
                     cbNoteTags.Items.Clear();
                     cbJobTags.Items.Clear();
+                    LoadUserData(i);
+                    break;
+                case 5:
+                    listBoxJournal.Items.Clear();
                     LoadUserData(i);
                     break;
 
@@ -413,7 +439,7 @@ namespace GardenPlanner
                 tbJournalTitle.Text + "', '" + tbJournalEntiry.Text + "', '" + date + "', '" + currentTag + "')";
 
             Query();
-
+            
             count = 0;
             Reset(count);
         }
@@ -636,6 +662,22 @@ namespace GardenPlanner
             }
         }
 
+        //List Filters
+        private void cbJournalFilterTags_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            currentTag = cbJournalFilterTags.SelectedItem.ToString();
+            count = 5;
+            Reset(count);
+        }
+
+        private void btnJournalFilterRemove_Click(object sender, EventArgs e)
+        {
+            cbJournalFilterTags.Text = "Tags";
+            count = 0;
+            Reset(count);
+        }
+
+
         //Remove Buttons
         private void btnRemoveJournalPost_Click(object sender, EventArgs e)
         {
@@ -643,7 +685,7 @@ namespace GardenPlanner
             DialogResult confirmation = MessageBox.Show("Are you sure you want to Delete " + temp, "Confirmation", MessageBoxButtons.YesNo);
             if (confirmation == DialogResult.Yes)
             {
-                query = " Delete from '" + userName + "' where Journal = '" + temp + "'";
+                query = " Delete from Journal where title = '" + temp + "'";
                 Query();
 
                 btnDeleteJournalPost.Enabled = false;
@@ -667,7 +709,6 @@ namespace GardenPlanner
                 Reset(count);
             }
         }
-        
         private void btnRemoveNote_Click(object sender, EventArgs e)
         {
             temp = listBoxNotes.SelectedItem.ToString();
