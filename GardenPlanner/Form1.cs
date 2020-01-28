@@ -15,9 +15,9 @@ namespace GardenPlanner
     public partial class Form1 : Form
     {
 
-        private string userName, query, temp, noteTitle, noteDetails, noteEntiry, jobEntiry, SelectedVegName, SelectedVegSpecies, currentTag;
+        private string userName, query, temp, SelectedVegName, SelectedVegSpecies, currentTag;
         List<string> list = new List<string>(), listTags = new List<string>();
-        int count = 0, userID = 0, remaingTitle = 50, remaingContent = 500, usedTitle = 0, usedContent = 0, countJournalTitle, countJournalContent;
+        int count = 0, userID = 0;
 
         int currentVegID;
         DateTime date;
@@ -54,7 +54,7 @@ namespace GardenPlanner
             InitializeComponent();
             Startup();
         }
-        
+
         private void Startup()
         {
             string[] UserNameSplit = new string[2];
@@ -72,7 +72,7 @@ namespace GardenPlanner
                 System.IO.Directory.CreateDirectory(path + @"\CGP");
                 File.Copy(fileToCopy, pathComplete);
             }
-            
+
             //checks for username
             using (conn)
             {
@@ -84,11 +84,11 @@ namespace GardenPlanner
                 {
                     using (reader = cmd.ExecuteReader())
                     {
-                        while(reader.Read())
+                        while (reader.Read())
                         {
                             try
                             {
-                                count = reader.GetInt16(0) ;
+                                count = reader.GetInt16(0);
                             }
                             catch (Exception ex)
                             {
@@ -123,13 +123,13 @@ namespace GardenPlanner
                 {
                     using (reader = cmd.ExecuteReader())
                     {
-                        while(reader.Read())
+                        while (reader.Read())
                         {
                             try
                             {
                                 userID = reader.GetInt32(0);
                             }
-                            catch(Exception ex)
+                            catch (Exception ex)
                             {
                                 MessageBox.Show(ex.ToString());
                             }
@@ -139,7 +139,7 @@ namespace GardenPlanner
                 conn.Close();
             }
 
-             
+
 
             query = "CREATE TABLE IF NOT EXISTS '" + userName + "' (ID INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE, Journal TEXT, Jobs TEXT, Selected TEXT, Notes TEXT, Date TEXT, Tag TEXT)";
             using (conn)
@@ -168,10 +168,10 @@ namespace GardenPlanner
         private void LoadUserData(int i)
         {
             string[] array = new string[2];
-            switch(i)
+            switch (i)
             {
                 case 0:
-                    query = "Select Title FROM Journal WHERE userid = '" + userID +"'ORDER BY date DESC";
+                    query = "Select Title FROM Journal WHERE userid = '" + userID + "'ORDER BY date DESC";
                     cmd = new SQLiteCommand(query, conn);
                     using (conn)
                     {
@@ -191,7 +191,7 @@ namespace GardenPlanner
                     }
                     break;
                 case 1:
-                    query = "Select * From Vegs WHERE id IN(SELECT vegid FROM SelectedVeg WHERE userid = '" + userID +"')";
+                    query = "Select * From Vegs WHERE id IN(SELECT vegid FROM SelectedVeg WHERE userid = '" + userID + "')";
 
                     cmd = new SQLiteCommand(query, conn);
 
@@ -214,28 +214,9 @@ namespace GardenPlanner
                         }
                         conn.Close();
                     }
-
-                    query = "Select Distinct Name FROM Vegs WHERE Name IS NOT NULL ORDER BY Name ASC";
-                    cmd = new SQLiteCommand(query, conn);
-                    using (conn)
-                    {
-                        conn.Open();
-                        using (cmd)
-                        {
-                            using (reader = cmd.ExecuteReader())
-                            {
-                                while (reader.Read())
-                                {
-                                    temp = reader.GetString(0);
-                                    cbVegName.Items.Add(temp);
-                                }
-                            }
-                        }
-                        conn.Close();
-                    }
                     break;
                 case 2:
-                    query = "Select Notes FROM '" + userName + "' WHERE Notes IS NOT NULL ORDER BY ID DESC";
+                    query = "Select title FROM Note where userid = '"+userID+"' ORDER BY date DESC";
 
                     cmd = new SQLiteCommand(query, conn);
 
@@ -258,7 +239,7 @@ namespace GardenPlanner
                     }
                     break;
                 case 3:
-                    query = "Select Jobs FROM '" + userName + "' WHERE Jobs IS NOT NULL ORDER BY ID DESC";
+                    query = "Select title FROM Job where userid = '" + userID +"' ORDER BY date DESC";
 
                     cmd = new SQLiteCommand(query, conn);
 
@@ -292,17 +273,17 @@ namespace GardenPlanner
                             {
                                 using (reader = cmd.ExecuteReader())
                                 {
-                                    while(reader.Read())
+                                    while (reader.Read())
                                     {
                                         temp = reader.GetString(0);
                                         cbJournalFilterTags.Items.Add(temp);
                                     }
                                 }
                             }
-                                conn.Close();
+                            conn.Close();
                         }
                     }
-                    catch(Exception ex)
+                    catch (Exception ex)
                     {
                         MessageBox.Show(ex.ToString());
                     }
@@ -345,11 +326,6 @@ namespace GardenPlanner
                     btnRemoveVeg.Enabled = false;
                     btnRemoveVeg.Text = "";
                     tbVegDetails.Text = "";
-                    cbVegName.Items.Clear();
-                    cbVegName.Text = "Choose vegetables";
-                    cbVegSpecies.Items.Clear();
-                    cbVegSpecies.Text = "";
-                    cbVegSpecies.Enabled = false;
                     listBoxSelectedVeg.Items.Clear();
                     LoadUserData(i);
                     break;
@@ -398,73 +374,7 @@ namespace GardenPlanner
 
                 conn.Close();
             }
-        } 
-        
-        //Save Buttons
-        
-        private void btnAddSelectedVeg_Click(object sender, EventArgs e)
-        {
-            date = DateTime.Now;
-
-            query = "select id from Vegs where Species = '" + cbVegSpecies.SelectedItem.ToString() + "'";
-            cmd = new SQLiteCommand(query, conn);
-            try
-            {
-                using (conn)
-                {
-                    conn.Open();
-                    using (cmd)
-                    {
-                        using (reader = cmd.ExecuteReader())
-                        {
-                            while (reader.Read())
-                            {
-                                currentVegID = reader.GetInt32(0);
-                            }
-                        }
-                    }
-
-                    query = "SELECT COUNT (vegid) from SelectedVeg WHERE vegid = '" + currentVegID.ToString() + "'";
-                    cmd = new SQLiteCommand(query, conn);
-
-                    using (cmd)
-                    {
-                        using (reader = cmd.ExecuteReader())
-                        {
-                            while (reader.Read())
-                            {
-                                count = reader.GetInt32(0);
-                            }
-                        }
-
-                    }
-                    if (count == 0)
-                    {
-                        query = "INSERT INTO SelectedVeg (userid, vegid) VALUES ('" + userID + "', '" + currentVegID + "')";
-                        cmd = new SQLiteCommand(query, conn);
-
-                        using (cmd)
-                        {
-                            cmd.ExecuteNonQuery();
-                        }
-                    }
-                    else
-                    {
-                        MessageBox.Show(temp + " has already been added to your list. Please select somthing differnt.");
-                    }
-
-                    conn.Close();
-
-                    count = 1;
-                    Reset(count);
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.ToString());
-            }
         }
-        
 
         //List Events
         private void listBoxJournal_SelectedIndexChanged(object sender, EventArgs e)
@@ -481,7 +391,7 @@ namespace GardenPlanner
             ds.load(temp);
             ds.FormClosed += new FormClosedEventHandler(DisplayJournnal_FormClosed);
             ds.Show();
-            
+
         }
         private void DisplayJournnal_FormClosed(object sender, FormClosedEventArgs e)
         {
@@ -515,7 +425,7 @@ namespace GardenPlanner
                 titles.Add("\nHarvest:\n");
                 titles.Add("\nCommon Problems:\n");
 
-                query = "Select Sowing, Growing, Harvest, CommonProblems, Companion FROM Vegs WHERE Species = '" + tempArray[1].ToString() +"'";
+                query = "Select Sowing, Growing, Harvest, CommonProblems, Companion FROM Vegs WHERE Species = '" + tempArray[1].ToString() + "'";
                 cmd = new SQLiteCommand(query, conn);
                 try
                 {
@@ -579,7 +489,6 @@ namespace GardenPlanner
             count = 5;
             Reset(count);
         }
-
         private void btnJournalFilterRemove_Click(object sender, EventArgs e)
         {
             cbJournalFilterTags.Text = "Tags";
@@ -598,7 +507,8 @@ namespace GardenPlanner
         }
         private void NewJournal_FormClosed(object sender, FormClosedEventArgs e)
         {
-            //reset journal list
+            count = 0;
+            Reset(count);
         }
 
         private void btnNewNote_Click(object sender, EventArgs e)
@@ -610,7 +520,8 @@ namespace GardenPlanner
         }
         private void NewNote_FormClosed(object sender, FormClosedEventArgs e)
         {
-            //reset note list
+            count = 2;
+            Reset(count);
         }
 
         private void btnNewJob_Click(object sender, EventArgs e)
@@ -622,7 +533,21 @@ namespace GardenPlanner
         }
         private void NewJob_FormClosed(object sender, FormClosedEventArgs e)
         {
-            //reset job list
+            count = 3;
+            Reset(count);
+        }
+
+        private void btnSelectVeg_Click(object sender, EventArgs e)
+        {
+            New_Entirys.NewSelectedVeg NewSelectedVeg = new New_Entirys.NewSelectedVeg();
+            NewSelectedVeg.FormClosed += new FormClosedEventHandler(NewSelectedVeg_FormClosed);
+            NewSelectedVeg.setUserID(userID);
+            NewSelectedVeg.Show();
+        }
+        private void NewSelectedVeg_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            count = 1;
+            Reset(count);
         }
 
 
@@ -633,15 +558,15 @@ namespace GardenPlanner
             DialogResult confirmation = MessageBox.Show("Are you sure you want to Delete " + temp, "Confirmation", MessageBoxButtons.YesNo);
             if (confirmation == DialogResult.Yes)
             {
-                query = " Delete from Journal where title = '" + temp + "'";
+                query = "Delete from Journal where title = '" + temp + "'";
                 Query();
 
                 btnDeleteJournalPost.Enabled = false;
                 count = 0;
                 Reset(count);
             }
-            
-            
+
+
         }
         private void btnRemoveVeg_Click(object sender, EventArgs e)
         {
@@ -649,7 +574,7 @@ namespace GardenPlanner
             DialogResult confirmation = MessageBox.Show("Are you sure you want to Delete " + temp, "Confirmation", MessageBoxButtons.YesNo);
             if (confirmation == DialogResult.Yes)
             {
-                query = " Delete from '" + userName + "' where Selected = '" + temp + "'";
+                query = "Delete from SelectedVeg where title = '" + temp + "'";
                 Query();
 
                 btnRemoveVeg.Enabled = false;
@@ -663,7 +588,7 @@ namespace GardenPlanner
             DialogResult confirmation = MessageBox.Show("Are you sure you want to Delete " + temp, "Confirmation", MessageBoxButtons.YesNo);
             if (confirmation == DialogResult.Yes)
             {
-                query = " Delete from '" + userName + "' where Notes = '" + temp + "'";
+                query = "Delete from Note where title = '" + temp + "'";
                 Query();
 
                 btnRemoveNote.Enabled = false;
@@ -677,7 +602,7 @@ namespace GardenPlanner
             DialogResult confirmation = MessageBox.Show("Are you sure you want to Delete " + temp, "Confirmation", MessageBoxButtons.YesNo);
             if (confirmation == DialogResult.Yes)
             {
-                query = " Delete from '" + userName + "' where Jobs = '" + temp + "'";
+                query = "Delete from Job where title = '" + temp + "'";
 
                 Query();
 
@@ -686,43 +611,11 @@ namespace GardenPlanner
                 Reset(count);
             }
         }
-        
-        
+
+
 
         //Veg
-        private void cbVegName_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            SelectedVegName = cbVegName.SelectedItem.ToString();
-            cbVegSpecies.Items.Clear();
 
-            query = "Select Species FROM Vegs WHERE Name = '" + SelectedVegName + "' ORDER BY Species ASC";
-            cmd = new SQLiteCommand(query, conn);
-            using (conn)
-            {
-                conn.Open();
-                using (cmd)
-                {
-                    using (reader = cmd.ExecuteReader())
-                    {
-                        while (reader.Read())
-                        {
-                            temp = reader.GetString(0);
-                            cbVegSpecies.Items.Add(temp);
-                        }
-                    }
-                }
-                conn.Close();
-            }
-            //select species
-            cbVegSpecies.Enabled = true;
-            cbVegSpecies.Text = "Select " + SelectedVegName + " species";
-        }
-        private void cbVegSpecies_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            SelectedVegSpecies = cbVegSpecies.SelectedItem.ToString();
-            btnAddSelectedVeg.Enabled = true;
-            btnAddSelectedVeg.Text = "Add " + SelectedVegName + " (" + SelectedVegSpecies + ") to your selected vegetable list";
-        }
-    }           
+    }
 }
 
