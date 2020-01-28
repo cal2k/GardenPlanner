@@ -291,10 +291,7 @@ namespace GardenPlanner
                                     while(reader.Read())
                                     {
                                         temp = reader.GetString(0);
-                                        cbJournalTags.Items.Add(temp);
                                         cbJournalFilterTags.Items.Add(temp);
-                                        cbNoteTags.Items.Add(temp);
-                                        cbJobTags.Items.Add(temp);
                                     }
                                 }
                             }
@@ -338,15 +335,6 @@ namespace GardenPlanner
                     listBoxJournal.Items.Clear();
                     btnDeleteJournalPost.Enabled = false;
                     btnDeleteJournalPost.Text = "";
-                    tbJournalTitle.Text = "Title";
-                    lblJournalTitleRemaining.Text = "(50)";
-                    tbJournalEntiry.Text = "Details";
-                    lblJournalContentRemaing.Text = "(500)";
-                    tbJournalEntiry.Enabled = false;
-                    btnSaveJournalEntiry.Enabled = false;
-                    btnSaveJournalEntiry.Text = "";
-                    btnDiscardJournalEntiry.Enabled = false;
-                    btnDiscardJournalEntiry.Text = "";
                     LoadUserData(i);
                     break;
                 case 1:
@@ -364,35 +352,18 @@ namespace GardenPlanner
                 case 2:
                     btnRemoveNote.Enabled = false;
                     btnRemoveNote.Text = "";
-                    tbNoteTitle.Text = "Title";
-                    tbNoteEntiry.Text = "Details";
-                    tbNoteEntiry.Enabled = false;
-                    btnSaveNote.Enabled = false;
-                    btnSaveNote.Text = "";
-                    btnDiscardNote.Enabled = false;
-                    btnDiscardNote.Text = "";
                     listBoxNotes.Items.Clear();
                     LoadUserData(i);
                     break;
                 case 3:
                     btnRemoveJob.Enabled = false;
                     btnRemoveJob.Text = "";
-                    tbJobTitle.Text = "Title";
-                    tbJobDetails.Text = "Details";
-                    tbJobDetails.Enabled = false;
-                    btnSaveJob.Enabled = false;
-                    btnSaveJob.Text = "";
-                    btnDiscardJob.Enabled = false;
-                    btnDiscardJob.Text = "";
                     listBoxJobs.Items.Clear();
                     LoadUserData(i);
                     break;
                 case 4:
                     listTags.Clear();
-                    cbJournalTags.Items.Clear();
                     cbJournalFilterTags.Items.Clear();
-                    cbNoteTags.Items.Clear();
-                    cbJobTags.Items.Clear();
                     LoadUserData(i);
                     break;
                 case 5:
@@ -426,23 +397,7 @@ namespace GardenPlanner
         } 
         
         //Save Buttons
-        private void btnSaveJournalEntiry_Click(object sender, EventArgs e)
-        {
-            currentTag = cbJournalTags.SelectedItem.ToString();
-            if(currentTag.ToString() == "Tags")
-            {
-                currentTag = "";
-            }
-            date = DateTime.Now;
-
-            query = "INSERT INTO Journal (userid, title, content, date, tag) VALUES ('" + userID + "', '" + 
-                tbJournalTitle.Text + "', '" + tbJournalEntiry.Text + "', '" + date + "', '" + currentTag + "')";
-
-            Query();
-            
-            count = 0;
-            Reset(count);
-        }
+        
         private void btnAddSelectedVeg_Click(object sender, EventArgs e)
         {
             date = DateTime.Now;
@@ -500,61 +455,7 @@ namespace GardenPlanner
             count = 1;
             Reset(count);
         }
-        private void btnSaveNote_Click(object sender, EventArgs e)
-        {
-            noteTitle = tbNoteTitle.Text;
-            noteDetails = tbNoteEntiry.Text;
-            noteEntiry = noteTitle + "," + noteDetails;
-
-            date = DateTime.Now;
-
-            query = "INSERT INTO " + userName + "(Notes, Date) VALUES ('" + noteEntiry + "', '" + date + "')";
-
-            Query();
-            count = 2;
-            Reset(count);
-        }
-        private void btnSaveJob_Click(object sender, EventArgs e)
-        {
-            jobEntiry = tbJobTitle.Text +","+ tbJobDetails.Text;
-
-            date = DateTime.Now;
-
-            query = "INSERT INTO " + userName + "(Jobs, Date) VALUES ('" + jobEntiry + "', '" + date + "')";
-
-            Query();
-            count = 3;
-            Reset(count);
-        }
-
-        //Discard Buttons
-        private void btnDiscardJournalEntiry_Click(object sender, EventArgs e)
-        {
-            DialogResult confirmation = MessageBox.Show("Are you sure you want to discard " + tbJournalTitle.Text, "Confirmation", MessageBoxButtons.YesNo);
-            if (confirmation == DialogResult.Yes)
-            {
-                count = 0;
-                Reset(count);
-            }
-        }
-        private void btnDiscardNote_Click(object sender, EventArgs e)
-        {
-            DialogResult confirmation = MessageBox.Show("Are you sure you want to discard " + tbNoteTitle.Text, "Confirmation", MessageBoxButtons.YesNo);
-            if (confirmation == DialogResult.Yes)
-            {
-                count = 2;
-                Reset(count);
-            }
-        }
-        private void btnDiscardJob_Click(object sender, EventArgs e)
-        {
-            DialogResult confirmation = MessageBox.Show("Are you sure you want to discard " + tbJobTitle.Text, "Confirmation", MessageBoxButtons.YesNo);
-            if (confirmation == DialogResult.Yes)
-            {
-                count = 3;
-                Reset(count);
-            }
-        }
+        
 
         //List Events
         private void listBoxJournal_SelectedIndexChanged(object sender, EventArgs e)
@@ -677,6 +578,44 @@ namespace GardenPlanner
             Reset(count);
         }
 
+        //new entirys
+        private void btnNewJournal_Click(object sender, EventArgs e)
+        {
+            New_Entirys.NewJournal Journal = new New_Entirys.NewJournal();
+            Journal.FormClosed += new FormClosedEventHandler(NewJournal_FormClosed);
+            Journal.setUserID(userID);
+            Journal.Show();
+
+        }
+        private void NewJournal_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            //reset journal list
+        }
+
+        private void btnNewNote_Click(object sender, EventArgs e)
+        {
+            New_Entirys.NewNote Note = new New_Entirys.NewNote();
+            Note.FormClosed += new FormClosedEventHandler(NewNote_FormClosed);
+            Note.setUserID(userID);
+            Note.Show();
+        }
+        private void NewNote_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            //reset note list
+        }
+
+        private void btnNewJob_Click(object sender, EventArgs e)
+        {
+            New_Entirys.NewJob Note = new New_Entirys.NewJob();
+            Note.FormClosed += new FormClosedEventHandler(NewJob_FormClosed);
+            Note.setUserID(userID);
+            Note.Show();
+        }
+        private void NewJob_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            //reset job list
+        }
+
 
         //Remove Buttons
         private void btnRemoveJournalPost_Click(object sender, EventArgs e)
@@ -739,49 +678,7 @@ namespace GardenPlanner
             }
         }
         
-
-        //NEW ENTIRYS
-
-        //Journal
-        private void tbJournalTitle_Click(object sender, EventArgs e)
-        {
-            if (tbJournalTitle.Text == "Title")
-            {
-                tbJournalTitle.Text = "";
-            }
-        }
-        private void tbJournalTitle_TextChanged(object sender, EventArgs e)
-        {
-            usedTitle = tbJournalTitle.Text.Length;
-            count = remaingTitle - usedTitle;
-            lblJournalTitleRemaining.Text = "(" + count.ToString() + ")";
-
-            if (tbJournalTitle.Text.Length > 3)
-            {
-                tbJournalEntiry.Enabled = true;
-            }
-        }
-        private void tbJournalEntiry_Click(object sender, EventArgs e)
-        {
-            if (tbJournalEntiry.Text == "Details")
-            {
-                tbJournalEntiry.Text = "";
-                btnDiscardJournalEntiry.Text = "Discard " + tbJournalTitle.Text;
-                btnDiscardJournalEntiry.Enabled = true;
-            }
-        }
-        private void tbJournalEntiry_TextChanged(object sender, EventArgs e)
-        {
-            usedContent = tbJournalEntiry.Text.Length;
-            countJournalContent = remaingContent - usedContent;
-            lblJournalContentRemaing.Text = ("(" + countJournalContent + ")");
-
-            if(tbJournalEntiry.Text.Length > 3)
-            {
-                btnSaveJournalEntiry.Enabled = true;
-                btnSaveJournalEntiry.Text = "Save " + tbJournalTitle.Text;
-            }
-        }
+        
 
         //Veg
         private void cbVegName_SelectedIndexChanged(object sender, EventArgs e)
@@ -817,72 +714,6 @@ namespace GardenPlanner
             btnAddSelectedVeg.Enabled = true;
             btnAddSelectedVeg.Text = "Add " + SelectedVegName + " (" + SelectedVegSpecies + ") to your selected vegetable list";
         }
-
-        //Note
-        private void tbNoteTitle_Click(object sender, EventArgs e)
-            {
-                if (tbNoteTitle.Text == "Title")
-                {
-                tbNoteTitle.Text = "";
-                }
-            }
-        private void tbNoteTitle_TextChanged(object sender, EventArgs e)
-        {
-            if(tbNoteTitle.Text.Length > 3)
-            {
-                tbNoteEntiry.Enabled = true;
-            }
-        }
-        private void tbNoteEntiry_Click(object sender, EventArgs e)
-        {
-            if (tbNoteEntiry.Text == "Details")
-            {
-                tbNoteEntiry.Text = "";
-                btnDiscardNote.Text = "Discard " + tbNoteTitle.Text;
-                btnDiscardNote.Enabled = true;
-            }
-        }
-        private void tbNoteEntiry_TextChanged(object sender, EventArgs e)
-            {
-                if(tbNoteEntiry.Text.Length > 3)
-                {
-                    btnSaveNote.Enabled = true;
-                    btnSaveNote.Text = "Save " + tbNoteTitle.Text;
-                }
-            }
-
-        //Job
-        private void tbJobTitle_Click(object sender, EventArgs e)
-        {
-            if (tbJobTitle.Text == "Title")
-            {
-                tbJobTitle.Text = "";
-            }
-        }
-        private void tbJobTitle_TextChanged(object sender, EventArgs e)
-        {
-            if(tbJobTitle.Text.Length > 3)
-            {
-                tbJobDetails.Enabled = true;
-            }
-        }
-        private void tbJobDetails_Click(object sender, EventArgs e)
-        {
-            if (tbJobDetails.Text == "Details")
-            {
-                tbJobDetails.Text = "";
-                btnDiscardJob.Text = "Discard " + tbJobTitle.Text;
-                btnDiscardJob.Enabled = true;
-            }
-        }
-        private void tbJobDetails_TextChanged(object sender, EventArgs e)
-            {
-                if(tbJobDetails.Text.Length > 3)
-                {
-                    btnSaveJob.Enabled = true;
-                    btnSaveJob.Text = "Save " + tbJobTitle.Text;
-                }
-            }
     }           
 }
 

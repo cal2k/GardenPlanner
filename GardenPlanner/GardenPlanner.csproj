@@ -50,16 +50,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AddPlant.cs">
+    <Compile Include="Tools\AddPlant.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="AddPlant.Designer.cs">
+    <Compile Include="Tools\AddPlant.Designer.cs">
       <DependentUpon>AddPlant.cs</DependentUpon>
     </Compile>
-    <Compile Include="CreateTag.cs">
+    <Compile Include="Tools\CreateTag.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="CreateTag.Designer.cs">
+    <Compile Include="Tools\CreateTag.Designer.cs">
       <DependentUpon>CreateTag.cs</DependentUpon>
     </Compile>
     <Compile Include="DisplayJournal.cs">
@@ -74,12 +74,30 @@
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
+    <Compile Include="New Entirys\NewJob.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="New Entirys\NewJob.Designer.cs">
+      <DependentUpon>NewJob.cs</DependentUpon>
+    </Compile>
+    <Compile Include="New Entirys\NewJournal.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="New Entirys\NewJournal.Designer.cs">
+      <DependentUpon>NewJournal.cs</DependentUpon>
+    </Compile>
+    <Compile Include="New Entirys\NewNote.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="New Entirys\NewNote.Designer.cs">
+      <DependentUpon>NewNote.cs</DependentUpon>
+    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="AddPlant.resx">
+    <EmbeddedResource Include="Tools\AddPlant.resx">
       <DependentUpon>AddPlant.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="CreateTag.resx">
+    <EmbeddedResource Include="Tools\CreateTag.resx">
       <DependentUpon>CreateTag.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="DisplayJournal.resx">
@@ -87,6 +105,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="New Entirys\NewJob.resx">
+      <DependentUpon>NewJob.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="New Entirys\NewJournal.resx">
+      <DependentUpon>NewJournal.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="New Entirys\NewNote.resx">
+      <DependentUpon>NewNote.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
