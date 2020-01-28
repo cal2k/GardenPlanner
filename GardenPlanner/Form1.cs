@@ -455,25 +455,42 @@ namespace GardenPlanner
         //List Events
         private void listBoxJournal_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (listBoxJournal.SelectedItem.ToString().Length > 0)
+            tbJournalContent.Text = "";
+            if (listBoxJournal.SelectedIndex > -1)
             {
                 btnDeleteJournalPost.Enabled = true;
                 btnDeleteJournalPost.Text = "Remove " + listBoxJournal.SelectedItem.ToString();
+
+                temp = listBoxJournal.SelectedItem.ToString();
+
+                query = "select content from Journal where title ='" + temp + "'";
+                cmd = new SQLiteCommand(query, conn);
+                try
+                {
+                    using (conn)
+                    {
+                        conn.Open();
+                        using (cmd)
+                        {
+                            using (reader = cmd.ExecuteReader())
+                            {
+                                while (reader.Read())
+                                {
+                                    tbJournalContent.Text = reader.GetString(0);
+                                }
+                            }
+                        }
+                        conn.Close();
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.ToString());
+                }
             }
         }
-        private void listBoxJournal_DoubleClick(object sender, EventArgs e)
-        {
-            temp = listBoxJournal.SelectedItem.ToString();
-            ds.load(temp);
-            ds.FormClosed += new FormClosedEventHandler(DisplayJournnal_FormClosed);
-            ds.Show();
-
-        }
-        private void DisplayJournnal_FormClosed(object sender, FormClosedEventArgs e)
-        {
-            count = 0;
-            Reset(count);
-        }
+        
+        
 
         private void listBoxSelectedVeg_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -487,7 +504,7 @@ namespace GardenPlanner
 
 
 
-            if (listBoxSelectedVeg.SelectedItem.ToString().Length > 0)
+            if (listBoxSelectedVeg.SelectedIndex > -1)
             {
                 btnRemoveVeg.Enabled = true;
                 btnRemoveVeg.Text = "Remove " + listBoxSelectedVeg.SelectedItem.ToString();
@@ -543,18 +560,74 @@ namespace GardenPlanner
         }
         private void listBoxNotes_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (listBoxNotes.SelectedItem.ToString().Length > 0)
+            tbNoteContent.Text = "";
+
+            if (listBoxNotes.SelectedIndex > -1)
             {
                 btnRemoveNote.Enabled = true;
                 btnRemoveNote.Text = "Remove " + listBoxNotes.SelectedItem.ToString();
+
+                temp = listBoxNotes.SelectedItem.ToString();
+
+                query = "select content from Note where title ='" + temp + "'";
+                cmd = new SQLiteCommand(query, conn);
+                try
+                {
+                    using (conn)
+                    {
+                        conn.Open();
+                        using (cmd)
+                        {
+                            using (reader = cmd.ExecuteReader())
+                            {
+                                while(reader.Read())
+                                {
+                                    tbNoteContent.Text = reader.GetString(0);
+                                }
+                            }
+                        }
+                            conn.Close();
+                    }
+                }
+                catch(Exception ex)
+                {
+                    MessageBox.Show(ex.ToString());
+                }
             }
         }
         private void listBoxJobs_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (listBoxJobs.SelectedItem.ToString().Length > 0)
+            if (listBoxJobs.SelectedIndex > -1)
             {
                 btnRemoveJob.Enabled = true;
                 btnRemoveJob.Text = "Remove " + listBoxJobs.SelectedItem.ToString();
+
+                temp = listBoxJobs.SelectedItem.ToString();
+
+                query = "select content from Job where title ='" + temp + "'";
+                cmd = new SQLiteCommand(query, conn);
+                try
+                {
+                    using (conn)
+                    {
+                        conn.Open();
+                        using (cmd)
+                        {
+                            using (reader = cmd.ExecuteReader())
+                            {
+                                while (reader.Read())
+                                {
+                                    tbJobContent.Text = reader.GetString(0);
+                                }
+                            }
+                        }
+                        conn.Close();
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.ToString());
+                }
             }
         }
 
@@ -674,7 +747,7 @@ namespace GardenPlanner
             {
                 query = "Delete from Journal where title = '" + temp + "'";
                 Query();
-
+                tbJournalContent.Text = "";
                 btnDeleteJournalPost.Enabled = false;
                 count = 0;
                 Reset(count);
@@ -720,7 +793,7 @@ namespace GardenPlanner
                 query = "Delete from SelectedVeg where vegid = '" + count + "'";
                 Query();
                 conn.Close();
-
+                tbVegDetails.Text = "";
                 btnRemoveVeg.Enabled = false;
                 count = 1;
                 Reset(count);
@@ -735,6 +808,7 @@ namespace GardenPlanner
                 query = "Delete from Note where title = '" + temp + "'";
                 Query();
 
+                tbNoteContent.Text = "";
                 btnRemoveNote.Enabled = false;
                 count = 2;
                 Reset(count);
@@ -750,6 +824,7 @@ namespace GardenPlanner
 
                 Query();
 
+                tbJobContent.Text = "";
                 btnRemoveJob.Enabled = false;
                 count = 3;
                 Reset(count);
