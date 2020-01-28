@@ -4,18 +4,16 @@ using System.Data.SQLite;
 
 namespace GardenPlanner.Edit
 {
-    public partial class EditJournal : Form
+    public partial class EditJob : Form
     {
         SqL SQL = new SqL();
         string query;
         int id;
-        
-        public EditJournal()
+
+        public EditJob()
         {
             InitializeComponent();
         }
-
-        
 
         public void populate(string t)
         {
@@ -25,7 +23,7 @@ namespace GardenPlanner.Edit
                 using (SQL.conn)
                 {
                     SQL.conn.Open();
-                    query = "Select id from Journal where title = '" + t + "'";
+                    query = "Select id from Job where title = '" + t + "'";
                     SQL.cmd = new SQLiteCommand(query, SQL.conn);
 
                     using (SQL.cmd)
@@ -39,32 +37,33 @@ namespace GardenPlanner.Edit
                         }
                     }
 
-                    query = "Select title, content from Journal Where title = '" + t + "'";
+                    query = "Select title, content from Job Where title = '" + t + "'";
                     SQL.cmd = new SQLiteCommand(query, SQL.conn);
 
-            
+
                     using (SQL.cmd)
                     {
                         using (SQL.reader = SQL.cmd.ExecuteReader())
                         {
-                            while(SQL.reader.Read())
+                            while (SQL.reader.Read())
                             {
                                 tbTitle.Text = SQL.reader.GetString(0);
                                 tbContent.Text = SQL.reader.GetString(1);
                             }
                         }
                     }
-                        SQL.conn.Close();
+                    SQL.conn.Close();
                 }
             }
-            catch(Exception ex) 
+            catch (Exception ex)
             {
                 MessageBox.Show(ex.ToString());
             }
         }
+
         private void btnSave_Click(object sender, EventArgs e)
         {
-            query = "update Journal set title = '" + tbTitle.Text +"', content = '"+ tbContent.Text + "' Where id = " + id;
+            query = "update Job set title = '" + tbTitle.Text + "', content = '" + tbContent.Text + "' Where id = " + id;
             SQL.cmd = new SQLiteCommand(query, SQL.conn);
 
             using (SQL.conn)
@@ -74,13 +73,15 @@ namespace GardenPlanner.Edit
                 {
                     SQL.cmd.ExecuteNonQuery();
                 }
-                    SQL.conn.Close();
+                SQL.conn.Close();
             }
             this.Close();
         }
+
         private void btnCancle_Click(object sender, EventArgs e)
         {
             this.Close();
         }
+        
     }
 }

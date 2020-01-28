@@ -389,6 +389,7 @@
             this.btnEditJob.TabIndex = 66;
             this.btnEditJob.Text = "Edit Job Details";
             this.btnEditJob.UseVisualStyleBackColor = true;
+            this.btnEditJob.Click += new System.EventHandler(this.btnEditJob_Click);
             // 
             // btnEditVegDetails
             // 
@@ -407,6 +408,7 @@
             this.btnEditNote.TabIndex = 68;
             this.btnEditNote.Text = "Edit Note Details";
             this.btnEditNote.UseVisualStyleBackColor = true;
+            this.btnEditNote.Click += new System.EventHandler(this.btnEditNote_Click);
             // 
             // Form1
             // 

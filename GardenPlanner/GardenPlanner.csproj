@@ -50,11 +50,23 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Edit\EditJob.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Edit\EditJob.Designer.cs">
+      <DependentUpon>EditJob.cs</DependentUpon>
+    </Compile>
     <Compile Include="Edit\EditJournal.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Edit\EditJournal.Designer.cs">
       <DependentUpon>EditJournal.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Edit\EditNote.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Edit\EditNote.Designer.cs">
+      <DependentUpon>EditNote.cs</DependentUpon>
     </Compile>
     <Compile Include="New Entirys\NewSelectedVeg.cs">
       <SubType>Form</SubType>
@@ -101,8 +113,14 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="Edit\EditJob.resx">
+      <DependentUpon>EditJob.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Edit\EditJournal.resx">
       <DependentUpon>EditJournal.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Edit\EditNote.resx">
+      <DependentUpon>EditNote.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="New Entirys\NewSelectedVeg.resx">
       <DependentUpon>NewSelectedVeg.cs</DependentUpon>

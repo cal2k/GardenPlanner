@@ -19,9 +19,6 @@ namespace GardenPlanner
         List<string> list = new List<string>(), listTags = new List<string>();
         int count = 0, userID = 0;
 
-        int currentVegID;
-        DateTime date;
-
         static string path = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
             pathComplete = path + @"\CGP\GardenDB.db";
         SQLiteConnection conn = new SQLiteConnection("Data Source =" + pathComplete + "; version =3;");
@@ -702,14 +699,21 @@ namespace GardenPlanner
         private void btnNewNote_Click(object sender, EventArgs e)
         {
             New_Entirys.NewNote Note = new New_Entirys.NewNote();
-            Note.FormClosed += new FormClosedEventHandler(NewNote_FormClosed);
+            Note.FormClosed += new FormClosedEventHandler(Note_FormClosed);
             Note.setUserID(userID);
             Note.Show();
         }
-        private void NewNote_FormClosed(object sender, FormClosedEventArgs e)
+        private void Note_FormClosed(object sender, FormClosedEventArgs e)
         {
             count = 2;
             Reset(count);
+        }
+        private void btnEditNote_Click(object sender, EventArgs e)
+        {
+            Edit.EditNote EditNote = new Edit.EditNote();
+            EditNote.FormClosed += new FormClosedEventHandler(Note_FormClosed);
+            EditNote.populate(listBoxNotes.SelectedItem.ToString());
+            EditNote.Show();
         }
 
         
@@ -717,24 +721,31 @@ namespace GardenPlanner
         private void btnNewJob_Click(object sender, EventArgs e)
         {
             New_Entirys.NewJob Note = new New_Entirys.NewJob();
-            Note.FormClosed += new FormClosedEventHandler(NewJob_FormClosed);
+            Note.FormClosed += new FormClosedEventHandler(Job_FormClosed);
             Note.setUserID(userID);
             Note.Show();
         }
-        private void NewJob_FormClosed(object sender, FormClosedEventArgs e)
+        private void Job_FormClosed(object sender, FormClosedEventArgs e)
         {
             count = 3;
             Reset(count);
         }
+        private void btnEditJob_Click(object sender, EventArgs e)
+        {
+            Edit.EditJob EditJob = new Edit.EditJob();
+            EditJob.FormClosed += new FormClosedEventHandler(Job_FormClosed);
+            EditJob.populate(listBoxJobs.SelectedItem.ToString());
+            EditJob.Show();
 
+        }
         private void btnSelectVeg_Click(object sender, EventArgs e)
         {
             New_Entirys.NewSelectedVeg NewSelectedVeg = new New_Entirys.NewSelectedVeg();
-            NewSelectedVeg.FormClosed += new FormClosedEventHandler(NewSelectedVeg_FormClosed);
+            NewSelectedVeg.FormClosed += new FormClosedEventHandler(SelectedVeg_FormClosed);
             NewSelectedVeg.setUserID(userID);
             NewSelectedVeg.Show();
         }
-        private void NewSelectedVeg_FormClosed(object sender, FormClosedEventArgs e)
+        private void SelectedVeg_FormClosed(object sender, FormClosedEventArgs e)
         {
             count = 1;
             Reset(count);
