@@ -18,6 +18,8 @@ namespace GardenPlanner
         private string userName, query, temp, noteTitle, noteDetails, noteEntiry, jobEntiry, SelectedVegName, SelectedVegSpecies, currentTag;
         List<string> list = new List<string>(), listTags = new List<string>();
         int count = 0, userID = 0, remaingTitle = 50, remaingContent = 500, usedTitle = 0, usedContent = 0, countJournalTitle, countJournalContent;
+
+        int currentVegID;
         DateTime date;
 
         static string path = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
@@ -401,59 +403,64 @@ namespace GardenPlanner
         private void btnAddSelectedVeg_Click(object sender, EventArgs e)
         {
             date = DateTime.Now;
-            temp = SelectedVegName + " (" + SelectedVegSpecies + ")";
-            query = "SELECT COUNT (Selected) from '" + userName + "' WHERE Selected = '" + temp + "'";
+
+            query = "select id from Vegs where Species = '" + cbVegSpecies.SelectedItem.ToString() + "'";
             cmd = new SQLiteCommand(query, conn);
-            using (conn)
+            try
             {
-                conn.Open();
-                using (cmd)
-                {
-                    using (reader = cmd.ExecuteReader())
-                    {
-                        while (reader.Read())
-                        {
-                            try
-                            {
-                                count = reader.GetInt32(0);
-                            }
-                            catch (Exception ex)
-                            {
-                                MessageBox.Show(ex.ToString());
-                            }
-                        }
-                    }
-                }
-
-                conn.Close();
-            }
-
-
-            if (count == 0)
-            {
-                query = "INSERT INTO " + userName + "(Selected, Date) VALUES ('" + temp + "', '" + date + "')";
-                cmd = new SQLiteCommand(query, conn);
-
                 using (conn)
                 {
                     conn.Open();
-                    try
+                    using (cmd)
                     {
-                        cmd.ExecuteNonQuery();
+                        using (reader = cmd.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {
+                                currentVegID = reader.GetInt32(0);
+                            }
+                        }
                     }
-                    catch (Exception ex)
+
+                    query = "SELECT COUNT (vegid) from SelectedVeg WHERE vegid = '" + currentVegID.ToString() + "'";
+                    cmd = new SQLiteCommand(query, conn);
+
+                    using (cmd)
                     {
-                        MessageBox.Show(ex.ToString());
+                        using (reader = cmd.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {
+                                count = reader.GetInt32(0);
+                            }
+                        }
+
                     }
+                    if (count == 0)
+                    {
+                        query = "INSERT INTO SelectedVeg (userid, vegid) VALUES ('" + userID + "', '" + currentVegID + "')";
+                        cmd = new SQLiteCommand(query, conn);
+
+                        using (cmd)
+                        {
+                            cmd.ExecuteNonQuery();
+                        }
+                    }
+                    else
+                    {
+                        MessageBox.Show(temp + " has already been added to your list. Please select somthing differnt.");
+                    }
+
                     conn.Close();
+
+                    count = 1;
+                    Reset(count);
                 }
             }
-            else
+            catch (Exception ex)
             {
-                MessageBox.Show(temp + " has already been added to your list. Please select somthing differnt.");
+                MessageBox.Show(ex.ToString());
             }
-            count = 1;
-            Reset(count);
         }
         
 

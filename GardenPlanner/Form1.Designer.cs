@@ -69,9 +69,11 @@
             // listBoxJournal
             // 
             this.listBoxJournal.FormattingEnabled = true;
+            this.listBoxJournal.Items.AddRange(new object[] {
+            "99999999999999999999999999999999999999999999999999"});
             this.listBoxJournal.Location = new System.Drawing.Point(15, 79);
             this.listBoxJournal.Name = "listBoxJournal";
-            this.listBoxJournal.Size = new System.Drawing.Size(400, 498);
+            this.listBoxJournal.Size = new System.Drawing.Size(383, 498);
             this.listBoxJournal.TabIndex = 1;
             this.listBoxJournal.SelectedIndexChanged += new System.EventHandler(this.listBoxJournal_SelectedIndexChanged);
             this.listBoxJournal.DoubleClick += new System.EventHandler(this.listBoxJournal_DoubleClick);
@@ -97,18 +99,18 @@
             // listBoxSelectedVeg
             // 
             this.listBoxSelectedVeg.FormattingEnabled = true;
-            this.listBoxSelectedVeg.Location = new System.Drawing.Point(421, 53);
+            this.listBoxSelectedVeg.Location = new System.Drawing.Point(417, 53);
             this.listBoxSelectedVeg.Name = "listBoxSelectedVeg";
-            this.listBoxSelectedVeg.Size = new System.Drawing.Size(400, 719);
+            this.listBoxSelectedVeg.Size = new System.Drawing.Size(312, 524);
             this.listBoxSelectedVeg.TabIndex = 16;
             this.listBoxSelectedVeg.SelectedIndexChanged += new System.EventHandler(this.listBoxSelectedVeg_SelectedIndexChanged);
             // 
             // btnRemoveVeg
             // 
             this.btnRemoveVeg.Enabled = false;
-            this.btnRemoveVeg.Location = new System.Drawing.Point(421, 778);
+            this.btnRemoveVeg.Location = new System.Drawing.Point(333, 583);
             this.btnRemoveVeg.Name = "btnRemoveVeg";
-            this.btnRemoveVeg.Size = new System.Drawing.Size(400, 23);
+            this.btnRemoveVeg.Size = new System.Drawing.Size(312, 23);
             this.btnRemoveVeg.TabIndex = 18;
             this.btnRemoveVeg.UseVisualStyleBackColor = true;
             this.btnRemoveVeg.Click += new System.EventHandler(this.btnRemoveVeg_Click);
@@ -137,7 +139,7 @@
             // 
             this.label4.AutoSize = true;
             this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Underline))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label4.Location = new System.Drawing.Point(418, 33);
+            this.label4.Location = new System.Drawing.Point(330, 33);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(104, 17);
             this.label4.TabIndex = 22;
@@ -156,9 +158,9 @@
             // btnAddSelectedVeg
             // 
             this.btnAddSelectedVeg.Enabled = false;
-            this.btnAddSelectedVeg.Location = new System.Drawing.Point(421, 880);
+            this.btnAddSelectedVeg.Location = new System.Drawing.Point(333, 679);
             this.btnAddSelectedVeg.Name = "btnAddSelectedVeg";
-            this.btnAddSelectedVeg.Size = new System.Drawing.Size(400, 23);
+            this.btnAddSelectedVeg.Size = new System.Drawing.Size(312, 23);
             this.btnAddSelectedVeg.TabIndex = 28;
             this.btnAddSelectedVeg.UseVisualStyleBackColor = true;
             this.btnAddSelectedVeg.Click += new System.EventHandler(this.btnAddSelectedVeg_Click);
@@ -168,7 +170,7 @@
             this.btnDeleteJournalPost.Enabled = false;
             this.btnDeleteJournalPost.Location = new System.Drawing.Point(15, 583);
             this.btnDeleteJournalPost.Name = "btnDeleteJournalPost";
-            this.btnDeleteJournalPost.Size = new System.Drawing.Size(400, 23);
+            this.btnDeleteJournalPost.Size = new System.Drawing.Size(312, 23);
             this.btnDeleteJournalPost.TabIndex = 29;
             this.btnDeleteJournalPost.UseVisualStyleBackColor = true;
             this.btnDeleteJournalPost.Click += new System.EventHandler(this.btnRemoveJournalPost_Click);
@@ -226,7 +228,7 @@
             // 
             this.label9.AutoSize = true;
             this.label9.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Underline))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label9.Location = new System.Drawing.Point(421, 804);
+            this.label9.Location = new System.Drawing.Point(330, 609);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(73, 13);
             this.label9.TabIndex = 35;
@@ -235,9 +237,9 @@
             // cbVegName
             // 
             this.cbVegName.FormattingEnabled = true;
-            this.cbVegName.Location = new System.Drawing.Point(421, 820);
+            this.cbVegName.Location = new System.Drawing.Point(333, 625);
             this.cbVegName.Name = "cbVegName";
-            this.cbVegName.Size = new System.Drawing.Size(400, 21);
+            this.cbVegName.Size = new System.Drawing.Size(312, 21);
             this.cbVegName.TabIndex = 36;
             this.cbVegName.Text = "Choose vegetables";
             this.cbVegName.SelectedIndexChanged += new System.EventHandler(this.cbVegName_SelectedIndexChanged);
@@ -246,9 +248,9 @@
             // 
             this.cbVegSpecies.Enabled = false;
             this.cbVegSpecies.FormattingEnabled = true;
-            this.cbVegSpecies.Location = new System.Drawing.Point(421, 853);
+            this.cbVegSpecies.Location = new System.Drawing.Point(333, 652);
             this.cbVegSpecies.Name = "cbVegSpecies";
-            this.cbVegSpecies.Size = new System.Drawing.Size(400, 21);
+            this.cbVegSpecies.Size = new System.Drawing.Size(312, 21);
             this.cbVegSpecies.TabIndex = 37;
             this.cbVegSpecies.SelectedIndexChanged += new System.EventHandler(this.cbVegSpecies_SelectedIndexChanged);
             // 
@@ -265,16 +267,16 @@
             // cbJournalFilterTags
             // 
             this.cbJournalFilterTags.FormattingEnabled = true;
-            this.cbJournalFilterTags.Location = new System.Drawing.Point(15, 53);
+            this.cbJournalFilterTags.Location = new System.Drawing.Point(103, 55);
             this.cbJournalFilterTags.Name = "cbJournalFilterTags";
-            this.cbJournalFilterTags.Size = new System.Drawing.Size(312, 21);
+            this.cbJournalFilterTags.Size = new System.Drawing.Size(207, 21);
             this.cbJournalFilterTags.TabIndex = 50;
-            this.cbJournalFilterTags.Text = "Tags";
+            this.cbJournalFilterTags.Text = "999999999999999999999999999999";
             this.cbJournalFilterTags.SelectedIndexChanged += new System.EventHandler(this.cbJournalFilterTags_SelectedIndexChanged);
             // 
             // btnJournalFilterRemove
             // 
-            this.btnJournalFilterRemove.Location = new System.Drawing.Point(333, 51);
+            this.btnJournalFilterRemove.Location = new System.Drawing.Point(316, 53);
             this.btnJournalFilterRemove.Name = "btnJournalFilterRemove";
             this.btnJournalFilterRemove.Size = new System.Drawing.Size(82, 23);
             this.btnJournalFilterRemove.TabIndex = 51;
@@ -284,11 +286,11 @@
             // 
             // btnNewJournal
             // 
-            this.btnNewJournal.Location = new System.Drawing.Point(573, 4);
+            this.btnNewJournal.Location = new System.Drawing.Point(15, 53);
             this.btnNewJournal.Name = "btnNewJournal";
-            this.btnNewJournal.Size = new System.Drawing.Size(75, 23);
+            this.btnNewJournal.Size = new System.Drawing.Size(82, 23);
             this.btnNewJournal.TabIndex = 52;
-            this.btnNewJournal.Text = "New Journal Entiry";
+            this.btnNewJournal.Text = "New Entiry";
             this.btnNewJournal.UseVisualStyleBackColor = true;
             this.btnNewJournal.Click += new System.EventHandler(this.btnNewJournal_Click);
             // 
