@@ -571,11 +571,41 @@ namespace GardenPlanner
         private void btnRemoveVeg_Click(object sender, EventArgs e)
         {
             temp = listBoxSelectedVeg.SelectedItem.ToString();
+            string[] split = new string[2];
+            split = temp.Split('(', ')');
+
             DialogResult confirmation = MessageBox.Show("Are you sure you want to Delete " + temp, "Confirmation", MessageBoxButtons.YesNo);
             if (confirmation == DialogResult.Yes)
             {
-                query = "Delete from SelectedVeg where title = '" + temp + "'";
+                
+                try
+                {
+                    using (conn)
+                    {
+                        conn.Open();
+                        query = "SELECT id from Vegs where Species = '" + split[1] + "'";
+                        cmd = new SQLiteCommand(query, conn);
+
+                        using (cmd)
+                        {
+                            using (reader = cmd.ExecuteReader())
+                            {
+                                while(reader.Read())
+                                {
+                                    count = reader.GetInt32(0);
+                                }
+                            }
+                        }
+                        conn.Close(); 
+                    }
+                }
+                catch(Exception ex)
+                {
+                    MessageBox.Show(ex.ToString());
+                }
+                query = "Delete from SelectedVeg where vegid = '" + count + "'";
                 Query();
+                conn.Close();
 
                 btnRemoveVeg.Enabled = false;
                 count = 1;
