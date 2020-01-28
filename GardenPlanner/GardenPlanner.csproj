@@ -50,12 +50,19 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Edit\EditJournal.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Edit\EditJournal.Designer.cs">
+      <DependentUpon>EditJournal.cs</DependentUpon>
+    </Compile>
     <Compile Include="New Entirys\NewSelectedVeg.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="New Entirys\NewSelectedVeg.Designer.cs">
       <DependentUpon>NewSelectedVeg.cs</DependentUpon>
     </Compile>
+    <Compile Include="SqL.cs" />
     <Compile Include="Tools\AddPlant.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -67,12 +74,6 @@
     </Compile>
     <Compile Include="Tools\CreateTag.Designer.cs">
       <DependentUpon>CreateTag.cs</DependentUpon>
-    </Compile>
-    <Compile Include="DisplayJournal.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="DisplayJournal.Designer.cs">
-      <DependentUpon>DisplayJournal.cs</DependentUpon>
     </Compile>
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
@@ -100,6 +101,9 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="Edit\EditJournal.resx">
+      <DependentUpon>EditJournal.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="New Entirys\NewSelectedVeg.resx">
       <DependentUpon>NewSelectedVeg.cs</DependentUpon>
     </EmbeddedResource>
@@ -108,9 +112,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Tools\CreateTag.resx">
       <DependentUpon>CreateTag.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="DisplayJournal.resx">
-      <DependentUpon>DisplayJournal.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>

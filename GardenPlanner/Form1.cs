@@ -27,8 +27,7 @@ namespace GardenPlanner
         SQLiteConnection conn = new SQLiteConnection("Data Source =" + pathComplete + "; version =3;");
         SQLiteCommand cmd;
         SQLiteDataReader reader;
-
-        DisplayJournal ds = new DisplayJournal();
+        
         //Tools
         private void btnAddPlant_Click(object sender, EventArgs e)
         {
@@ -489,9 +488,6 @@ namespace GardenPlanner
                 }
             }
         }
-        
-        
-
         private void listBoxSelectedVeg_SelectedIndexChanged(object sender, EventArgs e)
         {
             List<string> vegDetails = new List<string>();
@@ -685,13 +681,20 @@ namespace GardenPlanner
         private void btnNewJournal_Click(object sender, EventArgs e)
         {
             New_Entirys.NewJournal Journal = new New_Entirys.NewJournal();
-            Journal.FormClosed += new FormClosedEventHandler(NewJournal_FormClosed);
+            Journal.FormClosed += new FormClosedEventHandler(Journal_FormClosed);
             Journal.setUserID(userID);
             Journal.Show();
-
         }
-        private void NewJournal_FormClosed(object sender, FormClosedEventArgs e)
+        private void btnEditJournal_Click(object sender, EventArgs e)
         {
+            Edit.EditJournal EditJournal = new Edit.EditJournal();
+            EditJournal.FormClosed += new FormClosedEventHandler(Journal_FormClosed);
+            EditJournal.populate(listBoxJournal.SelectedItem.ToString());
+            EditJournal.Show();
+        }
+        private void Journal_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            tbJournalContent.Text = "";
             count = 0;
             Reset(count);
         }
@@ -830,10 +833,6 @@ namespace GardenPlanner
                 Reset(count);
             }
         }
-
-
-
-        //Veg
 
     }
 }

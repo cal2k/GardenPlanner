@@ -379,6 +379,7 @@
             this.btnEditJournal.TabIndex = 65;
             this.btnEditJournal.Text = "Edit Journal Details";
             this.btnEditJournal.UseVisualStyleBackColor = true;
+            this.btnEditJournal.Click += new System.EventHandler(this.btnEditJournal_Click);
             // 
             // btnEditJob
             // 
