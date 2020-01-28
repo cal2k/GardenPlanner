@@ -72,6 +72,8 @@
             this.Controls.Add(this.cbVegSpecies);
             this.Controls.Add(this.cbVegName);
             this.Controls.Add(this.btnAddSelectedVeg);
+            this.MaximizeBox = false;
+            this.MinimizeBox = false;
             this.Name = "NewSelectedVeg";
             this.Text = "NewSelectedVeg";
             this.ResumeLayout(false);

@@ -68,6 +68,12 @@
     <Compile Include="Edit\EditNote.Designer.cs">
       <DependentUpon>EditNote.cs</DependentUpon>
     </Compile>
+    <Compile Include="Edit\EditVeg.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Edit\EditVeg.Designer.cs">
+      <DependentUpon>EditVeg.cs</DependentUpon>
+    </Compile>
     <Compile Include="New Entirys\NewSelectedVeg.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -121,6 +127,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Edit\EditNote.resx">
       <DependentUpon>EditNote.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Edit\EditVeg.resx">
+      <DependentUpon>EditVeg.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="New Entirys\NewSelectedVeg.resx">
       <DependentUpon>NewSelectedVeg.cs</DependentUpon>

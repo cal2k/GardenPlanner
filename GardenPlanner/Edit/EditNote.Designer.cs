@@ -79,6 +79,8 @@
             this.Controls.Add(this.tbContent);
             this.Controls.Add(this.tbTitle);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
+            this.MaximizeBox = false;
+            this.MinimizeBox = false;
             this.Name = "EditNote";
             this.Text = "EditNote";
             this.ResumeLayout(false);

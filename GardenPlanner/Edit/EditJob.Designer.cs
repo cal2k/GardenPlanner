@@ -78,6 +78,9 @@
             this.Controls.Add(this.btnSave);
             this.Controls.Add(this.tbContent);
             this.Controls.Add(this.tbTitle);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
+            this.MaximizeBox = false;
+            this.MinimizeBox = false;
             this.Name = "EditJob";
             this.Text = "EditJob";
             this.ResumeLayout(false);

@@ -120,6 +120,8 @@
             this.Controls.Add(this.btnCancle);
             this.Controls.Add(this.tbTitle);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
+            this.MaximizeBox = false;
+            this.MinimizeBox = false;
             this.Name = "NewJournal";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "NewJournal";

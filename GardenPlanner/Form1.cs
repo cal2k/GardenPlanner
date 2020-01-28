@@ -378,26 +378,27 @@ namespace GardenPlanner
                 case 0:
 
                     listBoxJournal.Items.Clear();
+                    btnEditJournal.Enabled = false;
                     btnDeleteJournalPost.Enabled = false;
-                    btnDeleteJournalPost.Text = "";
+                    tbJournalContent.Text = "";
                     LoadUserData(i);
                     break;
                 case 1:
+                    btnEditVegDetails.Enabled = false;
                     btnRemoveVeg.Enabled = false;
-                    btnRemoveVeg.Text = "";
                     tbVegDetails.Text = "";
                     listBoxSelectedVeg.Items.Clear();
                     LoadUserData(i);
                     break;
                 case 2:
+                    btnEditNote.Enabled = false;
                     btnRemoveNote.Enabled = false;
-                    btnRemoveNote.Text = "";
                     listBoxNotes.Items.Clear();
                     LoadUserData(i);
                     break;
                 case 3:
+                    btnEditJob.Enabled = false;
                     btnRemoveJob.Enabled = false;
-                    btnRemoveJob.Text = "";
                     listBoxJobs.Items.Clear();
                     LoadUserData(i);
                     break;
@@ -454,8 +455,8 @@ namespace GardenPlanner
             tbJournalContent.Text = "";
             if (listBoxJournal.SelectedIndex > -1)
             {
+                btnEditJournal.Enabled = true;
                 btnDeleteJournalPost.Enabled = true;
-                btnDeleteJournalPost.Text = "Remove " + listBoxJournal.SelectedItem.ToString();
 
                 temp = listBoxJournal.SelectedItem.ToString();
 
@@ -499,8 +500,8 @@ namespace GardenPlanner
 
             if (listBoxSelectedVeg.SelectedIndex > -1)
             {
+                btnEditVegDetails.Enabled = true;
                 btnRemoveVeg.Enabled = true;
-                btnRemoveVeg.Text = "Remove " + listBoxSelectedVeg.SelectedItem.ToString();
 
                 temp = listBoxSelectedVeg.SelectedItem.ToString();
                 string[] tempArray = new string[2];
@@ -557,8 +558,8 @@ namespace GardenPlanner
 
             if (listBoxNotes.SelectedIndex > -1)
             {
+                btnEditNote.Enabled = true;
                 btnRemoveNote.Enabled = true;
-                btnRemoveNote.Text = "Remove " + listBoxNotes.SelectedItem.ToString();
 
                 temp = listBoxNotes.SelectedItem.ToString();
 
@@ -592,8 +593,8 @@ namespace GardenPlanner
         {
             if (listBoxJobs.SelectedIndex > -1)
             {
+                btnEditJob.Enabled = true;
                 btnRemoveJob.Enabled = true;
-                btnRemoveJob.Text = "Remove " + listBoxJobs.SelectedItem.ToString();
 
                 temp = listBoxJobs.SelectedItem.ToString();
 
@@ -695,7 +696,6 @@ namespace GardenPlanner
             count = 0;
             Reset(count);
         }
-
         private void btnNewNote_Click(object sender, EventArgs e)
         {
             New_Entirys.NewNote Note = new New_Entirys.NewNote();
@@ -715,9 +715,6 @@ namespace GardenPlanner
             EditNote.populate(listBoxNotes.SelectedItem.ToString());
             EditNote.Show();
         }
-
-        
-
         private void btnNewJob_Click(object sender, EventArgs e)
         {
             New_Entirys.NewJob Note = new New_Entirys.NewJob();

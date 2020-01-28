@@ -118,6 +118,7 @@
             this.btnRemoveVeg.Name = "btnRemoveVeg";
             this.btnRemoveVeg.Size = new System.Drawing.Size(168, 23);
             this.btnRemoveVeg.TabIndex = 18;
+            this.btnRemoveVeg.Text = "Remove";
             this.btnRemoveVeg.UseVisualStyleBackColor = true;
             this.btnRemoveVeg.Click += new System.EventHandler(this.btnRemoveVeg_Click);
             // 
@@ -168,6 +169,7 @@
             this.btnDeleteJournalPost.Name = "btnDeleteJournalPost";
             this.btnDeleteJournalPost.Size = new System.Drawing.Size(168, 23);
             this.btnDeleteJournalPost.TabIndex = 29;
+            this.btnDeleteJournalPost.Text = "Remove";
             this.btnDeleteJournalPost.UseVisualStyleBackColor = true;
             this.btnDeleteJournalPost.Click += new System.EventHandler(this.btnRemoveJournalPost_Click);
             // 
@@ -178,6 +180,7 @@
             this.btnRemoveNote.Name = "btnRemoveNote";
             this.btnRemoveNote.Size = new System.Drawing.Size(168, 23);
             this.btnRemoveNote.TabIndex = 30;
+            this.btnRemoveNote.Text = "Remove";
             this.btnRemoveNote.UseVisualStyleBackColor = true;
             this.btnRemoveNote.Click += new System.EventHandler(this.btnRemoveNote_Click);
             // 
@@ -188,6 +191,7 @@
             this.btnRemoveJob.Name = "btnRemoveJob";
             this.btnRemoveJob.Size = new System.Drawing.Size(168, 23);
             this.btnRemoveJob.TabIndex = 31;
+            this.btnRemoveJob.Text = "Remove";
             this.btnRemoveJob.UseVisualStyleBackColor = true;
             this.btnRemoveJob.Click += new System.EventHandler(this.btnRemoveJob_Click);
             // 
@@ -373,6 +377,7 @@
             // 
             // btnEditJournal
             // 
+            this.btnEditJournal.Enabled = false;
             this.btnEditJournal.Location = new System.Drawing.Point(15, 785);
             this.btnEditJournal.Name = "btnEditJournal";
             this.btnEditJournal.Size = new System.Drawing.Size(168, 23);
@@ -383,6 +388,7 @@
             // 
             // btnEditJob
             // 
+            this.btnEditJob.Enabled = false;
             this.btnEditJob.Location = new System.Drawing.Point(361, 785);
             this.btnEditJob.Name = "btnEditJob";
             this.btnEditJob.Size = new System.Drawing.Size(168, 23);
@@ -393,6 +399,7 @@
             // 
             // btnEditVegDetails
             // 
+            this.btnEditVegDetails.Enabled = false;
             this.btnEditVegDetails.Location = new System.Drawing.Point(707, 785);
             this.btnEditVegDetails.Name = "btnEditVegDetails";
             this.btnEditVegDetails.Size = new System.Drawing.Size(168, 23);
@@ -402,6 +409,7 @@
             // 
             // btnEditNote
             // 
+            this.btnEditNote.Enabled = false;
             this.btnEditNote.Location = new System.Drawing.Point(1053, 785);
             this.btnEditNote.Name = "btnEditNote";
             this.btnEditNote.Size = new System.Drawing.Size(168, 23);
@@ -414,7 +422,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1404, 919);
+            this.ClientSize = new System.Drawing.Size(1404, 820);
             this.Controls.Add(this.btnEditNote);
             this.Controls.Add(this.btnEditVegDetails);
             this.Controls.Add(this.btnEditJob);
