@@ -191,7 +191,7 @@ namespace GardenPlanner
                     }
                     break;
                 case 1:
-                    query = "Select Selected FROM '" + userName + "' WHERE Selected IS NOT NULL ORDER BY Selected ASC";
+                    query = "Select * From Vegs WHERE id IN(SELECT vegid FROM SelectedVeg WHERE userid = '" + userID +"')";
 
                     cmd = new SQLiteCommand(query, conn);
 
@@ -205,7 +205,9 @@ namespace GardenPlanner
                             {
                                 while (reader.Read())
                                 {
-                                    temp = reader.GetString(0);
+                                    SelectedVegName = reader.GetString(1);
+                                    SelectedVegSpecies = reader.GetString(2);
+                                    temp = SelectedVegName + " (" + SelectedVegSpecies + ")";
                                     listBoxSelectedVeg.Items.Add(temp);
                                 }
                             }
