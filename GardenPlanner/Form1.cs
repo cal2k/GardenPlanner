@@ -276,7 +276,11 @@ namespace GardenPlanner
                                     while (reader.Read())
                                     {
                                         temp = reader.GetString(0);
-                                        cbJournalFilterTags.Items.Add(temp);
+                                        cbJournalTags.Items.Add(temp);
+                                        cbJobTags.Items.Add(temp);
+                                        cbVegTags.Items.Add(temp);
+                                        cbNoteTags.Items.Add(temp);
+
                                     }
                                 }
                             }
@@ -302,6 +306,66 @@ namespace GardenPlanner
                                 {
                                     temp = reader.GetString(0);
                                     listBoxJournal.Items.Add(temp);
+                                }
+                            }
+                        }
+                        conn.Close();
+                    }
+                    break;
+                case 6:
+                    query = "Select title from Job where tag = '" + currentTag + "';";
+                    cmd = new SQLiteCommand(query, conn);
+                    using (conn)
+                    {
+                        conn.Open();
+                        using (cmd)
+                        {
+                            using (reader = cmd.ExecuteReader())
+                            {
+                                while (reader.Read())
+                                {
+                                    temp = reader.GetString(0);
+                                    listBoxJobs.Items.Add(temp);
+                                }
+                            }
+                        }
+                        conn.Close();
+                    }
+                    break;
+                /*case 7:
+                    query = "Select title from SelectedVeg where tag = '" + currentTag + "';";
+                    cmd = new SQLiteCommand(query, conn);
+                    using (conn)
+                    {
+                        conn.Open();
+                        using (cmd)
+                        {
+                            using (reader = cmd.ExecuteReader())
+                            {
+                                while (reader.Read())
+                                {
+                                    temp = reader.GetString(0);
+                                    listBoxSelectedVeg.Items.Add(temp);
+                                }
+                            }
+                        }
+                        conn.Close();
+                    }
+                    break;*/
+                case 8:
+                    query = "Select title from Note where tag = '" + currentTag + "';";
+                    cmd = new SQLiteCommand(query, conn);
+                    using (conn)
+                    {
+                        conn.Open();
+                        using (cmd)
+                        {
+                            using (reader = cmd.ExecuteReader())
+                            {
+                                while (reader.Read())
+                                {
+                                    temp = reader.GetString(0);
+                                    listBoxNotes.Items.Add(temp);
                                 }
                             }
                         }
@@ -343,11 +407,23 @@ namespace GardenPlanner
                     break;
                 case 4:
                     listTags.Clear();
-                    cbJournalFilterTags.Items.Clear();
+                    cbJournalTags.Items.Clear();
                     LoadUserData(i);
                     break;
                 case 5:
                     listBoxJournal.Items.Clear();
+                    LoadUserData(i);
+                    break;
+                case 6:
+                    listBoxJobs.Items.Clear();
+                    LoadUserData(i);
+                    break;
+                case 7:
+                    listBoxSelectedVeg.Items.Clear();
+                    LoadUserData(i);
+                    break;
+                case 8:
+                    listBoxNotes.Items.Clear();
                     LoadUserData(i);
                     break;
 
@@ -485,14 +561,50 @@ namespace GardenPlanner
         //List Filters
         private void cbJournalFilterTags_SelectedIndexChanged(object sender, EventArgs e)
         {
-            currentTag = cbJournalFilterTags.SelectedItem.ToString();
+            currentTag = cbJournalTags.SelectedItem.ToString();
             count = 5;
             Reset(count);
         }
         private void btnJournalFilterRemove_Click(object sender, EventArgs e)
         {
-            cbJournalFilterTags.Text = "Tags";
+            cbJournalTags.Text = "Tags";
             count = 0;
+            Reset(count);
+        }
+        private void bnJobTags_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            currentTag = cbJobTags.SelectedItem.ToString();
+            count = 6;
+            Reset(count);
+        }
+        private void btnRemoveJobTag_Click(object sender, EventArgs e)
+        {
+            cbJobTags.Text = "Tags";
+            count = 3;
+            Reset(count);
+        }
+        private void cbVegTags_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            currentTag = cbVegTags.SelectedItem.ToString();
+            count = 7;
+            Reset(count);
+        }
+        private void btnRemoveVegTag_Click(object sender, EventArgs e)
+        {
+            cbVegTags.Text = "Tags";
+            count = 1;
+            Reset(count);
+        }
+        private void cbNoteTags_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            currentTag = cbNoteTags.SelectedItem.ToString();
+            count = 8;
+            Reset(count);
+        }
+        private void btnRemoveNoteTags_Click(object sender, EventArgs e)
+        {
+            cbNoteTags.Text = "Tags";
+            count = 2;
             Reset(count);
         }
 
@@ -523,6 +635,8 @@ namespace GardenPlanner
             count = 2;
             Reset(count);
         }
+
+        
 
         private void btnNewJob_Click(object sender, EventArgs e)
         {
