@@ -328,26 +328,6 @@ namespace GardenPlanner
                         conn.Close();
                     }
                     break;
-                /*case 7:
-                    query = "Select title from SelectedVeg where tag = '" + currentTag + "';";
-                    cmd = new SQLiteCommand(query, conn);
-                    using (conn)
-                    {
-                        conn.Open();
-                        using (cmd)
-                        {
-                            using (reader = cmd.ExecuteReader())
-                            {
-                                while (reader.Read())
-                                {
-                                    temp = reader.GetString(0);
-                                    listBoxSelectedVeg.Items.Add(temp);
-                                }
-                            }
-                        }
-                        conn.Close();
-                    }
-                    break;*/
                 case 8:
                     query = "Select title from Note where tag = '" + currentTag + "';";
                     cmd = new SQLiteCommand(query, conn);
