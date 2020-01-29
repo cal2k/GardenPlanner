@@ -87,6 +87,7 @@
             // tbSowingNote
             // 
             this.tbSowingNote.Location = new System.Drawing.Point(12, 127);
+            this.tbSowingNote.MaxLength = 1000;
             this.tbSowingNote.Name = "tbSowingNote";
             this.tbSowingNote.Size = new System.Drawing.Size(242, 96);
             this.tbSowingNote.TabIndex = 4;
@@ -95,6 +96,7 @@
             // tbGrowingNote
             // 
             this.tbGrowingNote.Location = new System.Drawing.Point(12, 242);
+            this.tbGrowingNote.MaxLength = 1000;
             this.tbGrowingNote.Name = "tbGrowingNote";
             this.tbGrowingNote.Size = new System.Drawing.Size(242, 96);
             this.tbGrowingNote.TabIndex = 5;
@@ -103,6 +105,7 @@
             // tbHarvestNote
             // 
             this.tbHarvestNote.Location = new System.Drawing.Point(268, 127);
+            this.tbHarvestNote.MaxLength = 1000;
             this.tbHarvestNote.Name = "tbHarvestNote";
             this.tbHarvestNote.Size = new System.Drawing.Size(242, 96);
             this.tbHarvestNote.TabIndex = 6;
@@ -235,6 +238,7 @@
             // tbCommonProblems
             // 
             this.tbCommonProblems.Location = new System.Drawing.Point(268, 242);
+            this.tbCommonProblems.MaxLength = 1000;
             this.tbCommonProblems.Name = "tbCommonProblems";
             this.tbCommonProblems.Size = new System.Drawing.Size(242, 96);
             this.tbCommonProblems.TabIndex = 20;
@@ -248,6 +252,7 @@
             this.btnSave.TabIndex = 22;
             this.btnSave.Text = "Save";
             this.btnSave.UseVisualStyleBackColor = true;
+            this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
             // 
             // btnCancle
             // 
@@ -257,6 +262,7 @@
             this.btnCancle.TabIndex = 23;
             this.btnCancle.Text = "Cancle";
             this.btnCancle.UseVisualStyleBackColor = true;
+            this.btnCancle.Click += new System.EventHandler(this.btnCancle_Click);
             // 
             // EditVeg
             // 

@@ -747,7 +747,13 @@ namespace GardenPlanner
             count = 1;
             Reset(count);
         }
-
+        private void btnEditVegDetails_Click(object sender, EventArgs e)
+        {
+            Edit.EditVeg EditVeg = new Edit.EditVeg();
+            EditVeg.FormClosed += new FormClosedEventHandler(SelectedVeg_FormClosed);
+            EditVeg.populate(listBoxSelectedVeg.SelectedItem.ToString());
+            EditVeg.Show();
+        }
 
         //Remove Buttons
         private void btnRemoveJournalPost_Click(object sender, EventArgs e)

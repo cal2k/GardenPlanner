@@ -406,6 +406,7 @@
             this.btnEditVegDetails.TabIndex = 67;
             this.btnEditVegDetails.Text = "Edit Veg Details";
             this.btnEditVegDetails.UseVisualStyleBackColor = true;
+            this.btnEditVegDetails.Click += new System.EventHandler(this.btnEditVegDetails_Click);
             // 
             // btnEditNote
             // 

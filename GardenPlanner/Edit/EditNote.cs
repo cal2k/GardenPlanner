@@ -7,7 +7,7 @@ namespace GardenPlanner.Edit
     public partial class EditNote : Form
     {
         SqL SQL = new SqL();
-        string query;
+        string query, temp;
         int id;
 
         public EditNote()
@@ -22,7 +22,7 @@ namespace GardenPlanner.Edit
                 using (SQL.conn)
                 {
                     SQL.conn.Open();
-                    query = "Select id from Note where title = '" + t + "'";
+                    query = "Select id from Vegs where Species = '" + t + "'";
                     SQL.cmd = new SQLiteCommand(query, SQL.conn);
 
                     using (SQL.cmd)
