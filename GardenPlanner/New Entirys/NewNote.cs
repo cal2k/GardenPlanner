@@ -103,9 +103,9 @@ namespace GardenPlanner.New_Entirys
             }
 
             date = DateTime.Now;
-
+            string title = tbTitle.Text.Replace("'", ".a"), content = tbContent.Text.Replace("'", ".a");
             query = "INSERT INTO Note (userid, title, content, date, tag) VALUES ('" + userid + "', '" +
-                tbTitle.Text + "', '" + tbContent.Text + "', '" + date + "', '" + currentTag + "')";
+                title + "', '" + content + "', '" + date + "', '" + currentTag + "')";
 
             cmd = new SQLiteCommand(query, conn);
 

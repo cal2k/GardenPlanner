@@ -178,7 +178,7 @@ namespace GardenPlanner
                             {
                                 while (reader.Read())
                                 {
-                                    temp = reader.GetString(0);
+                                    temp = reader.GetString(0).Replace(".a", "'");
                                     listBoxJournal.Items.Add(temp);
                                 }
                             }
@@ -226,7 +226,7 @@ namespace GardenPlanner
                             {
                                 while (reader.Read())
                                 {
-                                    temp = reader.GetString(0);
+                                    temp = reader.GetString(0).Replace(".a", "'");
                                     listBoxNotes.Items.Add(temp);
                                 }
                             }
@@ -249,7 +249,7 @@ namespace GardenPlanner
                             {
                                 while (reader.Read())
                                 {
-                                    temp = reader.GetString(0);
+                                    temp = reader.GetString(0).Replace(".a", "'");
                                     listBoxJobs.Items.Add(temp);
                                 }
                             }
@@ -438,7 +438,7 @@ namespace GardenPlanner
                 btnEditJournal.Enabled = true;
                 btnDeleteJournalPost.Enabled = true;
 
-                temp = listBoxJournal.SelectedItem.ToString();
+                temp = listBoxJournal.SelectedItem.ToString().Replace("'", ".a");
 
                 query = "select content from Journal where title ='" + temp + "'";
                 cmd = new SQLiteCommand(query, conn);
@@ -453,7 +453,7 @@ namespace GardenPlanner
                             {
                                 while (reader.Read())
                                 {
-                                    tbJournalContent.Text = reader.GetString(0);
+                                    tbJournalContent.Text = reader.GetString(0).Replace(".a", "'");
                                 }
                             }
                         }
@@ -541,7 +541,7 @@ namespace GardenPlanner
                 btnEditNote.Enabled = true;
                 btnRemoveNote.Enabled = true;
 
-                temp = listBoxNotes.SelectedItem.ToString();
+                temp = listBoxNotes.SelectedItem.ToString().Replace("'", ".a"); 
 
                 query = "select content from Note where title ='" + temp + "'";
                 cmd = new SQLiteCommand(query, conn);
@@ -556,7 +556,7 @@ namespace GardenPlanner
                             {
                                 while(reader.Read())
                                 {
-                                    tbNoteContent.Text = reader.GetString(0);
+                                    tbNoteContent.Text = reader.GetString(0).Replace(".a", "'");
                                 }
                             }
                         }
@@ -576,7 +576,7 @@ namespace GardenPlanner
                 btnEditJob.Enabled = true;
                 btnRemoveJob.Enabled = true;
 
-                temp = listBoxJobs.SelectedItem.ToString();
+                temp = listBoxJobs.SelectedItem.ToString().Replace("'", ".a");
 
                 query = "select content from Job where title ='" + temp + "'";
                 cmd = new SQLiteCommand(query, conn);
@@ -591,7 +591,7 @@ namespace GardenPlanner
                             {
                                 while (reader.Read())
                                 {
-                                    tbJobContent.Text = reader.GetString(0);
+                                    tbJobContent.Text = reader.GetString(0).Replace(".a", "'");
                                 }
                             }
                         }
@@ -742,6 +742,7 @@ namespace GardenPlanner
             DialogResult confirmation = MessageBox.Show("Are you sure you want to Delete " + temp, "Confirmation", MessageBoxButtons.YesNo);
             if (confirmation == DialogResult.Yes)
             {
+                temp = temp.Replace("'", ".a");
                 query = "Delete from Journal where title = '" + temp + "'";
                 Query();
                 tbJournalContent.Text = "";
@@ -802,6 +803,7 @@ namespace GardenPlanner
             DialogResult confirmation = MessageBox.Show("Are you sure you want to Delete " + temp, "Confirmation", MessageBoxButtons.YesNo);
             if (confirmation == DialogResult.Yes)
             {
+                temp = temp.Replace("'", ".a");
                 query = "Delete from Note where title = '" + temp + "'";
                 Query();
 
@@ -817,6 +819,7 @@ namespace GardenPlanner
             DialogResult confirmation = MessageBox.Show("Are you sure you want to Delete " + temp, "Confirmation", MessageBoxButtons.YesNo);
             if (confirmation == DialogResult.Yes)
             {
+                temp = temp.Replace("'", ".a");
                 query = "Delete from Job where title = '" + temp + "'";
 
                 Query();

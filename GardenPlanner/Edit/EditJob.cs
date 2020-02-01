@@ -7,7 +7,7 @@ namespace GardenPlanner.Edit
     public partial class EditJob : Form
     {
         SqL SQL = new SqL();
-        string query;
+        string query, title, oldTitle, content;
         int id;
 
         public EditJob()
@@ -17,38 +17,24 @@ namespace GardenPlanner.Edit
 
         public void populate(string t)
         {
+            
             this.Text = "EDIT: " + t;
+            oldTitle = t.Replace("'", ".a");
             try
             {
                 using (SQL.conn)
                 {
                     SQL.conn.Open();
-                    query = "Select id from Job where title = '" + t + "'";
+                    query = "Select title, content from Job Where title = '" + oldTitle + "'";
                     SQL.cmd = new SQLiteCommand(query, SQL.conn);
-
                     using (SQL.cmd)
                     {
                         using (SQL.reader = SQL.cmd.ExecuteReader())
                         {
                             while (SQL.reader.Read())
                             {
-                                id = SQL.reader.GetInt32(0);
-                            }
-                        }
-                    }
-
-                    query = "Select title, content from Job Where title = '" + t + "'";
-                    SQL.cmd = new SQLiteCommand(query, SQL.conn);
-
-
-                    using (SQL.cmd)
-                    {
-                        using (SQL.reader = SQL.cmd.ExecuteReader())
-                        {
-                            while (SQL.reader.Read())
-                            {
-                                tbTitle.Text = SQL.reader.GetString(0);
-                                tbContent.Text = SQL.reader.GetString(1);
+                                title = SQL.reader.GetString(0).Replace(".a", "'");
+                                content = SQL.reader.GetString(1).Replace(".a", "'");
                             }
                         }
                     }
@@ -59,11 +45,15 @@ namespace GardenPlanner.Edit
             {
                 MessageBox.Show(ex.ToString());
             }
+            tbTitle.Text = title;
+            tbContent.Text = content;
         }
 
         private void btnSave_Click(object sender, EventArgs e)
         {
-            query = "update Job set title = '" + tbTitle.Text + "', content = '" + tbContent.Text + "' Where id = " + id;
+            title = tbTitle.Text.Replace("'", ".a");
+            content = tbContent.Text.Replace("'", ".a");
+            query = "update Job set title = '" + title + "', content = '" + content + "' Where title = '" + oldTitle + "'";
             SQL.cmd = new SQLiteCommand(query, SQL.conn);
 
             using (SQL.conn)
