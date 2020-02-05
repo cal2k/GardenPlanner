@@ -14,16 +14,14 @@ namespace GardenPlanner
 {
     public partial class Form1 : Form
     {
+        SqL SQL = new SqL();
 
         private string userName, query, temp, SelectedVegName, SelectedVegSpecies, currentTag;
-        List<string> list = new List<string>(), listTags = new List<string>();
-        int count = 0, userID = 0;
 
-        static string path = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
-            pathComplete = path + @"\CGP\GardenDB.db";
-        SQLiteConnection conn = new SQLiteConnection("Data Source =" + pathComplete + "; version =3;");
-        SQLiteCommand cmd;
-        SQLiteDataReader reader;
+        List<string> list = new List<string>(), listTags = new List<string>();
+
+        private int count, userID; 
+
         
         //Tools
         private void btnAddPlant_Click(object sender, EventArgs e)
@@ -53,112 +51,14 @@ namespace GardenPlanner
 
         private void Startup()
         {
-            string[] UserNameSplit = new string[2];
-            string fileToCopy = "GardenDB.db";
-
-            //gather username
-            temp = System.Security.Principal.WindowsIdentity.GetCurrent().Name;
-            UserNameSplit = temp.Split('\\');
-            userName = UserNameSplit[1].ToLower();
-            lblUserName.Text = "Welcome, " + userName;
-
-            //check if database exists 
-            if (File.Exists(pathComplete) == false)
-            {
-                System.IO.Directory.CreateDirectory(path + @"\CGP");
-                File.Copy(fileToCopy, pathComplete);
-            }
-
-            //checks for username
-            using (conn)
-            {
-                conn.Open();
-                query = "SELECT COUNT (username) from users WHERE username = '" + userName + "'";
-                cmd = new SQLiteCommand(query, conn);
-
-                using (cmd)
-                {
-                    using (reader = cmd.ExecuteReader())
-                    {
-                        while (reader.Read())
-                        {
-                            try
-                            {
-                                count = reader.GetInt16(0);
-                            }
-                            catch (Exception ex)
-                            {
-                                MessageBox.Show(ex.ToString());
-                            }
-                        }
-                    }
-                }
-
-                //adding username if not present
-                if (count == 0)
-                {
-                    query = "INSERT INTO  users (username) VALUES ('" + userName + "')";
-                    cmd = new SQLiteCommand(query, conn);
-                    using (cmd)
-                    {
-                        try
-                        {
-                            cmd.ExecuteNonQuery();
-                        }
-                        catch (Exception ex)
-                        {
-                            MessageBox.Show(ex.ToString());
-                        }
-                    }
-                }
-
-                //gather users id
-                query = "select ID from users where username = '" + userName + "'";
-                cmd = new SQLiteCommand(query, conn);
-                using (cmd)
-                {
-                    using (reader = cmd.ExecuteReader())
-                    {
-                        while (reader.Read())
-                        {
-                            try
-                            {
-                                userID = reader.GetInt32(0);
-                            }
-                            catch (Exception ex)
-                            {
-                                MessageBox.Show(ex.ToString());
-                            }
-                        }
-                    }
-                }
-                conn.Close();
-            }
-
-
-
-            query = "CREATE TABLE IF NOT EXISTS '" + userName + "' (ID INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE, Journal TEXT, Jobs TEXT, Selected TEXT, Notes TEXT, Date TEXT, Tag TEXT)";
-            using (conn)
-            {
-                conn.Open();
-                cmd = new SQLiteCommand(query, conn);
-                try
-                {
-                    cmd.ExecuteNonQuery();
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show(ex.ToString());
-                }
-                conn.Close();
-            }
-            count = 0;
-            while (count <= 4)
-            {
-                LoadUserData(count);
-                count++;
-            }
-
+            SQL.checkfordb();
+            SQL.gatherusername();
+            setUserDetails();
+        }
+        public void setUserDetails()
+        {
+            userName = SQL.USERNAME;
+            userID = SQL.USERID;
         }
 
         private void LoadUserData(int i)
@@ -168,66 +68,66 @@ namespace GardenPlanner
             {
                 case 0:
                     query = "Select Title FROM Journal WHERE userid = '" + userID + "'ORDER BY date DESC";
-                    cmd = new SQLiteCommand(query, conn);
-                    using (conn)
+                    SQL.cmd = new SQLiteCommand(query, SQL.conn);
+                    using (SQL.conn)
                     {
-                        conn.Open();
-                        using (cmd)
+                        SQL.conn.Open();
+                        using (SQL.cmd)
                         {
-                            using (reader = cmd.ExecuteReader())
+                            using (SQL.reader = SQL.cmd.ExecuteReader())
                             {
-                                while (reader.Read())
+                                while (SQL.reader.Read())
                                 {
-                                    temp = reader.GetString(0).Replace(".a", "'");
+                                    temp = SQL.reader.GetString(0).Replace(".a", "'");
                                     listBoxJournal.Items.Add(temp);
                                 }
                             }
                         }
-                        conn.Close();
+                        SQL.conn.Close();
                     }
                     break;
                 case 1:
                     query = "Select * From Vegs WHERE id IN(SELECT vegid FROM SelectedVeg WHERE userid = '" + userID + "')";
 
-                    cmd = new SQLiteCommand(query, conn);
+                    SQL.cmd = new SQLiteCommand(query, SQL.conn);
 
 
-                    using (conn)
+                    using (SQL.conn)
                     {
-                        conn.Open();
-                        using (cmd)
+                        SQL.conn.Open();
+                        using (SQL.cmd)
                         {
-                            using (reader = cmd.ExecuteReader())
+                            using (SQL.reader = SQL.cmd.ExecuteReader())
                             {
-                                while (reader.Read())
+                                while (SQL.reader.Read())
                                 {
-                                    SelectedVegName = reader.GetString(1);
-                                    SelectedVegSpecies = reader.GetString(2);
+                                    SelectedVegName = SQL.reader.GetString(1);
+                                    SelectedVegSpecies = SQL.reader.GetString(2);
                                     temp = SelectedVegName + " (" + SelectedVegSpecies + ")";
                                     listBoxSelectedVeg.Items.Add(temp);
                                 }
                             }
                         }
-                        conn.Close();
+                        SQL.conn.Close();
                     }
                     break;
                 
                 case 3:
                     query = "Select job FROM Job where userid = '" + userID +"' ORDER BY date DESC";
 
-                    cmd = new SQLiteCommand(query, conn);
+                    SQL.cmd = new SQLiteCommand(query, SQL.conn);
 
 
-                    using (conn)
+                    using (SQL.conn)
                     {
-                        conn.Open();
-                        using (cmd)
+                        SQL.conn.Open();
+                        using (SQL.cmd)
                         {
-                            using (reader = cmd.ExecuteReader())
+                            using (SQL.reader = SQL.cmd.ExecuteReader())
                             {
-                                while (reader.Read())
+                                while (SQL.reader.Read())
                                 {
-                                    temp = reader.GetString(0);
+                                    temp = SQL.reader.GetString(0);
 
                                     if(temp.Contains("*A*"))
                                     {
@@ -238,24 +138,24 @@ namespace GardenPlanner
                                 }
                             }
                         }
-                        conn.Close();
+                        SQL.conn.Close();
                     }
                     break;
                 case 4:
                     query = "Select tag FROM Tags where userid = '" + userID + "'";
-                    cmd = new SQLiteCommand(query, conn);
+                    SQL.cmd = new SQLiteCommand(query, SQL.conn);
                     try
                     {
-                        using (conn)
+                        using (SQL.conn)
                         {
-                            conn.Open();
-                            using (cmd)
+                            SQL.conn.Open();
+                            using (SQL.cmd)
                             {
-                                using (reader = cmd.ExecuteReader())
+                                using (SQL.reader = SQL.cmd.ExecuteReader())
                                 {
-                                    while (reader.Read())
+                                    while (SQL.reader.Read())
                                     {
-                                        temp = reader.GetString(0);
+                                        temp = SQL.reader.GetString(0);
                                         cbJournalTags.Items.Add(temp);
                                         cbJobTags.Items.Add(temp);
                                         cbVegTags.Items.Add(temp);
@@ -264,7 +164,7 @@ namespace GardenPlanner
                                     }
                                 }
                             }
-                            conn.Close();
+                            SQL.conn.Close();
                         }
                     }
                     catch (Exception ex)
@@ -274,62 +174,62 @@ namespace GardenPlanner
                     break;
                 case 5:
                     query = "Select title from Journal where tag = '" + currentTag + "';";
-                    cmd = new SQLiteCommand(query, conn);
-                    using (conn)
+                    SQL.cmd = new SQLiteCommand(query, SQL.conn);
+                    using (SQL.conn)
                     {
-                        conn.Open();
-                        using (cmd)
+                        SQL.conn.Open();
+                        using (SQL.cmd)
                         {
-                            using (reader = cmd.ExecuteReader())
+                            using (SQL.reader = SQL.cmd.ExecuteReader())
                             {
-                                while (reader.Read())
+                                while (SQL.reader.Read())
                                 {
-                                    temp = reader.GetString(0);
+                                    temp = SQL.reader.GetString(0);
                                     listBoxJournal.Items.Add(temp);
                                 }
                             }
                         }
-                        conn.Close();
+                        SQL.conn.Close();
                     }
                     break;
                 case 6:
                     query = "Select title from Job where tag = '" + currentTag + "';";
-                    cmd = new SQLiteCommand(query, conn);
-                    using (conn)
+                    SQL.cmd = new SQLiteCommand(query, SQL.conn);
+                    using (SQL.conn)
                     {
-                        conn.Open();
-                        using (cmd)
+                        SQL.conn.Open();
+                        using (SQL.cmd)
                         {
-                            using (reader = cmd.ExecuteReader())
+                            using (SQL.reader = SQL.cmd.ExecuteReader())
                             {
-                                while (reader.Read())
+                                while (SQL.reader.Read())
                                 {
-                                    temp = reader.GetString(0);
+                                    temp = SQL.reader.GetString(0);
                                     listBoxJobs.Items.Add(temp);
                                 }
                             }
                         }
-                        conn.Close();
+                        SQL.conn.Close();
                     }
                     break;
                 case 8:
                     query = "Select title from Note where tag = '" + currentTag + "';";
-                    cmd = new SQLiteCommand(query, conn);
-                    using (conn)
+                    SQL.cmd = new SQLiteCommand(query, SQL.conn);
+                    using (SQL.conn)
                     {
-                        conn.Open();
-                        using (cmd)
+                        SQL.conn.Open();
+                        using (SQL.cmd)
                         {
-                            using (reader = cmd.ExecuteReader())
+                            using (SQL.reader = SQL.cmd.ExecuteReader())
                             {
-                                while (reader.Read())
+                                while (SQL.reader.Read())
                                 {
-                                    temp = reader.GetString(0);
+                                    temp = SQL.reader.GetString(0);
                                     listBoxNotes.Items.Add(temp);
                                 }
                             }
                         }
-                        conn.Close();
+                        SQL.conn.Close();
                     }
                     break;
             }
@@ -394,22 +294,22 @@ namespace GardenPlanner
 
         private void Query()
         {
-            using (conn)
+            using (SQL.conn)
             {
-                conn.Open();
+                SQL.conn.Open();
 
-                cmd = new SQLiteCommand(query, conn);
+                SQL.cmd = new SQLiteCommand(query, SQL.conn);
 
                 try
                 {
-                    cmd.ExecuteNonQuery();
+                    SQL.cmd.ExecuteNonQuery();
                 }
                 catch (Exception ex)
                 {
                     MessageBox.Show(ex.ToString());
                 }
 
-                conn.Close();
+                SQL.conn.Close();
             }
         }
 
@@ -425,23 +325,23 @@ namespace GardenPlanner
                 temp = listBoxJournal.SelectedItem.ToString().Replace("'", ".a");
 
                 query = "select content from Journal where title ='" + temp + "'";
-                cmd = new SQLiteCommand(query, conn);
+                SQL.cmd = new SQLiteCommand(query, SQL.conn);
                 try
                 {
-                    using (conn)
+                    using (SQL.conn)
                     {
-                        conn.Open();
-                        using (cmd)
+                        SQL.conn.Open();
+                        using (SQL.cmd)
                         {
-                            using (reader = cmd.ExecuteReader())
+                            using (SQL.reader = SQL.cmd.ExecuteReader())
                             {
-                                while (reader.Read())
+                                while (SQL.reader.Read())
                                 {
-                                    tbJournalContent.Text = reader.GetString(0).Replace(".a", "'");
+                                    tbJournalContent.Text = SQL.reader.GetString(0).Replace(".a", "'");
                                 }
                             }
                         }
-                        conn.Close();
+                        SQL.conn.Close();
                     }
                 }
                 catch (Exception ex)
@@ -477,31 +377,31 @@ namespace GardenPlanner
                 titles.Add("\nCommon Problems:\n");
 
                 query = "Select Sowing, Growing, Harvest, CommonProblems, Companion FROM Vegs WHERE Species = '" + tempArray[1].ToString() + "'";
-                cmd = new SQLiteCommand(query, conn);
+                SQL.cmd = new SQLiteCommand(query, SQL.conn);
                 try
                 {
-                    using (conn)
+                    using (SQL.conn)
                     {
-                        conn.Open();
-                        using (cmd)
+                        SQL.conn.Open();
+                        using (SQL.cmd)
                         {
-                            using (reader = cmd.ExecuteReader())
+                            using (SQL.reader = SQL.cmd.ExecuteReader())
                             {
-                                while (reader.Read())
+                                while (SQL.reader.Read())
                                 {
 
-                                    temp = reader.GetString(0);
+                                    temp = SQL.reader.GetString(0);
                                     vegDetails.Add(temp);
-                                    temp = reader.GetString(1);
+                                    temp = SQL.reader.GetString(1);
                                     vegDetails.Add(temp);
-                                    temp = reader.GetString(2);
+                                    temp = SQL.reader.GetString(2);
                                     vegDetails.Add(temp);
-                                    temp = reader.GetString(3);
+                                    temp = SQL.reader.GetString(3);
                                     vegDetails.Add(temp);
                                 }
                             }
                         }
-                        conn.Close();
+                        SQL.conn.Close();
                     }
                     count = vegDetails.Count();
                     for (int i = 0; i < count; i++)
@@ -528,23 +428,23 @@ namespace GardenPlanner
                 temp = listBoxNotes.SelectedItem.ToString().Replace("'", ".a"); 
 
                 query = "select content from Note where title ='" + temp + "'";
-                cmd = new SQLiteCommand(query, conn);
+                SQL.cmd = new SQLiteCommand(query, SQL.conn);
                 try
                 {
-                    using (conn)
+                    using (SQL.conn)
                     {
-                        conn.Open();
-                        using (cmd)
+                        SQL.conn.Open();
+                        using (SQL.cmd)
                         {
-                            using (reader = cmd.ExecuteReader())
+                            using (SQL.reader = SQL.cmd.ExecuteReader())
                             {
-                                while(reader.Read())
+                                while(SQL.reader.Read())
                                 {
-                                    tbNoteContent.Text = reader.GetString(0).Replace(".a", "'");
+                                    tbNoteContent.Text = SQL.reader.GetString(0).Replace(".a", "'");
                                 }
                             }
                         }
-                            conn.Close();
+                        SQL.conn.Close();
                     }
                 }
                 catch(Exception ex)
@@ -722,23 +622,23 @@ namespace GardenPlanner
                 
                 try
                 {
-                    using (conn)
+                    using (SQL.conn)
                     {
-                        conn.Open();
+                        SQL.conn.Open();
                         query = "SELECT id from Vegs where Species = '" + split[1] + "'";
-                        cmd = new SQLiteCommand(query, conn);
+                        SQL.cmd = new SQLiteCommand(query, SQL.conn);
 
-                        using (cmd)
+                        using (SQL.cmd)
                         {
-                            using (reader = cmd.ExecuteReader())
+                            using (SQL.reader = SQL.cmd.ExecuteReader())
                             {
-                                while(reader.Read())
+                                while(SQL.reader.Read())
                                 {
-                                    count = reader.GetInt32(0);
+                                    count = SQL.reader.GetInt32(0);
                                 }
                             }
                         }
-                        conn.Close(); 
+                        SQL.conn.Close(); 
                     }
                 }
                 catch(Exception ex)
@@ -747,7 +647,7 @@ namespace GardenPlanner
                 }
                 query = "Delete from SelectedVeg where vegid = '" + count + "'";
                 Query();
-                conn.Close();
+                SQL.conn.Close();
                 tbVegDetails.Text = "";
                 btnRemoveVeg.Enabled = false;
                 count = 1;
