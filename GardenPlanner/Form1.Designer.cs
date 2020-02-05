@@ -58,7 +58,6 @@
             this.btnRemoveVegTag = new System.Windows.Forms.Button();
             this.btnRemoveNoteTags = new System.Windows.Forms.Button();
             this.cbNoteTags = new System.Windows.Forms.ComboBox();
-            this.tbJobContent = new System.Windows.Forms.RichTextBox();
             this.tbJournalContent = new System.Windows.Forms.RichTextBox();
             this.btnEditJournal = new System.Windows.Forms.Button();
             this.btnEditJob = new System.Windows.Forms.Button();
@@ -355,16 +354,6 @@
             this.cbNoteTags.Text = "Tags";
             this.cbNoteTags.SelectedIndexChanged += new System.EventHandler(this.cbNoteTags_SelectedIndexChanged);
             // 
-            // tbJobContent
-            // 
-            this.tbJobContent.Location = new System.Drawing.Point(361, 559);
-            this.tbJobContent.MaxLength = 1100;
-            this.tbJobContent.Name = "tbJobContent";
-            this.tbJobContent.ReadOnly = true;
-            this.tbJobContent.Size = new System.Drawing.Size(340, 220);
-            this.tbJobContent.TabIndex = 63;
-            this.tbJobContent.Text = "";
-            // 
             // tbJournalContent
             // 
             this.tbJournalContent.Location = new System.Drawing.Point(15, 559);
@@ -429,7 +418,6 @@
             this.Controls.Add(this.btnEditJob);
             this.Controls.Add(this.btnEditJournal);
             this.Controls.Add(this.tbJournalContent);
-            this.Controls.Add(this.tbJobContent);
             this.Controls.Add(this.btnRemoveNoteTags);
             this.Controls.Add(this.cbNoteTags);
             this.Controls.Add(this.btnRemoveVegTag);
@@ -498,7 +486,6 @@
         private System.Windows.Forms.Button btnRemoveVegTag;
         private System.Windows.Forms.Button btnRemoveNoteTags;
         private System.Windows.Forms.ComboBox cbNoteTags;
-        private System.Windows.Forms.RichTextBox tbJobContent;
         private System.Windows.Forms.RichTextBox tbJournalContent;
         private System.Windows.Forms.Button btnEditJournal;
         private System.Windows.Forms.Button btnEditJob;

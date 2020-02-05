@@ -211,31 +211,9 @@ namespace GardenPlanner
                         conn.Close();
                     }
                     break;
-                case 2:
-                    query = "Select title FROM Note where userid = '"+userID+"' ORDER BY date DESC";
-
-                    cmd = new SQLiteCommand(query, conn);
-
-
-                    using (conn)
-                    {
-                        conn.Open();
-                        using (cmd)
-                        {
-                            using (reader = cmd.ExecuteReader())
-                            {
-                                while (reader.Read())
-                                {
-                                    temp = reader.GetString(0).Replace(".a", "'");
-                                    listBoxNotes.Items.Add(temp);
-                                }
-                            }
-                        }
-                        conn.Close();
-                    }
-                    break;
+                
                 case 3:
-                    query = "Select title FROM Job where userid = '" + userID +"' ORDER BY date DESC";
+                    query = "Select job FROM Job where userid = '" + userID +"' ORDER BY date DESC";
 
                     cmd = new SQLiteCommand(query, conn);
 
@@ -249,7 +227,13 @@ namespace GardenPlanner
                             {
                                 while (reader.Read())
                                 {
-                                    temp = reader.GetString(0).Replace(".a", "'");
+                                    temp = reader.GetString(0);
+
+                                    if(temp.Contains("*A*"))
+                                    {
+                                        temp = temp.Replace("*A*", "'");
+                                    }
+
                                     listBoxJobs.Items.Add(temp);
                                 }
                             }
@@ -575,33 +559,6 @@ namespace GardenPlanner
             {
                 btnEditJob.Enabled = true;
                 btnRemoveJob.Enabled = true;
-
-                temp = listBoxJobs.SelectedItem.ToString().Replace("'", ".a");
-
-                query = "select content from Job where title ='" + temp + "'";
-                cmd = new SQLiteCommand(query, conn);
-                try
-                {
-                    using (conn)
-                    {
-                        conn.Open();
-                        using (cmd)
-                        {
-                            using (reader = cmd.ExecuteReader())
-                            {
-                                while (reader.Read())
-                                {
-                                    tbJobContent.Text = reader.GetString(0).Replace(".a", "'");
-                                }
-                            }
-                        }
-                        conn.Close();
-                    }
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show(ex.ToString());
-                }
             }
         }
 
@@ -815,16 +772,20 @@ namespace GardenPlanner
         }
         private void btnRemoveJob_Click(object sender, EventArgs e)
         {
+
             temp = listBoxJobs.SelectedItem.ToString();
+
             DialogResult confirmation = MessageBox.Show("Are you sure you want to Delete " + temp, "Confirmation", MessageBoxButtons.YesNo);
             if (confirmation == DialogResult.Yes)
             {
-                temp = temp.Replace("'", ".a");
-                query = "Delete from Job where title = '" + temp + "'";
+                if (temp.Contains("'"))
+                {
+                    temp = temp.Replace("'", "*A*");
+                }
 
+                query = "Delete from Job where job = '" + temp + "'";
                 Query();
-
-                tbJobContent.Text = "";
+                
                 btnRemoveJob.Enabled = false;
                 count = 3;
                 Reset(count);

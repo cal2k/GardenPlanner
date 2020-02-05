@@ -1,11 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Data.SQLite;
 
@@ -13,15 +7,9 @@ namespace GardenPlanner.New_Entirys
 {
     public partial class NewJob : Form
     {
+        SqL SQL = new SqL();
         string query, currentTag, temp;
-        int userid, titleLimit = 50, titleCurrent = 0, titleRemaining, contentLimit = 1000, contentCurrent = 0, contentRemaining;
-
-        static string path = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
-            pathComplete = path + @"\CGP\GardenDB.db";
-        
-        SQLiteConnection conn = new SQLiteConnection("Data Source =" + pathComplete + "; version =3;");
-        SQLiteCommand cmd;
-        SQLiteDataReader reader;
+        int userid, contentLimit = 500, contentCurrent = 0, contentRemaining;
         DateTime date;
 
         public NewJob()
@@ -34,55 +22,29 @@ namespace GardenPlanner.New_Entirys
             userid = i;
 
             query = "Select tag FROM Tags where userid = '" + userid + "'";
-            cmd = new SQLiteCommand(query, conn);
+            SQL.cmd = new SQLiteCommand(query, SQL.conn);
             try
             {
-                using (conn)
+                using (SQL.conn)
                 {
-                    conn.Open();
-                    using (cmd)
+                    SQL.conn.Open();
+                    using (SQL.cmd)
                     {
-                        using (reader = cmd.ExecuteReader())
+                        using (SQL.reader = SQL.cmd.ExecuteReader())
                         {
-                            while (reader.Read())
+                            while (SQL.reader.Read())
                             {
-                                temp = reader.GetString(0);
+                                temp = SQL.reader.GetString(0);
                                 cbTag.Items.Add(temp);
                             }
                         }
                     }
-                    conn.Close();
+                    SQL.conn.Close();
                 }
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.ToString());
-            }
-        }
-
-        private void tbTitle_Click(object sender, EventArgs e)
-        {
-            if (tbTitle.Text == "Title")
-            {
-                tbTitle.Text = "";
-            }
-        }
-        private void tbTitle_TextChanged(object sender, EventArgs e)
-        {
-            titleCurrent = tbTitle.Text.Count();
-            titleRemaining = titleLimit - titleCurrent;
-            lblTitleRemaining.Text = "(" + titleRemaining.ToString() + ")";
-
-            if (titleCurrent > 3)
-            {
-                tbContent.Enabled = true;
-            }
-        }
-        private void tbContent_Click(object sender, EventArgs e)
-        {
-            if (tbContent.Text == "Details")
-            {
-                tbContent.Text = "";
             }
         }
         private void tbContent_TextChanged(object sender, EventArgs e)
@@ -104,22 +66,30 @@ namespace GardenPlanner.New_Entirys
             }
 
             date = DateTime.Now;
-            string title = tbTitle.Text.Replace("'", ".a"), content = tbContent.Text.Replace("'", ".a");
-            query = "INSERT INTO Job (userid, title, content, date, tag) VALUES ('" + userid + "', '" +
-               title + "', '" + content + "', '" + date + "', '" + currentTag + "')";
+            {
 
-            cmd = new SQLiteCommand(query, conn);
+            }
+            string content = tbContent.Text;
+            if(content.Contains("'"))
+            {
+                MessageBox.Show("working");
+                content = content.Replace("'", "*A*");
+            }
+
+            query = "INSERT INTO Job (userid, job, date, tag) VALUES ('" + userid + "', '" + content + "', '" + date + "', '" + currentTag + "')";
+
+            SQL.cmd = new SQLiteCommand(query, SQL.conn);
 
             try
             {
-                using (conn)
+                using (SQL.conn)
                 {
-                    conn.Open();
-                    using (cmd)
+                    SQL.conn.Open();
+                    using (SQL.cmd)
                     {
-                        cmd.ExecuteNonQuery();
+                        SQL.cmd.ExecuteNonQuery();
                     }
-                    conn.Close();
+                    SQL.conn.Close();
                 }
             }
             catch (Exception ex)
