@@ -3,6 +3,8 @@ using System.Data.SQLite;
 using System.IO;
 using System.Windows.Forms;
 
+using System.Collections.Generic;
+
 namespace GardenPlanner
 {
     class SqL
@@ -15,6 +17,11 @@ namespace GardenPlanner
 
         private string query, temp, userName;
         private int count, userID;
+
+        public string QUERY
+        {
+            set { query = value; }
+        }
         public string USERNAME
         {
             get { return userName; }
@@ -23,7 +30,9 @@ namespace GardenPlanner
         {
             get { return userID; }
         }
+            
 
+        //Querys
         public void queryCount()
         {
             cmd = new SQLiteCommand(query, conn);
@@ -70,9 +79,9 @@ namespace GardenPlanner
                 MessageBox.Show(ex.ToString());
             }
         }
+        //Querys END
 
-
-
+        //Startup
         public void checkfordb()
         {
             string fileToCopy = "GardenDB.db";
@@ -105,5 +114,6 @@ namespace GardenPlanner
             queryCount();
             userID = count;
         }
+        //Startup END
     }
 }

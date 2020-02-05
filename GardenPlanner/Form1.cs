@@ -54,93 +54,92 @@ namespace GardenPlanner
             SQL.checkfordb();
             SQL.gatherusername();
             setUserDetails();
+            loadJournal();
+            loadSelected();
+            loadJobs();
         }
         public void setUserDetails()
         {
             userName = SQL.USERNAME;
             userID = SQL.USERID;
         }
+        private void loadJournal()
+        {
+            query = "Select Title FROM Journal WHERE userid = '" + userID + "'ORDER BY date DESC";
+            SQL.cmd = new SQLiteCommand(query, SQL.conn);
+            using (SQL.conn)
+            {
+                SQL.conn.Open();
+                using (SQL.cmd)
+                {
+                    using (SQL.reader = SQL.cmd.ExecuteReader())
+                    {
+                        while (SQL.reader.Read())
+                        {
+                            temp = SQL.reader.GetString(0).Replace(".a", "'");
+                            listBoxJournal.Items.Add(temp);
+                        }
+                    }
+                }
+                SQL.conn.Close();
+            }
+        }
+        private void loadSelected()
+        {
+            query = "Select * From Vegs WHERE id IN(SELECT vegid FROM SelectedVeg WHERE userid = '" + userID + "')";
+
+            SQL.cmd = new SQLiteCommand(query, SQL.conn);
+
+
+            using (SQL.conn)
+            {
+                SQL.conn.Open();
+                using (SQL.cmd)
+                {
+                    using (SQL.reader = SQL.cmd.ExecuteReader())
+                    {
+                        while (SQL.reader.Read())
+                        {
+                            SelectedVegName = SQL.reader.GetString(1);
+                            SelectedVegSpecies = SQL.reader.GetString(2);
+                            temp = SelectedVegName + " (" + SelectedVegSpecies + ")";
+                            listBoxSelectedVeg.Items.Add(temp);
+                        }
+                    }
+                }
+                SQL.conn.Close();
+            }
+        }
+        private void loadJobs()
+        {
+            query = "Select job FROM Job where userid = '" + userID + "' ORDER BY date DESC";
+            SQL.cmd = new SQLiteCommand(query, SQL.conn);
+            using (SQL.conn)
+            {
+                SQL.conn.Open();
+                using (SQL.cmd)
+                {
+                    using (SQL.reader = SQL.cmd.ExecuteReader())
+                    {
+                        while (SQL.reader.Read())
+                        {
+                            temp = SQL.reader.GetString(0).Replace(".a", "'");
+                            listBoxJobs.Items.Add(temp);
+                        }
+                    }
+                }
+                SQL.conn.Close();
+            }
+        }
+        private void loadNotes()
+        {
+
+        }
 
         private void LoadUserData(int i)
         {
-            string[] array = new string[2];
             switch (i)
             {
-                case 0:
-                    query = "Select Title FROM Journal WHERE userid = '" + userID + "'ORDER BY date DESC";
-                    SQL.cmd = new SQLiteCommand(query, SQL.conn);
-                    using (SQL.conn)
-                    {
-                        SQL.conn.Open();
-                        using (SQL.cmd)
-                        {
-                            using (SQL.reader = SQL.cmd.ExecuteReader())
-                            {
-                                while (SQL.reader.Read())
-                                {
-                                    temp = SQL.reader.GetString(0).Replace(".a", "'");
-                                    listBoxJournal.Items.Add(temp);
-                                }
-                            }
-                        }
-                        SQL.conn.Close();
-                    }
-                    break;
-                case 1:
-                    query = "Select * From Vegs WHERE id IN(SELECT vegid FROM SelectedVeg WHERE userid = '" + userID + "')";
-
-                    SQL.cmd = new SQLiteCommand(query, SQL.conn);
-
-
-                    using (SQL.conn)
-                    {
-                        SQL.conn.Open();
-                        using (SQL.cmd)
-                        {
-                            using (SQL.reader = SQL.cmd.ExecuteReader())
-                            {
-                                while (SQL.reader.Read())
-                                {
-                                    SelectedVegName = SQL.reader.GetString(1);
-                                    SelectedVegSpecies = SQL.reader.GetString(2);
-                                    temp = SelectedVegName + " (" + SelectedVegSpecies + ")";
-                                    listBoxSelectedVeg.Items.Add(temp);
-                                }
-                            }
-                        }
-                        SQL.conn.Close();
-                    }
-                    break;
-                
-                case 3:
-                    query = "Select job FROM Job where userid = '" + userID +"' ORDER BY date DESC";
-
-                    SQL.cmd = new SQLiteCommand(query, SQL.conn);
-
-
-                    using (SQL.conn)
-                    {
-                        SQL.conn.Open();
-                        using (SQL.cmd)
-                        {
-                            using (SQL.reader = SQL.cmd.ExecuteReader())
-                            {
-                                while (SQL.reader.Read())
-                                {
-                                    temp = SQL.reader.GetString(0);
-
-                                    if(temp.Contains("*A*"))
-                                    {
-                                        temp = temp.Replace("*A*", "'");
-                                    }
-
-                                    listBoxJobs.Items.Add(temp);
-                                }
-                            }
-                        }
-                        SQL.conn.Close();
-                    }
-                    break;
                 case 4:
                     query = "Select tag FROM Tags where userid = '" + userID + "'";
                     SQL.cmd = new SQLiteCommand(query, SQL.conn);
