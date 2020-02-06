@@ -29,7 +29,6 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
-            this.lblUserName = new System.Windows.Forms.Label();
             this.listBoxJournal = new System.Windows.Forms.ListBox();
             this.listBoxNotes = new System.Windows.Forms.ListBox();
             this.listBoxJobs = new System.Windows.Forms.ListBox();
@@ -54,16 +53,13 @@
             this.btnEditJob = new System.Windows.Forms.Button();
             this.btnEditVegDetails = new System.Windows.Forms.Button();
             this.btnEditNote = new System.Windows.Forms.Button();
+            this.ToolStripUser = new System.Windows.Forms.ToolStrip();
+            this.lblUserName = new System.Windows.Forms.ToolStripLabel();
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.toolstripbtnAddPlant = new System.Windows.Forms.ToolStripButton();
+            this.toolStripbtnCreateTag = new System.Windows.Forms.ToolStripButton();
+            this.ToolStripUser.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // lblUserName
-            // 
-            this.lblUserName.AutoSize = true;
-            this.lblUserName.Location = new System.Drawing.Point(12, 9);
-            this.lblUserName.Name = "lblUserName";
-            this.lblUserName.Size = new System.Drawing.Size(35, 13);
-            this.lblUserName.TabIndex = 0;
-            this.lblUserName.Text = "label1";
             // 
             // listBoxJournal
             // 
@@ -99,6 +95,7 @@
             this.listBoxSelectedVeg.Name = "listBoxSelectedVeg";
             this.listBoxSelectedVeg.Size = new System.Drawing.Size(339, 472);
             this.listBoxSelectedVeg.TabIndex = 16;
+            this.listBoxSelectedVeg.SelectedIndexChanged += new System.EventHandler(this.listBoxSelectedVeg_SelectedIndexChanged);
             // 
             // btnRemoveVeg
             // 
@@ -192,7 +189,6 @@
             this.btnAddPlant.TabIndex = 32;
             this.btnAddPlant.Text = "Add new plant";
             this.btnAddPlant.UseVisualStyleBackColor = true;
-            this.btnAddPlant.Click += new System.EventHandler(this.btnAddPlant_Click);
             // 
             // btnCreateTag
             // 
@@ -202,7 +198,6 @@
             this.btnCreateTag.TabIndex = 45;
             this.btnCreateTag.Text = "Create Tag";
             this.btnCreateTag.UseVisualStyleBackColor = true;
-            this.btnCreateTag.Click += new System.EventHandler(this.btnCreateTag_Click);
             // 
             // cbJournalTags
             // 
@@ -308,11 +303,56 @@
             this.btnEditNote.UseVisualStyleBackColor = true;
             this.btnEditNote.Click += new System.EventHandler(this.btnEditNote_Click);
             // 
+            // ToolStripUser
+            // 
+            this.ToolStripUser.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.lblUserName,
+            this.toolStripSeparator1,
+            this.toolstripbtnAddPlant,
+            this.toolStripbtnCreateTag});
+            this.ToolStripUser.Location = new System.Drawing.Point(0, 0);
+            this.ToolStripUser.Name = "ToolStripUser";
+            this.ToolStripUser.Size = new System.Drawing.Size(1404, 25);
+            this.ToolStripUser.TabIndex = 69;
+            this.ToolStripUser.Text = "toolStrip";
+            // 
+            // lblUserName
+            // 
+            this.lblUserName.Name = "lblUserName";
+            this.lblUserName.Size = new System.Drawing.Size(68, 22);
+            this.lblUserName.Text = "Welcome - ";
+            // 
+            // toolStripSeparator1
+            // 
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 25);
+            // 
+            // toolstripbtnAddPlant
+            // 
+            this.toolstripbtnAddPlant.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.toolstripbtnAddPlant.Image = ((System.Drawing.Image)(resources.GetObject("toolstripbtnAddPlant.Image")));
+            this.toolstripbtnAddPlant.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolstripbtnAddPlant.Name = "toolstripbtnAddPlant";
+            this.toolstripbtnAddPlant.Size = new System.Drawing.Size(55, 22);
+            this.toolstripbtnAddPlant.Text = "Add Veg";
+            this.toolstripbtnAddPlant.Click += new System.EventHandler(this.toolstripbtnAddPlant_Click);
+            // 
+            // toolStripbtnCreateTag
+            // 
+            this.toolStripbtnCreateTag.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.toolStripbtnCreateTag.Image = ((System.Drawing.Image)(resources.GetObject("toolStripbtnCreateTag.Image")));
+            this.toolStripbtnCreateTag.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripbtnCreateTag.Name = "toolStripbtnCreateTag";
+            this.toolStripbtnCreateTag.Size = new System.Drawing.Size(66, 22);
+            this.toolStripbtnCreateTag.Text = "Create Tag";
+            this.toolStripbtnCreateTag.Click += new System.EventHandler(this.toolStripbtnCreateTag_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1404, 820);
+            this.Controls.Add(this.ToolStripUser);
             this.Controls.Add(this.btnEditNote);
             this.Controls.Add(this.btnEditVegDetails);
             this.Controls.Add(this.btnEditJob);
@@ -337,18 +377,19 @@
             this.Controls.Add(this.listBoxJobs);
             this.Controls.Add(this.listBoxNotes);
             this.Controls.Add(this.listBoxJournal);
-            this.Controls.Add(this.lblUserName);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "Form1";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Garden Planner";
+            this.ToolStripUser.ResumeLayout(false);
+            this.ToolStripUser.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
         }
 
         #endregion
-        private System.Windows.Forms.Label lblUserName;
         private System.Windows.Forms.ListBox listBoxJournal;
         private System.Windows.Forms.ListBox listBoxNotes;
         private System.Windows.Forms.ListBox listBoxJobs;
@@ -373,6 +414,11 @@
         private System.Windows.Forms.Button btnEditJob;
         private System.Windows.Forms.Button btnEditVegDetails;
         private System.Windows.Forms.Button btnEditNote;
+        public System.Windows.Forms.ToolStripLabel lblUserName;
+        public System.Windows.Forms.ToolStrip ToolStripUser;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
+        private System.Windows.Forms.ToolStripButton toolstripbtnAddPlant;
+        private System.Windows.Forms.ToolStripButton toolStripbtnCreateTag;
     }
 }
 

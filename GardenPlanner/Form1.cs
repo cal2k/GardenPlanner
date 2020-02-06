@@ -20,22 +20,21 @@ namespace GardenPlanner
 
         List<string> list = new List<string>(), listTags = new List<string>();
 
-        private int count, userID; 
+        private int count, userID;
 
-        
+
         //Tools
-        private void btnAddPlant_Click(object sender, EventArgs e)
+        private void toolstripbtnAddPlant_Click(object sender, EventArgs e)
         {
             AddPlant addPlant = new AddPlant();
             addPlant.Show();
         }
-        private void btnCreateTag_Click(object sender, EventArgs e)
+        private void toolStripbtnCreateTag_Click(object sender, EventArgs e)
         {
             CreateTag tag = new CreateTag();
             tag.setID(userID);
             tag.FormClosed += new FormClosedEventHandler(CreateTag_FormClosed);
             tag.Show();
-
         }
         private void CreateTag_FormClosed(object sender, FormClosedEventArgs e)
         {
@@ -57,12 +56,16 @@ namespace GardenPlanner
             loadJournal();
             loadSelected();
             loadJobs();
+            loadTags();
         }
+
         public void setUserDetails()
         {
             userName = SQL.USERNAME;
             userID = SQL.USERID;
-        }
+            lblUserName.Text = "Welcome " + userName;
+                }
+
         private void loadJournal()
         {
             query = "Select Title FROM Journal WHERE userid = '" + userID + "'ORDER BY date DESC";
@@ -76,7 +79,28 @@ namespace GardenPlanner
                     {
                         while (SQL.reader.Read())
                         {
-                            temp = SQL.reader.GetString(0).Replace(".a", "'");
+                            temp = SQL.reader.GetString(0).Replace("*A*", "'");
+                            listBoxJournal.Items.Add(temp);
+                        }
+                    }
+                }
+                SQL.conn.Close();
+            }
+        }
+        private void loadJournalFilter()
+        {
+            query = "Select title from Journal where tag = '" + currentTag + "';";
+            SQL.cmd = new SQLiteCommand(query, SQL.conn);
+            using (SQL.conn)
+            {
+                SQL.conn.Open();
+                using (SQL.cmd)
+                {
+                    using (SQL.reader = SQL.cmd.ExecuteReader())
+                    {
+                        while (SQL.reader.Read())
+                        {
+                            temp = SQL.reader.GetString(0);
                             listBoxJournal.Items.Add(temp);
                         }
                     }
@@ -135,58 +159,32 @@ namespace GardenPlanner
         {
 
         }
-
-        private void LoadUserData(int i)
+        private void loadTags()
         {
-            switch (i)
+            query = "Select tag FROM Tags where userid = '" + userID + "'";
+            SQL.cmd = new SQLiteCommand(query, SQL.conn);
+            try
             {
-                case 4:
-                    query = "Select tag FROM Tags where userid = '" + userID + "'";
-                    SQL.cmd = new SQLiteCommand(query, SQL.conn);
-                    try
+                using (SQL.conn)
+                {
+                    SQL.conn.Open();
+                    using (SQL.cmd)
                     {
-                        using (SQL.conn)
+                        using (SQL.reader = SQL.cmd.ExecuteReader())
                         {
-                            SQL.conn.Open();
-                            using (SQL.cmd)
+                            while (SQL.reader.Read())
                             {
-                                using (SQL.reader = SQL.cmd.ExecuteReader())
-                                {
-                                    while (SQL.reader.Read())
-                                    {
-                                        temp = SQL.reader.GetString(0);
-                                        cbJournalTags.Items.Add(temp);
-                                    }
-                                }
-                            }
-                            SQL.conn.Close();
-                        }
-                    }
-                    catch (Exception ex)
-                    {
-                        MessageBox.Show(ex.ToString());
-                    }
-                    break;
-                case 5:
-                    query = "Select title from Journal where tag = '" + currentTag + "';";
-                    SQL.cmd = new SQLiteCommand(query, SQL.conn);
-                    using (SQL.conn)
-                    {
-                        SQL.conn.Open();
-                        using (SQL.cmd)
-                        {
-                            using (SQL.reader = SQL.cmd.ExecuteReader())
-                            {
-                                while (SQL.reader.Read())
-                                {
-                                    temp = SQL.reader.GetString(0);
-                                    listBoxJournal.Items.Add(temp);
-                                }
+                                temp = SQL.reader.GetString(0);
+                                cbJournalTags.Items.Add(temp);
                             }
                         }
-                        SQL.conn.Close();
                     }
-                    break;
+                    SQL.conn.Close();
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString());
             }
         }
 
@@ -222,48 +220,11 @@ namespace GardenPlanner
                 case 4:
                     listTags.Clear();
                     cbJournalTags.Items.Clear();
-                    LoadUserData(i);
-                    break;
-                case 5:
-                    listBoxJournal.Items.Clear();
-                    LoadUserData(i);
-                    break;
-                case 6:
-                    listBoxJobs.Items.Clear();
-                    LoadUserData(i);
-                    break;
-                case 7:
-                    listBoxSelectedVeg.Items.Clear();
-                    LoadUserData(i);
-                    break;
-                case 8:
-                    listBoxNotes.Items.Clear();
-                    LoadUserData(i);
+                    loadTags();
                     break;
 
             }
 
-        }
-
-        private void Query()
-        {
-            using (SQL.conn)
-            {
-                SQL.conn.Open();
-
-                SQL.cmd = new SQLiteCommand(query, SQL.conn);
-
-                try
-                {
-                    SQL.cmd.ExecuteNonQuery();
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show(ex.ToString());
-                }
-
-                SQL.conn.Close();
-            }
         }
 
         //List Events
@@ -292,6 +253,14 @@ namespace GardenPlanner
                 btnRemoveJob.Enabled = true;
             }
         }
+        private void listBoxSelectedVeg_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if(listBoxSelectedVeg.SelectedIndex > -1)
+            {
+                btnEditVegDetails.Enabled = true;
+                btnRemoveVeg.Enabled = true;
+            }
+        }
 
         //List Filters
         private void cbJournalFilterTags_SelectedIndexChanged(object sender, EventArgs e)
@@ -304,6 +273,8 @@ namespace GardenPlanner
         {
             cbJournalTags.Text = "Tags";
             count = 0;
+            Reset(count);
+            count = 4;
             Reset(count);
         }
 
@@ -366,6 +337,9 @@ namespace GardenPlanner
             EditJob.Show();
 
         }
+
+        
+
         private void btnSelectVeg_Click(object sender, EventArgs e)
         {
             New_Entirys.NewSelectedVeg NewSelectedVeg = new New_Entirys.NewSelectedVeg();
@@ -390,12 +364,17 @@ namespace GardenPlanner
         private void btnRemoveJournalPost_Click(object sender, EventArgs e)
         {
             temp = listBoxJournal.SelectedItem.ToString();
+
             DialogResult confirmation = MessageBox.Show("Are you sure you want to Delete " + temp, "Confirmation", MessageBoxButtons.YesNo);
             if (confirmation == DialogResult.Yes)
             {
-                temp = temp.Replace("'", ".a");
-                query = "Delete from Journal where title = '" + temp + "'";
-                Query();
+                if (temp.Contains("'"))
+                {
+                    temp = temp.Replace("'", "*A*");
+                }
+
+                SQL.QUERY = "Delete from Journal where title = '" + temp + "'";
+                SQL.queryExecute();
                 btnDeleteJournalPost.Enabled = false;
                 count = 0;
                 Reset(count);
@@ -438,8 +417,8 @@ namespace GardenPlanner
                 {
                     MessageBox.Show(ex.ToString());
                 }
-                query = "Delete from SelectedVeg where vegid = '" + count + "'";
-                Query();
+                SQL.QUERY = "Delete from SelectedVeg where vegid = '" + count + "'";
+                SQL.queryExecute();
                 SQL.conn.Close();
                 btnRemoveVeg.Enabled = false;
                 count = 1;
@@ -452,10 +431,10 @@ namespace GardenPlanner
             DialogResult confirmation = MessageBox.Show("Are you sure you want to Delete " + temp, "Confirmation", MessageBoxButtons.YesNo);
             if (confirmation == DialogResult.Yes)
             {
-                temp = temp.Replace("'", ".a");
-                query = "Delete from Note where title = '" + temp + "'";
-                Query();
-                
+                temp = temp.Replace("'", "*A*");
+                SQL.QUERY = "Delete from Note where title = '" + temp + "'";
+                SQL.queryExecute();
+
                 btnRemoveNote.Enabled = false;
                 count = 2;
                 Reset(count);
@@ -474,9 +453,9 @@ namespace GardenPlanner
                     temp = temp.Replace("'", "*A*");
                 }
 
-                query = "Delete from Job where job = '" + temp + "'";
-                Query();
-                
+                SQL.QUERY = "Delete from Job where job = '" + temp + "'";
+                SQL.queryExecute();
+
                 btnRemoveJob.Enabled = false;
                 count = 3;
                 Reset(count);

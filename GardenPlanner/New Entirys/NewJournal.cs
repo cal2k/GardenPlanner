@@ -106,7 +106,7 @@ namespace GardenPlanner.New_Entirys
             }
 
             date = DateTime.Now;
-            string title = tbTitle.Text.Replace("'", ".a"), content = tbContent.Text.Replace("'", ".a");
+            string title = tbTitle.Text.Replace("'", "*A*"), content = tbContent.Text.Replace("'", "*A*");
             query = "INSERT INTO Journal (userid, title, content, date, tag) VALUES ('" + userid + "', '" +
                 title + "', '" + content + "', '" + date + "', '" + currentTag + "')";
 
