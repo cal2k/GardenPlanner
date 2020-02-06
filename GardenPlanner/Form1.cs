@@ -156,10 +156,6 @@ namespace GardenPlanner
                                     {
                                         temp = SQL.reader.GetString(0);
                                         cbJournalTags.Items.Add(temp);
-                                        cbJobTags.Items.Add(temp);
-                                        cbVegTags.Items.Add(temp);
-                                        cbNoteTags.Items.Add(temp);
-
                                     }
                                 }
                             }
@@ -191,46 +187,6 @@ namespace GardenPlanner
                         SQL.conn.Close();
                     }
                     break;
-                case 6:
-                    query = "Select title from Job where tag = '" + currentTag + "';";
-                    SQL.cmd = new SQLiteCommand(query, SQL.conn);
-                    using (SQL.conn)
-                    {
-                        SQL.conn.Open();
-                        using (SQL.cmd)
-                        {
-                            using (SQL.reader = SQL.cmd.ExecuteReader())
-                            {
-                                while (SQL.reader.Read())
-                                {
-                                    temp = SQL.reader.GetString(0);
-                                    listBoxJobs.Items.Add(temp);
-                                }
-                            }
-                        }
-                        SQL.conn.Close();
-                    }
-                    break;
-                case 8:
-                    query = "Select title from Note where tag = '" + currentTag + "';";
-                    SQL.cmd = new SQLiteCommand(query, SQL.conn);
-                    using (SQL.conn)
-                    {
-                        SQL.conn.Open();
-                        using (SQL.cmd)
-                        {
-                            using (SQL.reader = SQL.cmd.ExecuteReader())
-                            {
-                                while (SQL.reader.Read())
-                                {
-                                    temp = SQL.reader.GetString(0);
-                                    listBoxNotes.Items.Add(temp);
-                                }
-                            }
-                        }
-                        SQL.conn.Close();
-                    }
-                    break;
             }
         }
 
@@ -243,13 +199,11 @@ namespace GardenPlanner
                     listBoxJournal.Items.Clear();
                     btnEditJournal.Enabled = false;
                     btnDeleteJournalPost.Enabled = false;
-                    tbJournalContent.Text = "";
                     loadJournal();
                     break;
                 case 1:
                     btnEditVegDetails.Enabled = false;
                     btnRemoveVeg.Enabled = false;
-                    tbVegDetails.Text = "";
                     listBoxSelectedVeg.Items.Clear();
                     loadSelected();
                     break;
@@ -315,141 +269,19 @@ namespace GardenPlanner
         //List Events
         private void listBoxJournal_SelectedIndexChanged(object sender, EventArgs e)
         {
-            tbJournalContent.Text = "";
             if (listBoxJournal.SelectedIndex > -1)
             {
                 btnEditJournal.Enabled = true;
                 btnDeleteJournalPost.Enabled = true;
-
-                temp = listBoxJournal.SelectedItem.ToString().Replace("'", ".a");
-
-                query = "select content from Journal where title ='" + temp + "'";
-                SQL.cmd = new SQLiteCommand(query, SQL.conn);
-                try
-                {
-                    using (SQL.conn)
-                    {
-                        SQL.conn.Open();
-                        using (SQL.cmd)
-                        {
-                            using (SQL.reader = SQL.cmd.ExecuteReader())
-                            {
-                                while (SQL.reader.Read())
-                                {
-                                    tbJournalContent.Text = SQL.reader.GetString(0).Replace(".a", "'");
-                                }
-                            }
-                        }
-                        SQL.conn.Close();
-                    }
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show(ex.ToString());
-                }
-            }
-        }
-        private void listBoxSelectedVeg_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            List<string> vegDetails = new List<string>();
-            List<string> titles = new List<string>();
-            StringBuilder sb = new StringBuilder();
-
-            tbVegDetails.Text = "";
-            vegDetails.Clear();
-            sb.Clear();
-
-
-
-            if (listBoxSelectedVeg.SelectedIndex > -1)
-            {
-                btnEditVegDetails.Enabled = true;
-                btnRemoveVeg.Enabled = true;
-
-                temp = listBoxSelectedVeg.SelectedItem.ToString();
-                string[] tempArray = new string[2];
-                tempArray = temp.Split('(', ')');
-
-                titles.Add("Sowing:\n");
-                titles.Add("\nGrowing:\n");
-                titles.Add("\nHarvest:\n");
-                titles.Add("\nCommon Problems:\n");
-
-                query = "Select Sowing, Growing, Harvest, CommonProblems, Companion FROM Vegs WHERE Species = '" + tempArray[1].ToString() + "'";
-                SQL.cmd = new SQLiteCommand(query, SQL.conn);
-                try
-                {
-                    using (SQL.conn)
-                    {
-                        SQL.conn.Open();
-                        using (SQL.cmd)
-                        {
-                            using (SQL.reader = SQL.cmd.ExecuteReader())
-                            {
-                                while (SQL.reader.Read())
-                                {
-
-                                    temp = SQL.reader.GetString(0);
-                                    vegDetails.Add(temp);
-                                    temp = SQL.reader.GetString(1);
-                                    vegDetails.Add(temp);
-                                    temp = SQL.reader.GetString(2);
-                                    vegDetails.Add(temp);
-                                    temp = SQL.reader.GetString(3);
-                                    vegDetails.Add(temp);
-                                }
-                            }
-                        }
-                        SQL.conn.Close();
-                    }
-                    count = vegDetails.Count();
-                    for (int i = 0; i < count; i++)
-                    {
-                        sb.Append(titles[i] + vegDetails[i] + "\n");
-                    }
-                    tbVegDetails.Text = sb.ToString();
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show(ex.ToString());
-                }
             }
         }
         private void listBoxNotes_SelectedIndexChanged(object sender, EventArgs e)
         {
-            tbNoteContent.Text = "";
 
             if (listBoxNotes.SelectedIndex > -1)
             {
                 btnEditNote.Enabled = true;
                 btnRemoveNote.Enabled = true;
-
-                temp = listBoxNotes.SelectedItem.ToString().Replace("'", ".a"); 
-
-                query = "select content from Note where title ='" + temp + "'";
-                SQL.cmd = new SQLiteCommand(query, SQL.conn);
-                try
-                {
-                    using (SQL.conn)
-                    {
-                        SQL.conn.Open();
-                        using (SQL.cmd)
-                        {
-                            using (SQL.reader = SQL.cmd.ExecuteReader())
-                            {
-                                while(SQL.reader.Read())
-                                {
-                                    tbNoteContent.Text = SQL.reader.GetString(0).Replace(".a", "'");
-                                }
-                            }
-                        }
-                        SQL.conn.Close();
-                    }
-                }
-                catch(Exception ex)
-                {
-                    MessageBox.Show(ex.ToString());
-                }
             }
         }
         private void listBoxJobs_SelectedIndexChanged(object sender, EventArgs e)
@@ -474,42 +306,6 @@ namespace GardenPlanner
             count = 0;
             Reset(count);
         }
-        private void bnJobTags_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            currentTag = cbJobTags.SelectedItem.ToString();
-            count = 6;
-            Reset(count);
-        }
-        private void btnRemoveJobTag_Click(object sender, EventArgs e)
-        {
-            cbJobTags.Text = "Tags";
-            count = 3;
-            Reset(count);
-        }
-        private void cbVegTags_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            currentTag = cbVegTags.SelectedItem.ToString();
-            count = 7;
-            Reset(count);
-        }
-        private void btnRemoveVegTag_Click(object sender, EventArgs e)
-        {
-            cbVegTags.Text = "Tags";
-            count = 1;
-            Reset(count);
-        }
-        private void cbNoteTags_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            currentTag = cbNoteTags.SelectedItem.ToString();
-            count = 8;
-            Reset(count);
-        }
-        private void btnRemoveNoteTags_Click(object sender, EventArgs e)
-        {
-            cbNoteTags.Text = "Tags";
-            count = 2;
-            Reset(count);
-        }
 
         //new entirys
         private void btnNewJournal_Click(object sender, EventArgs e)
@@ -528,7 +324,6 @@ namespace GardenPlanner
         }
         private void Journal_FormClosed(object sender, FormClosedEventArgs e)
         {
-            tbJournalContent.Text = "";
             count = 0;
             Reset(count);
         }
@@ -601,7 +396,6 @@ namespace GardenPlanner
                 temp = temp.Replace("'", ".a");
                 query = "Delete from Journal where title = '" + temp + "'";
                 Query();
-                tbJournalContent.Text = "";
                 btnDeleteJournalPost.Enabled = false;
                 count = 0;
                 Reset(count);
@@ -647,7 +441,6 @@ namespace GardenPlanner
                 query = "Delete from SelectedVeg where vegid = '" + count + "'";
                 Query();
                 SQL.conn.Close();
-                tbVegDetails.Text = "";
                 btnRemoveVeg.Enabled = false;
                 count = 1;
                 Reset(count);
@@ -662,8 +455,7 @@ namespace GardenPlanner
                 temp = temp.Replace("'", ".a");
                 query = "Delete from Note where title = '" + temp + "'";
                 Query();
-
-                tbNoteContent.Text = "";
+                
                 btnRemoveNote.Enabled = false;
                 count = 2;
                 Reset(count);
