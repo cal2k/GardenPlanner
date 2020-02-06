@@ -8,7 +8,6 @@ namespace GardenPlanner.Edit
     {
         SqL SQL = new SqL();
         string query, title, oldTitle, content;
-        int id;
 
         public EditNote()
         {

@@ -75,26 +75,8 @@ namespace GardenPlanner.New_Entirys
                 content = content.Replace("'", "*A*");
             }
 
-            query = "INSERT INTO Job (userid, job, date, tag) VALUES ('" + userid + "', '" + content + "', '" + date + "', '" + currentTag + "')";
-
-            SQL.cmd = new SQLiteCommand(query, SQL.conn);
-
-            try
-            {
-                using (SQL.conn)
-                {
-                    SQL.conn.Open();
-                    using (SQL.cmd)
-                    {
-                        SQL.cmd.ExecuteNonQuery();
-                    }
-                    SQL.conn.Close();
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.ToString());
-            }
+            SQL.QUERY = "INSERT INTO Job (userid, job, date, tag) VALUES ('" + userid + "', '" + content + "', '" + date + "', '" + currentTag + "')";
+            SQL.queryExecute();
 
             this.Close();
         }

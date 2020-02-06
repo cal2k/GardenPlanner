@@ -32,9 +32,7 @@
             this.cbTag = new System.Windows.Forms.ComboBox();
             this.lblContentRemaing = new System.Windows.Forms.Label();
             this.tbContent = new System.Windows.Forms.RichTextBox();
-            this.lblTitleRemaining = new System.Windows.Forms.Label();
             this.btnCancle = new System.Windows.Forms.Button();
-            this.tbTitle = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // btnAdd
@@ -59,7 +57,7 @@
             // lblContentRemaing
             // 
             this.lblContentRemaing.AutoSize = true;
-            this.lblContentRemaing.Location = new System.Drawing.Point(324, 41);
+            this.lblContentRemaing.Location = new System.Drawing.Point(324, 15);
             this.lblContentRemaing.Name = "lblContentRemaing";
             this.lblContentRemaing.Size = new System.Drawing.Size(37, 13);
             this.lblContentRemaing.TabIndex = 11;
@@ -67,24 +65,14 @@
             // 
             // tbContent
             // 
-            this.tbContent.Enabled = false;
-            this.tbContent.Location = new System.Drawing.Point(12, 38);
+            this.tbContent.Location = new System.Drawing.Point(12, 12);
             this.tbContent.MaxLength = 1000;
             this.tbContent.Name = "tbContent";
-            this.tbContent.Size = new System.Drawing.Size(306, 164);
+            this.tbContent.Size = new System.Drawing.Size(306, 190);
             this.tbContent.TabIndex = 10;
             this.tbContent.Text = "Details";
             this.tbContent.Click += new System.EventHandler(this.tbContent_Click);
             this.tbContent.TextChanged += new System.EventHandler(this.tbContent_TextChanged);
-            // 
-            // lblTitleRemaining
-            // 
-            this.lblTitleRemaining.AutoSize = true;
-            this.lblTitleRemaining.Location = new System.Drawing.Point(324, 15);
-            this.lblTitleRemaining.Name = "lblTitleRemaining";
-            this.lblTitleRemaining.Size = new System.Drawing.Size(25, 13);
-            this.lblTitleRemaining.TabIndex = 9;
-            this.lblTitleRemaining.Text = "(50)";
             // 
             // btnCancle
             // 
@@ -96,17 +84,6 @@
             this.btnCancle.UseVisualStyleBackColor = true;
             this.btnCancle.Click += new System.EventHandler(this.btnCancle_Click);
             // 
-            // tbTitle
-            // 
-            this.tbTitle.Location = new System.Drawing.Point(12, 12);
-            this.tbTitle.MaxLength = 50;
-            this.tbTitle.Name = "tbTitle";
-            this.tbTitle.Size = new System.Drawing.Size(306, 20);
-            this.tbTitle.TabIndex = 7;
-            this.tbTitle.Text = "Title";
-            this.tbTitle.Click += new System.EventHandler(this.tbTitle_Click);
-            this.tbTitle.TextChanged += new System.EventHandler(this.tbTitle_TextChanged);
-            // 
             // NewNote
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -116,9 +93,7 @@
             this.Controls.Add(this.cbTag);
             this.Controls.Add(this.lblContentRemaing);
             this.Controls.Add(this.tbContent);
-            this.Controls.Add(this.lblTitleRemaining);
             this.Controls.Add(this.btnCancle);
-            this.Controls.Add(this.tbTitle);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
@@ -136,8 +111,6 @@
         private System.Windows.Forms.ComboBox cbTag;
         private System.Windows.Forms.Label lblContentRemaing;
         private System.Windows.Forms.RichTextBox tbContent;
-        private System.Windows.Forms.Label lblTitleRemaining;
         private System.Windows.Forms.Button btnCancle;
-        private System.Windows.Forms.TextBox tbTitle;
     }
 }

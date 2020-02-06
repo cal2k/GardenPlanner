@@ -80,26 +80,6 @@ namespace GardenPlanner
                 MessageBox.Show(ex.ToString());
             }
         }
-        public void queryInsert()
-        {
-            cmd = new SQLiteCommand(query, conn);
-            try
-            {
-                using (conn)
-                {
-                    conn.Open();
-                    using (cmd)
-                    {
-                        cmd.ExecuteNonQuery();
-                    }
-                    conn.Close();
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.ToString());
-            }
-        }
         //Querys END
 
         //Startup
@@ -129,7 +109,7 @@ namespace GardenPlanner
             if (count == 0)
             {
                 query = "INSERT INTO  users (username) VALUES ('" + userName + "')";
-                queryInsert();
+                queryExecute();
             }
             query = "select ID from users where username = '" + userName + "'";
             queryCount();

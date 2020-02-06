@@ -8,8 +8,6 @@ namespace GardenPlanner.Edit
     {
         SqL SQL = new SqL();
         string query, title, oldTitle, content;
-        int id;
-        
         public EditJournal()
         {
             InitializeComponent();
@@ -20,7 +18,7 @@ namespace GardenPlanner.Edit
         public void populate(string t)
         {
             this.Text = "EDIT: " + t;
-            oldTitle = t.Replace("'", ".a");
+            oldTitle = t.Replace("'", "*A*");
             try
             {
                 using (SQL.conn)
@@ -36,8 +34,8 @@ namespace GardenPlanner.Edit
                         {
                             while(SQL.reader.Read())
                             {
-                                title = SQL.reader.GetString(0).Replace(".a", "'");
-                                content = SQL.reader.GetString(1).Replace(".a", "'");
+                                title = SQL.reader.GetString(0).Replace("*A*", "'");
+                                content = SQL.reader.GetString(1).Replace("*A*", "'");
                             }
                         }
                     }
@@ -53,8 +51,8 @@ namespace GardenPlanner.Edit
         }
         private void btnSave_Click(object sender, EventArgs e)
         {
-            title = tbTitle.Text.Replace("'", ".a");
-            content = tbContent.Text.Replace("'", ".a");
+            title = tbTitle.Text.Replace("'", "*A*");
+            content = tbContent.Text.Replace("'", "*A*");
             query = "update Journal set title = '" + title + "', content = '" + content + "' Where title = '" + oldTitle + "'";
             SQL.cmd = new SQLiteCommand(query, SQL.conn);
 

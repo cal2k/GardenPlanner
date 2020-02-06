@@ -9,7 +9,6 @@ namespace GardenPlanner.Edit
         SqL SQL = new SqL();
         string query;
         string[] split = new string[2];
-        int temp;
 
         public EditVeg()
         {

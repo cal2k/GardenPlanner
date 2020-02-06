@@ -23,24 +23,7 @@ namespace GardenPlanner
         private int count, userID;
 
 
-        //Tools
-        private void toolstripbtnAddPlant_Click(object sender, EventArgs e)
-        {
-            AddPlant addPlant = new AddPlant();
-            addPlant.Show();
-        }
-        private void toolStripbtnCreateTag_Click(object sender, EventArgs e)
-        {
-            CreateTag tag = new CreateTag();
-            tag.setID(userID);
-            tag.FormClosed += new FormClosedEventHandler(CreateTag_FormClosed);
-            tag.Show();
-        }
-        private void CreateTag_FormClosed(object sender, FormClosedEventArgs e)
-        {
-            count = 4;
-            Reset(count);
-        }
+        
 
         public Form1()
         {
@@ -65,6 +48,26 @@ namespace GardenPlanner
             userID = SQL.USERID;
             lblUserName.Text = "Welcome " + userName;
                 }
+
+        //Tools
+        private void toolstripbtnAddPlant_Click(object sender, EventArgs e)
+        {
+            AddPlant addPlant = new AddPlant();
+            addPlant.Show();
+        }
+        private void toolStripbtnCreateTag_Click(object sender, EventArgs e)
+        {
+            CreateTag tag = new CreateTag();
+            tag.setID(userID);
+            tag.FormClosed += new FormClosedEventHandler(CreateTag_FormClosed);
+            tag.Show();
+        }
+        private void CreateTag_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            count = 4;
+            Reset(count);
+        }
+        //Tools END
 
         private void loadJournal()
         {

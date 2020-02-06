@@ -13,14 +13,10 @@ namespace GardenPlanner.New_Entirys
 {
     public partial class NewJournal : Form
     {
+        SqL SQL = new SqL();
         string query, currentTag, temp;
         int userid, titleLimit = 50, titleCurrent = 0, titleRemaining, contentLimit = 1000, contentCurrent = 0, contentRemaining;
         
-        static string path = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
-            pathComplete = path + @"\CGP\GardenDB.db";
-        SQLiteConnection conn = new SQLiteConnection("Data Source =" + pathComplete + "; version =3;");
-        SQLiteCommand cmd;
-        SQLiteDataReader reader;
         DateTime date;
         
 
@@ -34,24 +30,24 @@ namespace GardenPlanner.New_Entirys
             userid = i;
 
             query = "Select tag FROM Tags where userid = '" + userid + "'";
-            cmd = new SQLiteCommand(query, conn);
+            SQL.cmd = new SQLiteCommand(query, SQL.conn);
             try
             {
-                using (conn)
+                using (SQL.conn)
                 {
-                    conn.Open();
-                    using (cmd)
+                    SQL.conn.Open();
+                    using (SQL.cmd)
                     {
-                        using (reader = cmd.ExecuteReader())
+                        using (SQL.reader = SQL.cmd.ExecuteReader())
                         {
-                            while (reader.Read())
+                            while (SQL.reader.Read())
                             {
-                                temp = reader.GetString(0);
+                                temp = SQL.reader.GetString(0);
                                 cbTag.Items.Add(temp);
                             }
                         }
                     }
-                    conn.Close();
+                    SQL.conn.Close();
                 }
             }
             catch (Exception ex)
@@ -106,28 +102,21 @@ namespace GardenPlanner.New_Entirys
             }
 
             date = DateTime.Now;
-            string title = tbTitle.Text.Replace("'", "*A*"), content = tbContent.Text.Replace("'", "*A*");
-            query = "INSERT INTO Journal (userid, title, content, date, tag) VALUES ('" + userid + "', '" +
+            string title = tbTitle.Text, content = tbContent.Text;
+
+            if (title.Contains("'"))
+            {
+                title = title.Replace("'", "*A*");
+            }
+            if (content.Contains("'"))
+            {
+                content = content.Replace("'", "*A*");
+            }
+
+            SQL.QUERY = "INSERT INTO Journal (userid, title, content, date, tag) VALUES ('" + userid + "', '" +
                 title + "', '" + content + "', '" + date + "', '" + currentTag + "')";
 
-            cmd = new SQLiteCommand(query, conn);
-
-            try
-            {
-                using (conn)
-                {
-                conn.Open();
-                    using (cmd)
-                    {
-                        cmd.ExecuteNonQuery();
-                    }
-                conn.Close();
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.ToString());
-            }
+            SQL.queryExecute();
 
             this.Close();
         }
