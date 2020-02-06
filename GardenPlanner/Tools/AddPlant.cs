@@ -13,7 +13,9 @@ namespace GardenPlanner
 {
     public partial class AddPlant : Form
     {
-        string query;
+        SqL SQL = new SqL();
+        string query, name, species, sowingnote, harvestnote, growingnote, common, special, compaion;
+        
         int required, sowingStart, sowingEnd, harvestStart, harvestEnd;
 
         SQLiteConnection conn = new SQLiteConnection("Data Source = GardenDB.db; version =3;");
@@ -54,39 +56,28 @@ namespace GardenPlanner
             {
                 item.textbox.BackColor = Color.White;
             }
-            
+            name = tbName.Text;
+            special = tbSpecial.Text;
             sowingStart = Convert.ToInt32(tbSowingStart.Text);
             sowingEnd = Convert.ToInt32(tbSowingEnd.Text);
+            sowingnote = tbSowingNotes.Text;
+            growingnote = tbGrowingNotes.Text;
             harvestStart = Convert.ToInt32(tbHarvestStart.Text);
             harvestEnd = Convert.ToInt32(tbHarvestEnd.Text);
+            harvestnote = tbHarvestNotes.Text;
+            common = tbCommonProblems.Text;
+            species = tbSpecial.Text;
+            compaion = tbCompanions.Text;
 
             if (CheckValid())
             {
-                query = "INSERT INTO Vegs (Name, Species, SowStart, SowEnd," +
-                    "Sowing, HarvestStart, HarvestEnd, Harverst, CommonProblems, Companion)" +
-                    " VALUES ('" + tbName.Text + "', '" + tbSpecies.Text + "', '" + sowingStart + "', '" +
-                    sowingEnd + "', '" + tbSowingNotes.Text + "', '" + harvestStart + "', '" + harvestEnd + "', '" +
-                    tbHarvestNotes.Text + "', '" + tbCommonProblems.Text + "', '" + tbCompanions.Text + "')";
+                SQL.QUERY = "INSERT INTO Vegs (Name, Species, SowStart, SowEnd, Sowing, Growing, HarvestStart, HarvestEnd, Harvest, CommonProblems, Special, Companion)" +
+                    " VALUES ('" + name + "', '" + species + "', '" + sowingStart + "', '" + sowingEnd + "', '" + sowingnote + "', '" + growingnote +"', '" +
+                    harvestStart + "', '" + harvestEnd + "', '" + harvestnote + "', '" + common + "', '" + special + "', '" + compaion + "')";
 
-                cmd = new SQLiteCommand(query, conn);
+                SQL.queryExecute();
 
-                using (conn)
-                {
-                    conn.Open();
-
-                    using (cmd)
-                    {
-                        try
-                        {
-                            cmd.ExecuteNonQuery();
-                        }
-                        catch(Exception ex)
-                        {
-                            MessageBox.Show(ex.ToString());
-                        }
-                    }
-                        conn.Close();
-                }
+                this.Close();
             }
         }
 

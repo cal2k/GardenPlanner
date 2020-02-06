@@ -97,6 +97,7 @@ namespace GardenPlanner
             {
                 MessageBox.Show(ex.ToString());
             }
+            this.Close();
         }
 
 
