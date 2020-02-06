@@ -72,7 +72,6 @@ namespace GardenPlanner.New_Entirys
             string content = tbContent.Text;
             if(content.Contains("'"))
             {
-                MessageBox.Show("working");
                 content = content.Replace("'", "*A*");
             }
 

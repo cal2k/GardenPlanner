@@ -52,8 +52,6 @@
             this.btnNewJob = new System.Windows.Forms.Button();
             this.tbNoteContent = new System.Windows.Forms.RichTextBox();
             this.btnSelectVeg = new System.Windows.Forms.Button();
-            this.btnRemoveJobTag = new System.Windows.Forms.Button();
-            this.cbJobTags = new System.Windows.Forms.ComboBox();
             this.cbVegTags = new System.Windows.Forms.ComboBox();
             this.btnRemoveVegTag = new System.Windows.Forms.Button();
             this.btnRemoveNoteTags = new System.Windows.Forms.Button();
@@ -97,7 +95,7 @@
             this.listBoxJobs.FormattingEnabled = true;
             this.listBoxJobs.Location = new System.Drawing.Point(361, 81);
             this.listBoxJobs.Name = "listBoxJobs";
-            this.listBoxJobs.Size = new System.Drawing.Size(340, 472);
+            this.listBoxJobs.Size = new System.Drawing.Size(339, 472);
             this.listBoxJobs.TabIndex = 11;
             this.listBoxJobs.SelectedIndexChanged += new System.EventHandler(this.listBoxJobs_SelectedIndexChanged);
             // 
@@ -186,9 +184,9 @@
             // btnRemoveJob
             // 
             this.btnRemoveJob.Enabled = false;
-            this.btnRemoveJob.Location = new System.Drawing.Point(533, 785);
+            this.btnRemoveJob.Location = new System.Drawing.Point(591, 52);
             this.btnRemoveJob.Name = "btnRemoveJob";
-            this.btnRemoveJob.Size = new System.Drawing.Size(168, 23);
+            this.btnRemoveJob.Size = new System.Drawing.Size(109, 23);
             this.btnRemoveJob.TabIndex = 31;
             this.btnRemoveJob.Text = "Remove";
             this.btnRemoveJob.UseVisualStyleBackColor = true;
@@ -268,7 +266,7 @@
             // 
             this.btnNewJob.Location = new System.Drawing.Point(361, 52);
             this.btnNewJob.Name = "btnNewJob";
-            this.btnNewJob.Size = new System.Drawing.Size(82, 23);
+            this.btnNewJob.Size = new System.Drawing.Size(109, 23);
             this.btnNewJob.TabIndex = 54;
             this.btnNewJob.Text = "New Job";
             this.btnNewJob.UseVisualStyleBackColor = true;
@@ -293,26 +291,6 @@
             this.btnSelectVeg.Text = "Select Veg";
             this.btnSelectVeg.UseVisualStyleBackColor = true;
             this.btnSelectVeg.Click += new System.EventHandler(this.btnSelectVeg_Click);
-            // 
-            // btnRemoveJobTag
-            // 
-            this.btnRemoveJobTag.Location = new System.Drawing.Point(619, 52);
-            this.btnRemoveJobTag.Name = "btnRemoveJobTag";
-            this.btnRemoveJobTag.Size = new System.Drawing.Size(82, 23);
-            this.btnRemoveJobTag.TabIndex = 57;
-            this.btnRemoveJobTag.Text = "Remove Filter";
-            this.btnRemoveJobTag.UseVisualStyleBackColor = true;
-            this.btnRemoveJobTag.Click += new System.EventHandler(this.btnRemoveJobTag_Click);
-            // 
-            // cbJobTags
-            // 
-            this.cbJobTags.FormattingEnabled = true;
-            this.cbJobTags.Location = new System.Drawing.Point(449, 54);
-            this.cbJobTags.Name = "cbJobTags";
-            this.cbJobTags.Size = new System.Drawing.Size(164, 21);
-            this.cbJobTags.TabIndex = 58;
-            this.cbJobTags.Text = "Tags";
-            this.cbJobTags.SelectedIndexChanged += new System.EventHandler(this.bnJobTags_SelectedIndexChanged);
             // 
             // cbVegTags
             // 
@@ -378,9 +356,9 @@
             // btnEditJob
             // 
             this.btnEditJob.Enabled = false;
-            this.btnEditJob.Location = new System.Drawing.Point(361, 785);
+            this.btnEditJob.Location = new System.Drawing.Point(476, 52);
             this.btnEditJob.Name = "btnEditJob";
-            this.btnEditJob.Size = new System.Drawing.Size(168, 23);
+            this.btnEditJob.Size = new System.Drawing.Size(109, 23);
             this.btnEditJob.TabIndex = 66;
             this.btnEditJob.Text = "Edit Job Details";
             this.btnEditJob.UseVisualStyleBackColor = true;
@@ -422,8 +400,6 @@
             this.Controls.Add(this.cbNoteTags);
             this.Controls.Add(this.btnRemoveVegTag);
             this.Controls.Add(this.cbVegTags);
-            this.Controls.Add(this.cbJobTags);
-            this.Controls.Add(this.btnRemoveJobTag);
             this.Controls.Add(this.btnSelectVeg);
             this.Controls.Add(this.tbNoteContent);
             this.Controls.Add(this.btnNewJob);
@@ -480,8 +456,6 @@
         private System.Windows.Forms.Button btnNewJob;
         private System.Windows.Forms.RichTextBox tbNoteContent;
         private System.Windows.Forms.Button btnSelectVeg;
-        private System.Windows.Forms.Button btnRemoveJobTag;
-        private System.Windows.Forms.ComboBox cbJobTags;
         private System.Windows.Forms.ComboBox cbVegTags;
         private System.Windows.Forms.Button btnRemoveVegTag;
         private System.Windows.Forms.Button btnRemoveNoteTags;

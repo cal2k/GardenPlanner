@@ -33,6 +33,27 @@ namespace GardenPlanner
             
 
         //Querys
+        public void queryExecute()
+        {
+            cmd = new SQLiteCommand(query, conn);
+            try
+            {
+                using (conn)
+                {
+                    conn.Open();
+                    using (cmd)
+                    {
+                        cmd.ExecuteNonQuery();
+                    }
+                        conn.Close();
+                }
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show(ex.ToString());
+            }
+
+        }
         public void queryCount()
         {
             cmd = new SQLiteCommand(query, conn);

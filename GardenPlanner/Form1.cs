@@ -123,7 +123,7 @@ namespace GardenPlanner
                     {
                         while (SQL.reader.Read())
                         {
-                            temp = SQL.reader.GetString(0).Replace(".a", "'");
+                            temp = SQL.reader.GetString(0).Replace("*A*", "'");
                             listBoxJobs.Items.Add(temp);
                         }
                     }
@@ -244,26 +244,26 @@ namespace GardenPlanner
                     btnEditJournal.Enabled = false;
                     btnDeleteJournalPost.Enabled = false;
                     tbJournalContent.Text = "";
-                    LoadUserData(i);
+                    loadJournal();
                     break;
                 case 1:
                     btnEditVegDetails.Enabled = false;
                     btnRemoveVeg.Enabled = false;
                     tbVegDetails.Text = "";
                     listBoxSelectedVeg.Items.Clear();
-                    LoadUserData(i);
+                    loadSelected();
                     break;
                 case 2:
                     btnEditNote.Enabled = false;
                     btnRemoveNote.Enabled = false;
                     listBoxNotes.Items.Clear();
-                    LoadUserData(i);
+                    loadNotes();
                     break;
                 case 3:
                     btnEditJob.Enabled = false;
                     btnRemoveJob.Enabled = false;
                     listBoxJobs.Items.Clear();
-                    LoadUserData(i);
+                    loadJobs();
                     break;
                 case 4:
                     listTags.Clear();

@@ -7,8 +7,7 @@ namespace GardenPlanner.Edit
     public partial class EditJob : Form
     {
         SqL SQL = new SqL();
-        string query, title, oldTitle, content;
-        int id;
+        string query, oldTitle, content;
 
         public EditJob()
         {
@@ -19,13 +18,17 @@ namespace GardenPlanner.Edit
         {
             
             this.Text = "EDIT: " + t;
-            oldTitle = t.Replace("'", ".a");
+            if(t.Contains("'"))
+            {
+                t = t.Replace("'", "*A*");
+            }
+            oldTitle = t;
             try
             {
                 using (SQL.conn)
                 {
                     SQL.conn.Open();
-                    query = "Select title, content from Job Where title = '" + oldTitle + "'";
+                    query = "Select job from Job Where job = '" + oldTitle + "'";
                     SQL.cmd = new SQLiteCommand(query, SQL.conn);
                     using (SQL.cmd)
                     {
@@ -33,8 +36,7 @@ namespace GardenPlanner.Edit
                         {
                             while (SQL.reader.Read())
                             {
-                                title = SQL.reader.GetString(0).Replace(".a", "'");
-                                content = SQL.reader.GetString(1).Replace(".a", "'");
+                                content = SQL.reader.GetString(0).Replace("*A*", "'");
                             }
                         }
                     }
@@ -45,26 +47,14 @@ namespace GardenPlanner.Edit
             {
                 MessageBox.Show(ex.ToString());
             }
-            tbTitle.Text = title;
             tbContent.Text = content;
         }
 
         private void btnSave_Click(object sender, EventArgs e)
         {
-            title = tbTitle.Text.Replace("'", ".a");
-            content = tbContent.Text.Replace("'", ".a");
-            query = "update Job set title = '" + title + "', content = '" + content + "' Where title = '" + oldTitle + "'";
-            SQL.cmd = new SQLiteCommand(query, SQL.conn);
-
-            using (SQL.conn)
-            {
-                SQL.conn.Open();
-                using (SQL.cmd)
-                {
-                    SQL.cmd.ExecuteNonQuery();
-                }
-                SQL.conn.Close();
-            }
+            content = tbContent.Text.Replace("'", "*A*");
+            SQL.QUERY = "update Job set job = '" + content + "' Where job = '" + oldTitle + "'";
+            SQL.queryExecute();
             this.Close();
         }
 
