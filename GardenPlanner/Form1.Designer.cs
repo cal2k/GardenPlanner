@@ -51,13 +51,13 @@
             this.btnSelectVeg = new System.Windows.Forms.Button();
             this.btnEditJournal = new System.Windows.Forms.Button();
             this.btnEditJob = new System.Windows.Forms.Button();
-            this.btnEditVegDetails = new System.Windows.Forms.Button();
             this.btnEditNote = new System.Windows.Forms.Button();
             this.ToolStripUser = new System.Windows.Forms.ToolStrip();
             this.lblUserName = new System.Windows.Forms.ToolStripLabel();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.toolstripbtnAddPlant = new System.Windows.Forms.ToolStripButton();
             this.toolStripbtnCreateTag = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
             this.ToolStripUser.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -282,17 +282,6 @@
             this.btnEditJob.UseVisualStyleBackColor = true;
             this.btnEditJob.Click += new System.EventHandler(this.btnEditJob_Click);
             // 
-            // btnEditVegDetails
-            // 
-            this.btnEditVegDetails.Enabled = false;
-            this.btnEditVegDetails.Location = new System.Drawing.Point(823, 52);
-            this.btnEditVegDetails.Name = "btnEditVegDetails";
-            this.btnEditVegDetails.Size = new System.Drawing.Size(109, 23);
-            this.btnEditVegDetails.TabIndex = 67;
-            this.btnEditVegDetails.Text = "Edit Veg Details";
-            this.btnEditVegDetails.UseVisualStyleBackColor = true;
-            this.btnEditVegDetails.Click += new System.EventHandler(this.btnEditVegDetails_Click);
-            // 
             // btnEditNote
             // 
             this.btnEditNote.Enabled = false;
@@ -310,6 +299,7 @@
             this.lblUserName,
             this.toolStripSeparator1,
             this.toolstripbtnAddPlant,
+            this.toolStripButton1,
             this.toolStripbtnCreateTag});
             this.ToolStripUser.Location = new System.Drawing.Point(0, 0);
             this.ToolStripUser.Name = "ToolStripUser";
@@ -348,6 +338,15 @@
             this.toolStripbtnCreateTag.Text = "Create Tag";
             this.toolStripbtnCreateTag.Click += new System.EventHandler(this.toolStripbtnCreateTag_Click);
             // 
+            // toolStripButton1
+            // 
+            this.toolStripButton1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.toolStripButton1.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton1.Image")));
+            this.toolStripButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton1.Name = "toolStripButton1";
+            this.toolStripButton1.Size = new System.Drawing.Size(53, 22);
+            this.toolStripButton1.Text = "Edit Veg";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -355,7 +354,6 @@
             this.ClientSize = new System.Drawing.Size(1404, 820);
             this.Controls.Add(this.ToolStripUser);
             this.Controls.Add(this.btnEditNote);
-            this.Controls.Add(this.btnEditVegDetails);
             this.Controls.Add(this.btnEditJob);
             this.Controls.Add(this.btnEditJournal);
             this.Controls.Add(this.btnSelectVeg);
@@ -413,13 +411,13 @@
         private System.Windows.Forms.Button btnSelectVeg;
         private System.Windows.Forms.Button btnEditJournal;
         private System.Windows.Forms.Button btnEditJob;
-        private System.Windows.Forms.Button btnEditVegDetails;
         private System.Windows.Forms.Button btnEditNote;
         public System.Windows.Forms.ToolStripLabel lblUserName;
         public System.Windows.Forms.ToolStrip ToolStripUser;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.ToolStripButton toolstripbtnAddPlant;
         private System.Windows.Forms.ToolStripButton toolStripbtnCreateTag;
+        private System.Windows.Forms.ToolStripButton toolStripButton1;
     }
 }
 

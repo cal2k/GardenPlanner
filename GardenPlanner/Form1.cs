@@ -226,7 +226,6 @@ namespace GardenPlanner
                     loadJournal();
                     break;
                 case 1:
-                    btnEditVegDetails.Enabled = false;
                     btnRemoveVeg.Enabled = false;
                     listBoxSelectedVeg.Items.Clear();
                     loadSelected();
@@ -253,11 +252,22 @@ namespace GardenPlanner
 
         }
 
+        private void disablebtn()
+        {
+            btnEditJournal.Enabled = false;
+            btnDeleteJournalPost.Enabled = false;
+            btnRemoveJournalTag.Enabled = false;
+            btnRemoveVeg.Enabled = false;
+            btnEditJob.Enabled = false;
+            btnRemoveJob.Enabled = false;
+
+        }
         //List Events
         private void listBoxJournal_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (listBoxJournal.SelectedIndex > -1)
             {
+                disablebtn();
                 listBoxJobs.SelectedIndex = -1;
                 listBoxSelectedVeg.SelectedIndex = -1;
                 btnEditJournal.Enabled = true;
@@ -287,6 +297,7 @@ namespace GardenPlanner
         {
             if (listBoxJobs.SelectedIndex > -1)
             {
+                disablebtn();
                 listBoxJournal.SelectedIndex = -1;
                 listBoxSelectedVeg.SelectedIndex = -1;
                 btnEditJob.Enabled = true;
@@ -306,17 +317,16 @@ namespace GardenPlanner
         {
             if(listBoxSelectedVeg.SelectedIndex > -1)
             {
+                disablebtn();
                 listBoxJournal.SelectedIndex = -1;
                 listBoxJobs.SelectedIndex = -1;
-                btnEditVegDetails.Enabled = true;
                 btnRemoveVeg.Enabled = true;
                 btnNewNote.Enabled = true;
                 currentList = "SelectedVeg";
                 string[] array = listBoxSelectedVeg.SelectedItem.ToString().Split('(', ')');
 
                 currentItem = array[1];
-                MessageBox.Show(array[1]);
-
+                
                 query = "select ID from Vegs where Species = '" + currentItem +"'";
                 SQL.cmd = new SQLiteCommand(query, SQL.conn);
                 try
@@ -427,9 +437,6 @@ namespace GardenPlanner
             EditJob.Show();
 
         }
-
-        
-
         private void btnSelectVeg_Click(object sender, EventArgs e)
         {
             New_Entirys.NewSelectedVeg NewSelectedVeg = new New_Entirys.NewSelectedVeg();
