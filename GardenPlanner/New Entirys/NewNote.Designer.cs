@@ -29,7 +29,6 @@
         private void InitializeComponent()
         {
             this.btnAdd = new System.Windows.Forms.Button();
-            this.cbTag = new System.Windows.Forms.ComboBox();
             this.lblContentRemaing = new System.Windows.Forms.Label();
             this.tbContent = new System.Windows.Forms.RichTextBox();
             this.btnCancle = new System.Windows.Forms.Button();
@@ -37,22 +36,13 @@
             // 
             // btnAdd
             // 
-            this.btnAdd.Location = new System.Drawing.Point(12, 235);
+            this.btnAdd.Location = new System.Drawing.Point(12, 208);
             this.btnAdd.Name = "btnAdd";
             this.btnAdd.Size = new System.Drawing.Size(75, 23);
             this.btnAdd.TabIndex = 13;
             this.btnAdd.Text = "Save";
             this.btnAdd.UseVisualStyleBackColor = true;
             this.btnAdd.Click += new System.EventHandler(this.btnAdd_Click);
-            // 
-            // cbTag
-            // 
-            this.cbTag.FormattingEnabled = true;
-            this.cbTag.Location = new System.Drawing.Point(12, 208);
-            this.cbTag.Name = "cbTag";
-            this.cbTag.Size = new System.Drawing.Size(306, 21);
-            this.cbTag.TabIndex = 12;
-            this.cbTag.Text = "Tags";
             // 
             // lblContentRemaing
             // 
@@ -70,13 +60,12 @@
             this.tbContent.Name = "tbContent";
             this.tbContent.Size = new System.Drawing.Size(306, 190);
             this.tbContent.TabIndex = 10;
-            this.tbContent.Text = "Details";
-            this.tbContent.Click += new System.EventHandler(this.tbContent_Click);
+            this.tbContent.Text = "";
             this.tbContent.TextChanged += new System.EventHandler(this.tbContent_TextChanged);
             // 
             // btnCancle
             // 
-            this.btnCancle.Location = new System.Drawing.Point(243, 235);
+            this.btnCancle.Location = new System.Drawing.Point(243, 208);
             this.btnCancle.Name = "btnCancle";
             this.btnCancle.Size = new System.Drawing.Size(75, 23);
             this.btnCancle.TabIndex = 8;
@@ -88,9 +77,8 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(373, 270);
+            this.ClientSize = new System.Drawing.Size(373, 240);
             this.Controls.Add(this.btnAdd);
-            this.Controls.Add(this.cbTag);
             this.Controls.Add(this.lblContentRemaing);
             this.Controls.Add(this.tbContent);
             this.Controls.Add(this.btnCancle);
@@ -108,7 +96,6 @@
         #endregion
 
         private System.Windows.Forms.Button btnAdd;
-        private System.Windows.Forms.ComboBox cbTag;
         private System.Windows.Forms.Label lblContentRemaing;
         private System.Windows.Forms.RichTextBox tbContent;
         private System.Windows.Forms.Button btnCancle;

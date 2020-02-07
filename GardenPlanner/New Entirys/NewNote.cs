@@ -14,7 +14,7 @@ namespace GardenPlanner.New_Entirys
     public partial class NewNote : Form
     {
         SqL SQL = new SqL();
-        string currentTag, temp, query;
+        string currentTag, temp, query, currentlist, currentitem;
         int userid, contentLimit = 1000, contentCurrent = 0, contentRemaining;
         
         DateTime date;
@@ -24,42 +24,11 @@ namespace GardenPlanner.New_Entirys
             InitializeComponent();
         }
 
-        public void setUserID(int i)
+        public void setUserID(int i, string List, string Item)
         {
             userid = i;
-
-            query = "Select tag FROM Tags where userid = '" + userid + "'";
-            SQL.cmd = new SQLiteCommand(query, SQL.conn);
-            try
-            {
-                using (SQL.conn)
-                {
-                    SQL.conn.Open();
-                    using (SQL.cmd)
-                    {
-                        using (SQL.reader = SQL.cmd.ExecuteReader())
-                        {
-                            while (SQL.reader.Read())
-                            {
-                                temp = SQL.reader.GetString(0);
-                                cbTag.Items.Add(temp);
-                            }
-                        }
-                    }
-                    SQL.conn.Close();
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.ToString());
-            }
-        }
-        private void tbContent_Click(object sender, EventArgs e)
-        {
-            if (tbContent.Text == "Details")
-            {
-                tbContent.Text = "";
-            }
+            currentlist = List;
+            currentitem = Item;
         }
         private void tbContent_TextChanged(object sender, EventArgs e)
         {
@@ -70,23 +39,31 @@ namespace GardenPlanner.New_Entirys
 
         private void btnAdd_Click(object sender, EventArgs e)
         {
-            if (cbTag.SelectedIndex == -1)
-            {
-                currentTag = "";
-            }
-            else
-            {
-                currentTag = cbTag.SelectedItem.ToString();
-            }
-
             date = DateTime.Now;
             string content = tbContent.Text;
             if(content.Contains("'"))
             {
                 content = content.Replace("'", "*A*");
             }
-            SQL.QUERY = "INSERT INTO Note (userid, content, date, tag) VALUES ('" + userid + "', '" + content + "', '" + date + "', '" + currentTag + "')";
-            SQL.queryExecute();
+            query = "INSERT INTO '"+ currentlist + "' (userid, note, noteid) VALUES ('"+ userid +"', '" + content + "','" + currentitem +"')";
+            SQL.cmd = new SQLiteCommand(query, SQL.conn);
+            try
+            {
+                using (SQL.conn)
+                {
+                    SQL.conn.Open();
+                    using (SQL.cmd)
+                    {
+                        SQL.cmd.ExecuteNonQuery();
+                    }
+                        SQL.conn.Close();
+                }
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show(ex.ToString());
+            }
+
             this.Close();
         }
         private void btnCancle_Click(object sender, EventArgs e)

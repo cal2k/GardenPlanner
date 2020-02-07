@@ -231,6 +231,7 @@
             // 
             // btnNewNote
             // 
+            this.btnNewNote.Enabled = false;
             this.btnNewNote.Location = new System.Drawing.Point(15, 585);
             this.btnNewNote.Name = "btnNewNote";
             this.btnNewNote.Size = new System.Drawing.Size(109, 23);

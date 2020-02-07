@@ -16,15 +16,12 @@ namespace GardenPlanner
     {
         SqL SQL = new SqL();
 
-        private string userName, query, temp, SelectedVegName, SelectedVegSpecies, currentTag;
+        private string userName, query, temp, SelectedVegName, SelectedVegSpecies, currentTag, currentList, currentItem;
 
         List<string> list = new List<string>(), listTags = new List<string>();
 
         private int count, userID;
-
-
         
-
         public Form1()
         {
             InitializeComponent();
@@ -71,7 +68,7 @@ namespace GardenPlanner
 
         private void loadJournal()
         {
-            query = "Select Title FROM Journal WHERE userid = '" + userID + "'ORDER BY date DESC";
+            query = "Select Title FROM Journal WHERE userid = '" + userID + "' and Title is not null ORDER BY date DESC";
             SQL.cmd = new SQLiteCommand(query, SQL.conn);
             using (SQL.conn)
             {
@@ -160,7 +157,33 @@ namespace GardenPlanner
         }
         private void loadNotes()
         {
-
+            listBoxNotes.Items.Clear();
+            query = "select note from '" + currentList + "' where noteid = '" + currentItem + "' and userid = '" + userID + "'";
+            SQL.cmd = new SQLiteCommand(query, SQL.conn);
+            try
+            {
+                using (SQL.conn)
+                {
+                    SQL.conn.Open();
+                    using (SQL.reader = SQL.cmd.ExecuteReader())
+                    {
+                        while(SQL.reader.Read())
+                        {
+                            temp = SQL.reader.GetString(0);
+                            if(temp.Contains("*A*"))
+                            {
+                                temp = temp.Replace("*A*", "'");
+                            }
+                            listBoxNotes.Items.Add(temp);
+                        }
+                    }
+                        SQL.conn.Close();
+                }
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show(ex.ToString());
+            }
         }
         private void loadTags()
         {
@@ -237,6 +260,16 @@ namespace GardenPlanner
             {
                 btnEditJournal.Enabled = true;
                 btnDeleteJournalPost.Enabled = true;
+                btnNewNote.Enabled = true;
+                currentList = "Journal";
+                currentItem = listBoxJournal.SelectedItem.ToString();
+
+                if(currentItem.Contains("'"))
+                {
+                    currentItem = currentItem.Replace("'", "*A*");
+                }
+                loadNotes();
+
             }
         }
         private void listBoxNotes_SelectedIndexChanged(object sender, EventArgs e)
@@ -254,6 +287,15 @@ namespace GardenPlanner
             {
                 btnEditJob.Enabled = true;
                 btnRemoveJob.Enabled = true;
+                btnNewNote.Enabled = true;
+                currentList = "Job";
+                currentItem = listBoxJobs.SelectedItem.ToString();
+
+                if (currentItem.Contains("'"))
+                {
+                    currentItem = currentItem.Replace("'", "*A*");
+                }
+                loadNotes();
             }
         }
         private void listBoxSelectedVeg_SelectedIndexChanged(object sender, EventArgs e)
@@ -262,6 +304,15 @@ namespace GardenPlanner
             {
                 btnEditVegDetails.Enabled = true;
                 btnRemoveVeg.Enabled = true;
+                btnNewNote.Enabled = true;
+                currentList = "SelectedVeg";
+                currentItem = listBoxSelectedVeg.SelectedItem.ToString();
+
+                if (currentItem.Contains("'"))
+                {
+                    currentItem = currentItem.Replace("'", "*A*");
+                }
+                loadNotes();
             }
         }
 
@@ -305,7 +356,7 @@ namespace GardenPlanner
         {
             New_Entirys.NewNote Note = new New_Entirys.NewNote();
             Note.FormClosed += new FormClosedEventHandler(Note_FormClosed);
-            Note.setUserID(userID);
+            Note.setUserID(userID, currentList, currentItem);
             Note.Show();
         }
         private void Note_FormClosed(object sender, FormClosedEventArgs e)
