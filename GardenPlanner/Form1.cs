@@ -61,13 +61,13 @@ namespace GardenPlanner
         }
         private void CreateTag_FormClosed(object sender, FormClosedEventArgs e)
         {
-            count = 4;
-            Reset(count);
+            loadTags();
         }
         //Tools END
 
         private void loadJournal()
         {
+            listBoxJournal.Items.Clear();
             query = "Select Title FROM Journal WHERE userid = '" + userID + "' and Title is not null ORDER BY date DESC";
             SQL.cmd = new SQLiteCommand(query, SQL.conn);
             using (SQL.conn)
@@ -110,6 +110,7 @@ namespace GardenPlanner
         }
         private void loadSelected()
         {
+            listBoxSelectedVeg.Items.Clear();
             query = "Select * From Vegs WHERE id IN(SELECT vegid FROM SelectedVeg WHERE userid = '" + userID + "' and vegid is not null)";
 
             SQL.cmd = new SQLiteCommand(query, SQL.conn);
@@ -136,6 +137,7 @@ namespace GardenPlanner
         }
         private void loadJobs()
         {
+            listBoxJobs.Items.Clear();
             query = "Select job FROM Job where userid = '" + userID + "' and job is not null ORDER BY date DESC";
             SQL.cmd = new SQLiteCommand(query, SQL.conn);
             using (SQL.conn)
@@ -187,6 +189,7 @@ namespace GardenPlanner
         }
         private void loadTags()
         {
+            listTags.Clear();
             query = "Select tag FROM Tags where userid = '" + userID + "'";
             SQL.cmd = new SQLiteCommand(query, SQL.conn);
             try
@@ -214,44 +217,6 @@ namespace GardenPlanner
             }
         }
 
-        public void Reset(int i)
-        {
-            switch (i)
-            {
-                case 0:
-
-                    listBoxJournal.Items.Clear();
-                    btnEditJournal.Enabled = false;
-                    btnDeleteJournalPost.Enabled = false;
-                    loadJournal();
-                    break;
-                case 1:
-                    btnRemoveVeg.Enabled = false;
-                    listBoxSelectedVeg.Items.Clear();
-                    loadSelected();
-                    break;
-                case 2:
-                    btnEditNote.Enabled = false;
-                    btnRemoveNote.Enabled = false;
-                    listBoxNotes.Items.Clear();
-                    loadNotes();
-                    break;
-                case 3:
-                    btnEditJob.Enabled = false;
-                    btnRemoveJob.Enabled = false;
-                    listBoxJobs.Items.Clear();
-                    loadJobs();
-                    break;
-                case 4:
-                    listTags.Clear();
-                    cbJournalTags.Items.Clear();
-                    loadTags();
-                    break;
-
-            }
-
-        }
-
         private void disablebtn()
         {
             btnEditJournal.Enabled = false;
@@ -260,16 +225,21 @@ namespace GardenPlanner
             btnRemoveVeg.Enabled = false;
             btnEditJob.Enabled = false;
             btnRemoveJob.Enabled = false;
+            btnNewNote.Enabled = false;
+            btnEditNote.Enabled = false;
+            btnRemoveNote.Enabled = false;
 
         }
+
         //List Events
         private void listBoxJournal_SelectedIndexChanged(object sender, EventArgs e)
         {
+            disablebtn();
             if (listBoxJournal.SelectedIndex > -1)
             {
-                disablebtn();
                 listBoxJobs.SelectedIndex = -1;
                 listBoxSelectedVeg.SelectedIndex = -1;
+
                 btnEditJournal.Enabled = true;
                 btnDeleteJournalPost.Enabled = true;
                 btnNewNote.Enabled = true;
@@ -295,9 +265,9 @@ namespace GardenPlanner
         }
         private void listBoxJobs_SelectedIndexChanged(object sender, EventArgs e)
         {
+            disablebtn();
             if (listBoxJobs.SelectedIndex > -1)
             {
-                disablebtn();
                 listBoxJournal.SelectedIndex = -1;
                 listBoxSelectedVeg.SelectedIndex = -1;
                 btnEditJob.Enabled = true;
@@ -315,9 +285,9 @@ namespace GardenPlanner
         }
         private void listBoxSelectedVeg_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if(listBoxSelectedVeg.SelectedIndex > -1)
+            disablebtn();
+            if (listBoxSelectedVeg.SelectedIndex > -1)
             {
-                disablebtn();
                 listBoxJournal.SelectedIndex = -1;
                 listBoxJobs.SelectedIndex = -1;
                 btnRemoveVeg.Enabled = true;
@@ -365,17 +335,15 @@ namespace GardenPlanner
         //List Filters
         private void cbJournalFilterTags_SelectedIndexChanged(object sender, EventArgs e)
         {
+            btnRemoveJournalTag.Enabled = true;
             currentTag = cbJournalTags.SelectedItem.ToString();
-            count = 5;
-            Reset(count);
+            loadJournalFilter();
         }
         private void btnJournalFilterRemove_Click(object sender, EventArgs e)
         {
             cbJournalTags.Text = "Tags";
-            count = 0;
-            Reset(count);
-            count = 4;
-            Reset(count);
+            loadJournal();
+            loadTags();
         }
 
         //new entirys
@@ -395,8 +363,7 @@ namespace GardenPlanner
         }
         private void Journal_FormClosed(object sender, FormClosedEventArgs e)
         {
-            count = 0;
-            Reset(count);
+            loadJournal();
         }
         private void btnNewNote_Click(object sender, EventArgs e)
         {
@@ -407,8 +374,7 @@ namespace GardenPlanner
         }
         private void Note_FormClosed(object sender, FormClosedEventArgs e)
         {
-            count = 2;
-            Reset(count);
+            loadNotes();
         }
         private void btnEditNote_Click(object sender, EventArgs e)
         {
@@ -426,8 +392,7 @@ namespace GardenPlanner
         }
         private void Job_FormClosed(object sender, FormClosedEventArgs e)
         {
-            count = 3;
-            Reset(count);
+            loadJobs();
         }
         private void btnEditJob_Click(object sender, EventArgs e)
         {
@@ -446,8 +411,7 @@ namespace GardenPlanner
         }
         private void SelectedVeg_FormClosed(object sender, FormClosedEventArgs e)
         {
-            count = 1;
-            Reset(count);
+            loadSelected();
         }
         private void btnEditVegDetails_Click(object sender, EventArgs e)
         {
@@ -472,9 +436,7 @@ namespace GardenPlanner
 
                 SQL.QUERY = "Delete from Journal where title = '" + temp + "'";
                 SQL.queryExecute();
-                btnDeleteJournalPost.Enabled = false;
-                count = 0;
-                Reset(count);
+                loadJournal();
             }
 
 
@@ -518,8 +480,7 @@ namespace GardenPlanner
                 SQL.queryExecute();
                 SQL.conn.Close();
                 btnRemoveVeg.Enabled = false;
-                count = 1;
-                Reset(count);
+                loadSelected();
             }
         }
         private void btnRemoveNote_Click(object sender, EventArgs e)
@@ -532,9 +493,7 @@ namespace GardenPlanner
                 SQL.QUERY = "Delete from '" + currentList +"' where note = '" + temp + "'";
                 SQL.queryExecute();
 
-                btnRemoveNote.Enabled = false;
-                count = 2;
-                Reset(count);
+                loadNotes();
             }
         }
         private void btnRemoveJob_Click(object sender, EventArgs e)
@@ -554,8 +513,7 @@ namespace GardenPlanner
                 SQL.queryExecute();
 
                 btnRemoveJob.Enabled = false;
-                count = 3;
-                Reset(count);
+                loadJobs();
             }
         }
 

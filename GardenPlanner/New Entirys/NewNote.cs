@@ -14,7 +14,7 @@ namespace GardenPlanner.New_Entirys
     public partial class NewNote : Form
     {
         SqL SQL = new SqL();
-        string currentTag, temp, query, currentlist, currentitem;
+        string query, currentlist, currentitem;
         int userid, contentLimit = 1000, contentCurrent = 0, contentRemaining;
         
         DateTime date;

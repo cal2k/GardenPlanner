@@ -14,12 +14,9 @@ namespace GardenPlanner
     public partial class AddPlant : Form
     {
         SqL SQL = new SqL();
-        string query, name, species, sowingnote, harvestnote, growingnote, common, special, compaion;
+        string name, species, sowingnote, harvestnote, growingnote, common, special, compaion;
         
         int required, sowingStart, sowingEnd, harvestStart, harvestEnd;
-
-        SQLiteConnection conn = new SQLiteConnection("Data Source = GardenDB.db; version =3;");
-        SQLiteCommand cmd;
 
 
         private class RequiredItem

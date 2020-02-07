@@ -43,8 +43,6 @@
             this.btnRemoveJob = new System.Windows.Forms.Button();
             this.btnAddPlant = new System.Windows.Forms.Button();
             this.btnCreateTag = new System.Windows.Forms.Button();
-            this.cbJournalTags = new System.Windows.Forms.ComboBox();
-            this.btnRemoveJournalTag = new System.Windows.Forms.Button();
             this.btnNewJournal = new System.Windows.Forms.Button();
             this.btnNewNote = new System.Windows.Forms.Button();
             this.btnNewJob = new System.Windows.Forms.Button();
@@ -58,6 +56,8 @@
             this.toolstripbtnAddPlant = new System.Windows.Forms.ToolStripButton();
             this.toolStripbtnCreateTag = new System.Windows.Forms.ToolStripButton();
             this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
+            this.btnRemoveJournalTag = new System.Windows.Forms.Button();
+            this.cbJournalTags = new System.Windows.Forms.ComboBox();
             this.ToolStripUser.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -199,26 +199,6 @@
             this.btnCreateTag.Text = "Create Tag";
             this.btnCreateTag.UseVisualStyleBackColor = true;
             // 
-            // cbJournalTags
-            // 
-            this.cbJournalTags.FormattingEnabled = true;
-            this.cbJournalTags.Location = new System.Drawing.Point(360, 54);
-            this.cbJournalTags.Name = "cbJournalTags";
-            this.cbJournalTags.Size = new System.Drawing.Size(227, 21);
-            this.cbJournalTags.TabIndex = 50;
-            this.cbJournalTags.Text = "Tags";
-            this.cbJournalTags.SelectedIndexChanged += new System.EventHandler(this.cbJournalFilterTags_SelectedIndexChanged);
-            // 
-            // btnRemoveJournalTag
-            // 
-            this.btnRemoveJournalTag.Location = new System.Drawing.Point(593, 52);
-            this.btnRemoveJournalTag.Name = "btnRemoveJournalTag";
-            this.btnRemoveJournalTag.Size = new System.Drawing.Size(109, 23);
-            this.btnRemoveJournalTag.TabIndex = 51;
-            this.btnRemoveJournalTag.Text = "Remove Filter";
-            this.btnRemoveJournalTag.UseVisualStyleBackColor = true;
-            this.btnRemoveJournalTag.Click += new System.EventHandler(this.btnJournalFilterRemove_Click);
-            // 
             // btnNewJournal
             // 
             this.btnNewJournal.Location = new System.Drawing.Point(15, 52);
@@ -347,6 +327,26 @@
             this.toolStripButton1.Size = new System.Drawing.Size(53, 22);
             this.toolStripButton1.Text = "Edit Veg";
             // 
+            // btnRemoveJournalTag
+            // 
+            this.btnRemoveJournalTag.Location = new System.Drawing.Point(593, 52);
+            this.btnRemoveJournalTag.Name = "btnRemoveJournalTag";
+            this.btnRemoveJournalTag.Size = new System.Drawing.Size(109, 23);
+            this.btnRemoveJournalTag.TabIndex = 51;
+            this.btnRemoveJournalTag.Text = "Remove Filter";
+            this.btnRemoveJournalTag.UseVisualStyleBackColor = true;
+            this.btnRemoveJournalTag.Click += new System.EventHandler(this.btnJournalFilterRemove_Click);
+            // 
+            // cbJournalTags
+            // 
+            this.cbJournalTags.FormattingEnabled = true;
+            this.cbJournalTags.Location = new System.Drawing.Point(360, 54);
+            this.cbJournalTags.Name = "cbJournalTags";
+            this.cbJournalTags.Size = new System.Drawing.Size(227, 21);
+            this.cbJournalTags.TabIndex = 50;
+            this.cbJournalTags.Text = "Tags";
+            this.cbJournalTags.SelectedIndexChanged += new System.EventHandler(this.cbJournalFilterTags_SelectedIndexChanged);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -403,8 +403,6 @@
         private System.Windows.Forms.Button btnRemoveJob;
         private System.Windows.Forms.Button btnAddPlant;
         private System.Windows.Forms.Button btnCreateTag;
-        private System.Windows.Forms.ComboBox cbJournalTags;
-        private System.Windows.Forms.Button btnRemoveJournalTag;
         private System.Windows.Forms.Button btnNewJournal;
         private System.Windows.Forms.Button btnNewNote;
         private System.Windows.Forms.Button btnNewJob;
@@ -418,6 +416,8 @@
         private System.Windows.Forms.ToolStripButton toolstripbtnAddPlant;
         private System.Windows.Forms.ToolStripButton toolStripbtnCreateTag;
         private System.Windows.Forms.ToolStripButton toolStripButton1;
+        private System.Windows.Forms.Button btnRemoveJournalTag;
+        private System.Windows.Forms.ComboBox cbJournalTags;
     }
 }
 
