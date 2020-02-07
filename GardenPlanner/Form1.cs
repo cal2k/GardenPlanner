@@ -110,7 +110,7 @@ namespace GardenPlanner
         }
         private void loadSelected()
         {
-            query = "Select * From Vegs WHERE id IN(SELECT vegid FROM SelectedVeg WHERE userid = '" + userID + "')";
+            query = "Select * From Vegs WHERE id IN(SELECT vegid FROM SelectedVeg WHERE userid = '" + userID + "' and vegid is not null)";
 
             SQL.cmd = new SQLiteCommand(query, SQL.conn);
 
@@ -136,7 +136,7 @@ namespace GardenPlanner
         }
         private void loadJobs()
         {
-            query = "Select job FROM Job where userid = '" + userID + "' ORDER BY date DESC";
+            query = "Select job FROM Job where userid = '" + userID + "' and job is not null ORDER BY date DESC";
             SQL.cmd = new SQLiteCommand(query, SQL.conn);
             using (SQL.conn)
             {
@@ -258,6 +258,8 @@ namespace GardenPlanner
         {
             if (listBoxJournal.SelectedIndex > -1)
             {
+                listBoxJobs.SelectedIndex = -1;
+                listBoxSelectedVeg.SelectedIndex = -1;
                 btnEditJournal.Enabled = true;
                 btnDeleteJournalPost.Enabled = true;
                 btnNewNote.Enabled = true;
@@ -285,6 +287,8 @@ namespace GardenPlanner
         {
             if (listBoxJobs.SelectedIndex > -1)
             {
+                listBoxJournal.SelectedIndex = -1;
+                listBoxSelectedVeg.SelectedIndex = -1;
                 btnEditJob.Enabled = true;
                 btnRemoveJob.Enabled = true;
                 btnNewNote.Enabled = true;
@@ -302,11 +306,43 @@ namespace GardenPlanner
         {
             if(listBoxSelectedVeg.SelectedIndex > -1)
             {
+                listBoxJournal.SelectedIndex = -1;
+                listBoxJobs.SelectedIndex = -1;
                 btnEditVegDetails.Enabled = true;
                 btnRemoveVeg.Enabled = true;
                 btnNewNote.Enabled = true;
                 currentList = "SelectedVeg";
-                currentItem = listBoxSelectedVeg.SelectedItem.ToString();
+                string[] array = listBoxSelectedVeg.SelectedItem.ToString().Split('(', ')');
+
+                currentItem = array[1];
+                MessageBox.Show(array[1]);
+
+                query = "select ID from Vegs where Species = '" + currentItem +"'";
+                SQL.cmd = new SQLiteCommand(query, SQL.conn);
+                try
+                {
+                    using (SQL.conn)
+                    {
+                        SQL.conn.Open();
+                        using (SQL.cmd)
+                        {
+                            using (SQL.reader = SQL.cmd.ExecuteReader())
+                            {
+                                while(SQL.reader.Read())
+                                {
+                                    count = SQL.reader.GetInt32(0);
+                                }
+                            }
+                        }
+                            SQL.conn.Close();
+                    }
+                }
+                catch(Exception ex)
+                {
+                    MessageBox.Show(ex.ToString());
+                }
+
+                currentItem = count.ToString();
 
                 if (currentItem.Contains("'"))
                 {
@@ -486,7 +522,7 @@ namespace GardenPlanner
             if (confirmation == DialogResult.Yes)
             {
                 temp = temp.Replace("'", "*A*");
-                SQL.QUERY = "Delete from Note where title = '" + temp + "'";
+                SQL.QUERY = "Delete from '" + currentList +"' where note = '" + temp + "'";
                 SQL.queryExecute();
 
                 btnRemoveNote.Enabled = false;
