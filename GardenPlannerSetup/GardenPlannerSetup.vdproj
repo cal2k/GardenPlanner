@@ -3,7 +3,7 @@
 "VSVersion" = "3:800"
 "ProjectType" = "8:{978C614F-708E-4E1A-B201-565925725DBA}"
 "IsWebType" = "8:FALSE"
-"ProjectName" = "8:GardenPlannerSetup"
+"ProjectName" = "8:Garden Planner"
 "LanguageId" = "3:1033"
 "CodePage" = "3:1252"
 "UILanguageId" = "3:1033"
@@ -299,6 +299,17 @@
             "Property" = "8:ProgramMenuFolder"
                 "Folders"
                 {
+                    "{9EF0B969-E518-4E46-987F-47570745A589}:_5AF3914E6E054A41B513B41E5421AA9B"
+                    {
+                    "Name" = "8:Garden Planner"
+                    "AlwaysCreate" = "11:FALSE"
+                    "Condition" = "8:"
+                    "Transitive" = "11:FALSE"
+                    "Property" = "8:_A3BBFED15FDD43E5B5E8959CA9EB7DAF"
+                        "Folders"
+                        {
+                        }
+                    }
                 }
             }
             "{3C67513D-01DD-4637-8A68-80971EB9504F}:_8681AB0B388946C6B0B7153E9D9E6177"
@@ -341,7 +352,7 @@
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:GardenPlannerSetup"
         "ProductCode" = "8:{C663B62C-261F-4473-B07A-7680B0AD801B}"
-        "PackageCode" = "8:{F44AD80A-DBCD-48BE-BEC1-1B915BCDFB42}"
+        "PackageCode" = "8:{FCEA72AA-DCBE-419F-BD2D-DA1B8C985017}"
         "UpgradeCode" = "8:{CAF8F70D-841D-4AE7-A34B-E4CBF1E47032}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"
@@ -461,6 +472,20 @@
         }
         "Shortcut"
         {
+            "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_19F9F2875F044231A50F40A7B3DEBA8A"
+            {
+            "Name" = "8:Garden Planner"
+            "Arguments" = "8:"
+            "Description" = "8:"
+            "ShowCmd" = "3:1"
+            "IconIndex" = "3:0"
+            "Transitive" = "11:FALSE"
+            "Target" = "8:_FB3463AEC7D8482FBF2871B58A72C7F3"
+            "Folder" = "8:_5AF3914E6E054A41B513B41E5421AA9B"
+            "WorkingFolder" = "8:_8681AB0B388946C6B0B7153E9D9E6177"
+            "Icon" = "8:_8A0CABFDDEC74F548F5C1A7515803FD4"
+            "Feature" = "8:"
+            }
             "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_BE82BCCA30864A4895D074D81E8DEED5"
             {
             "Name" = "8:GardenPlanner"
