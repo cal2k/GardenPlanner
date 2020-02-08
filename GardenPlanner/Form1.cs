@@ -70,7 +70,8 @@ namespace GardenPlanner
         }
         private void toolStripButton2_Click(object sender, EventArgs e)
         {
-            HOWTO();
+            Tools.Help help = new Tools.Help();
+            help.Show();
         }
         //Tools END
 
