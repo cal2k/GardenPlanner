@@ -274,6 +274,16 @@ namespace GardenPlanner
 
             }
         }
+        private void listBoxJournal_DoubleClick(object sender, EventArgs e)
+        {
+            if (listBoxJournal.SelectedIndex > -1)
+            {
+                Edit.EditJournal EditJournal = new Edit.EditJournal();
+                EditJournal.FormClosed += new FormClosedEventHandler(Journal_FormClosed);
+                EditJournal.populateReadOnly(listBoxJournal.SelectedItem.ToString());
+                EditJournal.Show();
+            }
+        }
         private void btnNewJournal_Click(object sender, EventArgs e)
         {
             New_Entirys.NewJournal Journal = new New_Entirys.NewJournal();

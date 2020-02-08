@@ -14,7 +14,43 @@ namespace GardenPlanner.Edit
         }
 
         
+        public void populateReadOnly(string t)
+        {
+            this.Text = "Viewing: " + t;
+            oldTitle = t.Replace("'", "*A*");
+            try
+            {
+                using (SQL.conn)
+                {
+                    SQL.conn.Open();
+                    query = "Select title, content from Journal Where title = '" + oldTitle + "'";
+                    SQL.cmd = new SQLiteCommand(query, SQL.conn);
 
+
+                    using (SQL.cmd)
+                    {
+                        using (SQL.reader = SQL.cmd.ExecuteReader())
+                        {
+                            while (SQL.reader.Read())
+                            {
+                                title = SQL.reader.GetString(0).Replace("*A*", "'");
+                                content = SQL.reader.GetString(1).Replace("*A*", "'");
+                            }
+                        }
+                    }
+                    SQL.conn.Close();
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString());
+            }
+            tbTitle.Text = title;
+            tbContent.Text = content;
+            tbTitle.ReadOnly = true;
+            tbContent.ReadOnly = true;
+            btnSave.Hide();
+        }
         public void populate(string t)
         {
             this.Text = "EDIT: " + t;
