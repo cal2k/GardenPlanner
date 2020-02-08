@@ -7,23 +7,29 @@ namespace GardenPlanner.Edit
     public partial class EditNote : Form
     {
         SqL SQL = new SqL();
-        string query, title, oldTitle, content;
+        string query, title, oldTitle, content, list, item;
+        int userid;
 
         public EditNote()
         {
             InitializeComponent();
         }
-        public void populate(string t)
+        public void populate(int i, string t, string tt)
         {
-            this.Text = "EDIT: " + t;
-            oldTitle = t.Replace("'", ".a");
+            userid = i;
+            list = t;
+            item = tt;
+            if(item.Contains("'"))
+            {
+                item = item.Replace("'", "*A*");
+            }
             try
             {
                 using (SQL.conn)
                 {
                     SQL.conn.Open();
 
-                    query = "Select title, content from Note Where title = '" + oldTitle + "'";
+                    query = "Select note from '" + list + "' Where noteid = '" + item + "' and userid = '" + userid + "'";
                     SQL.cmd = new SQLiteCommand(query, SQL.conn);
 
 
@@ -33,8 +39,11 @@ namespace GardenPlanner.Edit
                         {
                             while (SQL.reader.Read())
                             {
-                                title = SQL.reader.GetString(0).Replace(".a", "'");
-                                content = SQL.reader.GetString(1).Replace(".a", "'");
+                                content = SQL.reader.GetString(0);
+                                if(content.Contains("*A*"))
+                                {
+                                    content = content.Replace("*A*", "'");
+                                }
                             }
                         }
                     }
@@ -45,15 +54,13 @@ namespace GardenPlanner.Edit
             {
                 MessageBox.Show(ex.ToString());
             }
-            tbTitle.Text = title;
             tbContent.Text = content;
         }
 
         private void btnSave_Click(object sender, EventArgs e)
         {
-            title = tbTitle.Text.Replace("'", ".a");
-            content = tbContent.Text.Replace("'", ".a");
-            query = "update Note set title = '" + title + "', content = '" + content + "' Where title = '" + oldTitle + "'";
+            content = tbContent.Text.Replace("'", "*A*");
+            query = "update '" + list + "' set note = '" + content + "' Where noteid = '" + item + "'";
             SQL.cmd = new SQLiteCommand(query, SQL.conn);
 
             using (SQL.conn)

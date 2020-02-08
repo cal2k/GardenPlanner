@@ -54,10 +54,12 @@
             this.lblUserName = new System.Windows.Forms.ToolStripLabel();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.toolstripbtnAddPlant = new System.Windows.Forms.ToolStripButton();
-            this.toolStripbtnCreateTag = new System.Windows.Forms.ToolStripButton();
             this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
+            this.toolStripbtnCreateTag = new System.Windows.Forms.ToolStripButton();
             this.btnRemoveJournalTag = new System.Windows.Forms.Button();
             this.cbJournalTags = new System.Windows.Forms.ComboBox();
+            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
+            this.toolStripButton2 = new System.Windows.Forms.ToolStripButton();
             this.ToolStripUser.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -243,7 +245,7 @@
             // btnEditJournal
             // 
             this.btnEditJournal.Enabled = false;
-            this.btnEditJournal.Location = new System.Drawing.Point(130, 54);
+            this.btnEditJournal.Location = new System.Drawing.Point(130, 52);
             this.btnEditJournal.Name = "btnEditJournal";
             this.btnEditJournal.Size = new System.Drawing.Size(109, 23);
             this.btnEditJournal.TabIndex = 65;
@@ -280,7 +282,9 @@
             this.toolStripSeparator1,
             this.toolstripbtnAddPlant,
             this.toolStripButton1,
-            this.toolStripbtnCreateTag});
+            this.toolStripbtnCreateTag,
+            this.toolStripSeparator2,
+            this.toolStripButton2});
             this.ToolStripUser.Location = new System.Drawing.Point(0, 0);
             this.ToolStripUser.Name = "ToolStripUser";
             this.ToolStripUser.Size = new System.Drawing.Size(1404, 25);
@@ -308,6 +312,15 @@
             this.toolstripbtnAddPlant.Text = "Add Veg";
             this.toolstripbtnAddPlant.Click += new System.EventHandler(this.toolstripbtnAddPlant_Click);
             // 
+            // toolStripButton1
+            // 
+            this.toolStripButton1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.toolStripButton1.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton1.Image")));
+            this.toolStripButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton1.Name = "toolStripButton1";
+            this.toolStripButton1.Size = new System.Drawing.Size(53, 22);
+            this.toolStripButton1.Text = "Edit Veg";
+            // 
             // toolStripbtnCreateTag
             // 
             this.toolStripbtnCreateTag.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
@@ -317,15 +330,6 @@
             this.toolStripbtnCreateTag.Size = new System.Drawing.Size(66, 22);
             this.toolStripbtnCreateTag.Text = "Create Tag";
             this.toolStripbtnCreateTag.Click += new System.EventHandler(this.toolStripbtnCreateTag_Click);
-            // 
-            // toolStripButton1
-            // 
-            this.toolStripButton1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.toolStripButton1.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton1.Image")));
-            this.toolStripButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton1.Name = "toolStripButton1";
-            this.toolStripButton1.Size = new System.Drawing.Size(53, 22);
-            this.toolStripButton1.Text = "Edit Veg";
             // 
             // btnRemoveJournalTag
             // 
@@ -346,6 +350,21 @@
             this.cbJournalTags.TabIndex = 50;
             this.cbJournalTags.Text = "Tags";
             this.cbJournalTags.SelectedIndexChanged += new System.EventHandler(this.cbJournalFilterTags_SelectedIndexChanged);
+            // 
+            // toolStripSeparator2
+            // 
+            this.toolStripSeparator2.Name = "toolStripSeparator2";
+            this.toolStripSeparator2.Size = new System.Drawing.Size(6, 25);
+            // 
+            // toolStripButton2
+            // 
+            this.toolStripButton2.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.toolStripButton2.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton2.Image")));
+            this.toolStripButton2.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton2.Name = "toolStripButton2";
+            this.toolStripButton2.Size = new System.Drawing.Size(36, 22);
+            this.toolStripButton2.Text = "Help";
+            this.toolStripButton2.Click += new System.EventHandler(this.toolStripButton2_Click);
             // 
             // Form1
             // 
@@ -381,6 +400,7 @@
             this.Name = "Form1";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Garden Planner";
+            this.Shown += new System.EventHandler(this.Form1_Shown);
             this.ToolStripUser.ResumeLayout(false);
             this.ToolStripUser.PerformLayout();
             this.ResumeLayout(false);
@@ -418,6 +438,8 @@
         private System.Windows.Forms.ToolStripButton toolStripButton1;
         private System.Windows.Forms.Button btnRemoveJournalTag;
         private System.Windows.Forms.ComboBox cbJournalTags;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
+        private System.Windows.Forms.ToolStripButton toolStripButton2;
     }
 }
 

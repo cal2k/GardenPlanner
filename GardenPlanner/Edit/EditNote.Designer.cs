@@ -31,7 +31,6 @@
             this.btnCancle = new System.Windows.Forms.Button();
             this.btnSave = new System.Windows.Forms.Button();
             this.tbContent = new System.Windows.Forms.RichTextBox();
-            this.tbTitle = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // btnCancle
@@ -56,18 +55,11 @@
             // 
             // tbContent
             // 
-            this.tbContent.Location = new System.Drawing.Point(12, 38);
+            this.tbContent.Location = new System.Drawing.Point(12, 12);
             this.tbContent.Name = "tbContent";
-            this.tbContent.Size = new System.Drawing.Size(260, 182);
+            this.tbContent.Size = new System.Drawing.Size(260, 208);
             this.tbContent.TabIndex = 5;
             this.tbContent.Text = "";
-            // 
-            // tbTitle
-            // 
-            this.tbTitle.Location = new System.Drawing.Point(12, 12);
-            this.tbTitle.Name = "tbTitle";
-            this.tbTitle.Size = new System.Drawing.Size(260, 20);
-            this.tbTitle.TabIndex = 4;
             // 
             // EditNote
             // 
@@ -77,14 +69,12 @@
             this.Controls.Add(this.btnCancle);
             this.Controls.Add(this.btnSave);
             this.Controls.Add(this.tbContent);
-            this.Controls.Add(this.tbTitle);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "EditNote";
             this.Text = "EditNote";
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 
@@ -93,6 +83,5 @@
         private System.Windows.Forms.Button btnCancle;
         private System.Windows.Forms.Button btnSave;
         private System.Windows.Forms.RichTextBox tbContent;
-        private System.Windows.Forms.TextBox tbTitle;
     }
 }

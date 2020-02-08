@@ -15,9 +15,12 @@ namespace GardenPlanner
     public partial class Form1 : Form
     {
         SqL SQL = new SqL();
+        New_Entirys.NewJournal NewJournal = new New_Entirys.NewJournal();
 
         private string userName, query, temp, SelectedVegName, SelectedVegSpecies, currentTag, currentList, currentItem;
+        private bool tutorialRun = true;
 
+        
         List<string> list = new List<string>(), listTags = new List<string>();
 
         private int count, userID;
@@ -37,15 +40,17 @@ namespace GardenPlanner
             loadSelected();
             loadJobs();
             loadTags();
+            tutorialRun = SQL.tutorial;
         }
 
-        public void setUserDetails()
+        private void Form1_Shown(object sender, EventArgs e)
         {
-            userName = SQL.USERNAME;
-            userID = SQL.USERID;
-            lblUserName.Text = "Welcome " + userName;
-                }
-
+            if (tutorialRun == false)
+            {
+                HOWTO();
+            }
+        }
+        
         //Tools
         private void toolstripbtnAddPlant_Click(object sender, EventArgs e)
         {
@@ -63,8 +68,22 @@ namespace GardenPlanner
         {
             loadTags();
         }
+        private void toolStripButton2_Click(object sender, EventArgs e)
+        {
+            HOWTO();
+        }
         //Tools END
 
+        private void HOWTO()
+        {
+            MessageBox.Show("HELP");
+        }
+        public void setUserDetails()
+        {
+            userName = SQL.USERNAME;
+            userID = SQL.USERID;
+            lblUserName.Text = "Welcome " + userName;
+        }
         private void loadJournal()
         {
             listBoxJournal.Items.Clear();
@@ -231,7 +250,7 @@ namespace GardenPlanner
 
         }
 
-        //List Events
+        //Journal
         private void listBoxJournal_SelectedIndexChanged(object sender, EventArgs e)
         {
             disablebtn();
@@ -246,7 +265,7 @@ namespace GardenPlanner
                 currentList = "Journal";
                 currentItem = listBoxJournal.SelectedItem.ToString();
 
-                if(currentItem.Contains("'"))
+                if (currentItem.Contains("'"))
                 {
                     currentItem = currentItem.Replace("'", "*A*");
                 }
@@ -254,6 +273,57 @@ namespace GardenPlanner
 
             }
         }
+        private void btnNewJournal_Click(object sender, EventArgs e)
+        {
+            New_Entirys.NewJournal Journal = new New_Entirys.NewJournal();
+            Journal.FormClosed += new FormClosedEventHandler(Journal_FormClosed);
+            Journal.setUserID(userID);
+            Journal.Show();
+        }
+        private void Journal_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            loadJournal();
+        }
+        private void btnEditJournal_Click(object sender, EventArgs e)
+        {
+            Edit.EditJournal EditJournal = new Edit.EditJournal();
+            EditJournal.FormClosed += new FormClosedEventHandler(Journal_FormClosed);
+            EditJournal.populate(listBoxJournal.SelectedItem.ToString());
+            EditJournal.Show();
+        }
+        private void btnRemoveJournalPost_Click(object sender, EventArgs e)
+        {
+            temp = listBoxJournal.SelectedItem.ToString();
+
+            DialogResult confirmation = MessageBox.Show("Are you sure you want to Delete " + temp, "Confirmation", MessageBoxButtons.YesNo);
+            if (confirmation == DialogResult.Yes)
+            {
+                if (temp.Contains("'"))
+                {
+                    temp = temp.Replace("'", "*A*");
+                }
+
+                SQL.QUERY = "Delete from Journal where title = '" + temp + "'";
+                SQL.queryExecute();
+                loadJournal();
+            }
+
+
+        }
+        private void cbJournalFilterTags_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            btnRemoveJournalTag.Enabled = true;
+            currentTag = cbJournalTags.SelectedItem.ToString();
+            loadJournalFilter();
+        }
+        private void btnJournalFilterRemove_Click(object sender, EventArgs e)
+        {
+            cbJournalTags.Text = "Tags";
+            loadJournal();
+            loadTags();
+        }
+
+        //Notes
         private void listBoxNotes_SelectedIndexChanged(object sender, EventArgs e)
         {
 
@@ -263,6 +333,39 @@ namespace GardenPlanner
                 btnRemoveNote.Enabled = true;
             }
         }
+        private void btnNewNote_Click(object sender, EventArgs e)
+        {
+            New_Entirys.NewNote Note = new New_Entirys.NewNote();
+            Note.FormClosed += new FormClosedEventHandler(Note_FormClosed);
+            Note.setUserID(userID, currentList, currentItem);
+            Note.Show();
+        }
+        private void Note_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            loadNotes();
+        }
+        private void btnEditNote_Click(object sender, EventArgs e)
+        {
+            Edit.EditNote EditNote = new Edit.EditNote();
+            EditNote.FormClosed += new FormClosedEventHandler(Note_FormClosed);
+            EditNote.populate(userID, currentList, currentItem);
+            EditNote.Show();
+        }
+        private void btnRemoveNote_Click(object sender, EventArgs e)
+        {
+            temp = listBoxNotes.SelectedItem.ToString();
+            DialogResult confirmation = MessageBox.Show("Are you sure you want to Delete " + temp, "Confirmation", MessageBoxButtons.YesNo);
+            if (confirmation == DialogResult.Yes)
+            {
+                temp = temp.Replace("'", "*A*");
+                SQL.QUERY = "Delete from '" + currentList + "' where note = '" + temp + "'";
+                SQL.queryExecute();
+
+                loadNotes();
+            }
+        }
+
+        //Jobs
         private void listBoxJobs_SelectedIndexChanged(object sender, EventArgs e)
         {
             disablebtn();
@@ -283,106 +386,6 @@ namespace GardenPlanner
                 loadNotes();
             }
         }
-        private void listBoxSelectedVeg_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            disablebtn();
-            if (listBoxSelectedVeg.SelectedIndex > -1)
-            {
-                listBoxJournal.SelectedIndex = -1;
-                listBoxJobs.SelectedIndex = -1;
-                btnRemoveVeg.Enabled = true;
-                btnNewNote.Enabled = true;
-                currentList = "SelectedVeg";
-                string[] array = listBoxSelectedVeg.SelectedItem.ToString().Split('(', ')');
-
-                currentItem = array[1];
-                
-                query = "select ID from Vegs where Species = '" + currentItem +"'";
-                SQL.cmd = new SQLiteCommand(query, SQL.conn);
-                try
-                {
-                    using (SQL.conn)
-                    {
-                        SQL.conn.Open();
-                        using (SQL.cmd)
-                        {
-                            using (SQL.reader = SQL.cmd.ExecuteReader())
-                            {
-                                while(SQL.reader.Read())
-                                {
-                                    count = SQL.reader.GetInt32(0);
-                                }
-                            }
-                        }
-                            SQL.conn.Close();
-                    }
-                }
-                catch(Exception ex)
-                {
-                    MessageBox.Show(ex.ToString());
-                }
-
-                currentItem = count.ToString();
-
-                if (currentItem.Contains("'"))
-                {
-                    currentItem = currentItem.Replace("'", "*A*");
-                }
-                loadNotes();
-            }
-        }
-
-        //List Filters
-        private void cbJournalFilterTags_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            btnRemoveJournalTag.Enabled = true;
-            currentTag = cbJournalTags.SelectedItem.ToString();
-            loadJournalFilter();
-        }
-        private void btnJournalFilterRemove_Click(object sender, EventArgs e)
-        {
-            cbJournalTags.Text = "Tags";
-            loadJournal();
-            loadTags();
-        }
-
-        //new entirys
-        private void btnNewJournal_Click(object sender, EventArgs e)
-        {
-            New_Entirys.NewJournal Journal = new New_Entirys.NewJournal();
-            Journal.FormClosed += new FormClosedEventHandler(Journal_FormClosed);
-            Journal.setUserID(userID);
-            Journal.Show();
-        }
-        private void btnEditJournal_Click(object sender, EventArgs e)
-        {
-            Edit.EditJournal EditJournal = new Edit.EditJournal();
-            EditJournal.FormClosed += new FormClosedEventHandler(Journal_FormClosed);
-            EditJournal.populate(listBoxJournal.SelectedItem.ToString());
-            EditJournal.Show();
-        }
-        private void Journal_FormClosed(object sender, FormClosedEventArgs e)
-        {
-            loadJournal();
-        }
-        private void btnNewNote_Click(object sender, EventArgs e)
-        {
-            New_Entirys.NewNote Note = new New_Entirys.NewNote();
-            Note.FormClosed += new FormClosedEventHandler(Note_FormClosed);
-            Note.setUserID(userID, currentList, currentItem);
-            Note.Show();
-        }
-        private void Note_FormClosed(object sender, FormClosedEventArgs e)
-        {
-            loadNotes();
-        }
-        private void btnEditNote_Click(object sender, EventArgs e)
-        {
-            Edit.EditNote EditNote = new Edit.EditNote();
-            EditNote.FormClosed += new FormClosedEventHandler(Note_FormClosed);
-            EditNote.populate(listBoxNotes.SelectedItem.ToString());
-            EditNote.Show();
-        }
         private void btnNewJob_Click(object sender, EventArgs e)
         {
             New_Entirys.NewJob Note = new New_Entirys.NewJob();
@@ -401,100 +404,6 @@ namespace GardenPlanner
             EditJob.populate(listBoxJobs.SelectedItem.ToString());
             EditJob.Show();
 
-        }
-        private void btnSelectVeg_Click(object sender, EventArgs e)
-        {
-            New_Entirys.NewSelectedVeg NewSelectedVeg = new New_Entirys.NewSelectedVeg();
-            NewSelectedVeg.FormClosed += new FormClosedEventHandler(SelectedVeg_FormClosed);
-            NewSelectedVeg.setUserID(userID);
-            NewSelectedVeg.Show();
-        }
-        private void SelectedVeg_FormClosed(object sender, FormClosedEventArgs e)
-        {
-            loadSelected();
-        }
-        private void btnEditVegDetails_Click(object sender, EventArgs e)
-        {
-            Edit.EditVeg EditVeg = new Edit.EditVeg();
-            EditVeg.FormClosed += new FormClosedEventHandler(SelectedVeg_FormClosed);
-            EditVeg.populate(listBoxSelectedVeg.SelectedItem.ToString());
-            EditVeg.Show();
-        }
-
-        //Remove Buttons
-        private void btnRemoveJournalPost_Click(object sender, EventArgs e)
-        {
-            temp = listBoxJournal.SelectedItem.ToString();
-
-            DialogResult confirmation = MessageBox.Show("Are you sure you want to Delete " + temp, "Confirmation", MessageBoxButtons.YesNo);
-            if (confirmation == DialogResult.Yes)
-            {
-                if (temp.Contains("'"))
-                {
-                    temp = temp.Replace("'", "*A*");
-                }
-
-                SQL.QUERY = "Delete from Journal where title = '" + temp + "'";
-                SQL.queryExecute();
-                loadJournal();
-            }
-
-
-        }
-        private void btnRemoveVeg_Click(object sender, EventArgs e)
-        {
-            temp = listBoxSelectedVeg.SelectedItem.ToString();
-            string[] split = new string[2];
-            split = temp.Split('(', ')');
-
-            DialogResult confirmation = MessageBox.Show("Are you sure you want to Delete " + temp, "Confirmation", MessageBoxButtons.YesNo);
-            if (confirmation == DialogResult.Yes)
-            {
-                
-                try
-                {
-                    using (SQL.conn)
-                    {
-                        SQL.conn.Open();
-                        query = "SELECT id from Vegs where Species = '" + split[1] + "'";
-                        SQL.cmd = new SQLiteCommand(query, SQL.conn);
-
-                        using (SQL.cmd)
-                        {
-                            using (SQL.reader = SQL.cmd.ExecuteReader())
-                            {
-                                while(SQL.reader.Read())
-                                {
-                                    count = SQL.reader.GetInt32(0);
-                                }
-                            }
-                        }
-                        SQL.conn.Close(); 
-                    }
-                }
-                catch(Exception ex)
-                {
-                    MessageBox.Show(ex.ToString());
-                }
-                SQL.QUERY = "Delete from SelectedVeg where vegid = '" + count + "'";
-                SQL.queryExecute();
-                SQL.conn.Close();
-                btnRemoveVeg.Enabled = false;
-                loadSelected();
-            }
-        }
-        private void btnRemoveNote_Click(object sender, EventArgs e)
-        {
-            temp = listBoxNotes.SelectedItem.ToString();
-            DialogResult confirmation = MessageBox.Show("Are you sure you want to Delete " + temp, "Confirmation", MessageBoxButtons.YesNo);
-            if (confirmation == DialogResult.Yes)
-            {
-                temp = temp.Replace("'", "*A*");
-                SQL.QUERY = "Delete from '" + currentList +"' where note = '" + temp + "'";
-                SQL.queryExecute();
-
-                loadNotes();
-            }
         }
         private void btnRemoveJob_Click(object sender, EventArgs e)
         {
@@ -517,6 +426,115 @@ namespace GardenPlanner
             }
         }
 
+        //Selected
+        private void listBoxSelectedVeg_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            disablebtn();
+            if (listBoxSelectedVeg.SelectedIndex > -1)
+            {
+                listBoxJournal.SelectedIndex = -1;
+                listBoxJobs.SelectedIndex = -1;
+                btnRemoveVeg.Enabled = true;
+                btnNewNote.Enabled = true;
+                currentList = "SelectedVeg";
+                string[] array = listBoxSelectedVeg.SelectedItem.ToString().Split('(', ')');
+
+                currentItem = array[1];
+
+                query = "select ID from Vegs where Species = '" + currentItem + "'";
+                SQL.cmd = new SQLiteCommand(query, SQL.conn);
+                try
+                {
+                    using (SQL.conn)
+                    {
+                        SQL.conn.Open();
+                        using (SQL.cmd)
+                        {
+                            using (SQL.reader = SQL.cmd.ExecuteReader())
+                            {
+                                while (SQL.reader.Read())
+                                {
+                                    count = SQL.reader.GetInt32(0);
+                                }
+                            }
+                        }
+                        SQL.conn.Close();
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.ToString());
+                }
+
+                currentItem = count.ToString();
+
+                if (currentItem.Contains("'"))
+                {
+                    currentItem = currentItem.Replace("'", "*A*");
+                }
+                loadNotes();
+            }
+        }
+        private void btnSelectVeg_Click(object sender, EventArgs e)
+        {
+            New_Entirys.NewSelectedVeg NewSelectedVeg = new New_Entirys.NewSelectedVeg();
+            NewSelectedVeg.FormClosed += new FormClosedEventHandler(SelectedVeg_FormClosed);
+            NewSelectedVeg.setUserID(userID);
+            NewSelectedVeg.Show();
+        }
+        private void SelectedVeg_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            loadSelected();
+        }
+        private void btnEditVegDetails_Click(object sender, EventArgs e)
+        {
+            Edit.EditVeg EditVeg = new Edit.EditVeg();
+            EditVeg.FormClosed += new FormClosedEventHandler(SelectedVeg_FormClosed);
+            EditVeg.populate(listBoxSelectedVeg.SelectedItem.ToString());
+            EditVeg.Show();
+        }
+        private void btnRemoveVeg_Click(object sender, EventArgs e)
+        {
+            temp = listBoxSelectedVeg.SelectedItem.ToString();
+            string[] split = new string[2];
+            split = temp.Split('(', ')');
+
+            DialogResult confirmation = MessageBox.Show("Are you sure you want to Delete " + temp, "Confirmation", MessageBoxButtons.YesNo);
+            if (confirmation == DialogResult.Yes)
+            {
+
+                try
+                {
+                    using (SQL.conn)
+                    {
+                        SQL.conn.Open();
+                        query = "SELECT id from Vegs where Species = '" + split[1] + "'";
+                        SQL.cmd = new SQLiteCommand(query, SQL.conn);
+
+                        using (SQL.cmd)
+                        {
+                            using (SQL.reader = SQL.cmd.ExecuteReader())
+                            {
+                                while (SQL.reader.Read())
+                                {
+                                    count = SQL.reader.GetInt32(0);
+                                }
+                            }
+                        }
+                        SQL.conn.Close();
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.ToString());
+                }
+                SQL.QUERY = "Delete from SelectedVeg where vegid = '" + count + "'";
+                SQL.queryExecute();
+                SQL.conn.Close();
+                btnRemoveVeg.Enabled = false;
+                loadSelected();
+            }
+        }
     }
 }
 

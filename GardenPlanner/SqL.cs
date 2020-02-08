@@ -14,6 +14,7 @@ namespace GardenPlanner
         public SQLiteConnection conn = new SQLiteConnection("Data Source =" + pathComplete + "; version =3;");
         public SQLiteCommand cmd;
         public SQLiteDataReader reader;
+        public bool tutorial = true;
 
         private string query, temp, userName;
         private int count, userID;
@@ -110,6 +111,7 @@ namespace GardenPlanner
             {
                 query = "INSERT INTO  users (username) VALUES ('" + userName + "')";
                 queryExecute();
+                tutorial = false;
             }
             query = "select ID from users where username = '" + userName + "'";
             queryCount();
