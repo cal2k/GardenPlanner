@@ -16,7 +16,7 @@ namespace GardenPlanner
     {
         SqL SQL = new SqL();
         New_Entirys.NewJournal NewJournal = new New_Entirys.NewJournal();
-
+        private int vegid;
         private string userName, query, temp, SelectedVegName, SelectedVegSpecies, currentTag, currentList, currentItem;
         private bool tutorialRun = true;
 
@@ -47,7 +47,7 @@ namespace GardenPlanner
         {
             if (tutorialRun == false)
             {
-                HOWTO();
+                //Tour
             }
         }
         
@@ -384,6 +384,8 @@ namespace GardenPlanner
             }
         }
 
+        
+
         //Jobs
         private void listBoxJobs_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -448,6 +450,7 @@ namespace GardenPlanner
                 listBoxJobs.SelectedIndex = -1;
                 btnRemoveVeg.Enabled = true;
                 btnNewNote.Enabled = true;
+
                 currentList = "SelectedVeg";
                 string[] array = listBoxSelectedVeg.SelectedItem.ToString().Split('(', ')');
 
@@ -466,7 +469,7 @@ namespace GardenPlanner
                             {
                                 while (SQL.reader.Read())
                                 {
-                                    count = SQL.reader.GetInt32(0);
+                                    vegid = SQL.reader.GetInt32(0);
                                 }
                             }
                         }
@@ -477,14 +480,17 @@ namespace GardenPlanner
                 {
                     MessageBox.Show(ex.ToString());
                 }
-
-                currentItem = count.ToString();
-
-                if (currentItem.Contains("'"))
-                {
-                    currentItem = currentItem.Replace("'", "*A*");
-                }
                 loadNotes();
+            }
+        }
+        private void listBoxSelectedVeg_DoubleClick(object sender, EventArgs e)
+        {
+            if (listBoxSelectedVeg.SelectedIndex > -1)
+            {
+                Edit.EditVeg EditVeg = new Edit.EditVeg();
+                EditVeg.FormClosed += new FormClosedEventHandler(SelectedVeg_FormClosed);
+                EditVeg.populateReadonly(listBoxSelectedVeg.SelectedItem.ToString());
+                EditVeg.Show();
             }
         }
         private void btnSelectVeg_Click(object sender, EventArgs e)
@@ -497,13 +503,6 @@ namespace GardenPlanner
         private void SelectedVeg_FormClosed(object sender, FormClosedEventArgs e)
         {
             loadSelected();
-        }
-        private void btnEditVegDetails_Click(object sender, EventArgs e)
-        {
-            Edit.EditVeg EditVeg = new Edit.EditVeg();
-            EditVeg.FormClosed += new FormClosedEventHandler(SelectedVeg_FormClosed);
-            EditVeg.populate(listBoxSelectedVeg.SelectedItem.ToString());
-            EditVeg.Show();
         }
         private void btnRemoveVeg_Click(object sender, EventArgs e)
         {

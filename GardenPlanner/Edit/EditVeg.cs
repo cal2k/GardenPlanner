@@ -7,7 +7,7 @@ namespace GardenPlanner.Edit
     public partial class EditVeg : Form
     {
         SqL SQL = new SqL();
-        string query;
+        string query, temp;
         string[] split = new string[2];
 
         public EditVeg()
@@ -15,9 +15,10 @@ namespace GardenPlanner.Edit
             InitializeComponent();
         }
 
-        public void populate(string t)
+        public void populateReadonly(string t)
         {
-            this.Text = "EDIT: " + t;
+            this.Text = t;
+            temp = t;
             split = t.Split('(', ')');
             try
             {
@@ -67,6 +68,23 @@ namespace GardenPlanner.Edit
             {
                 MessageBox.Show(ex.ToString());
             }
+            btnSave.Hide();
+            tbName.ReadOnly = true;
+            tbSpecies.ReadOnly = true;
+            tbSowStart.ReadOnly = true;
+            tbSowEnd.ReadOnly = true;
+            tbSowingNote.ReadOnly = true;
+            tbHarvestStart.ReadOnly = true;
+            tbHarvestEnd.ReadOnly = true;
+            tbHarvestNote.ReadOnly = true;
+            tbGrowingNote.ReadOnly = true;
+            tbCommonProblems.ReadOnly = true;
+
+
+            tbSowingNote.BackColor = System.Drawing.Color.Empty;
+            tbHarvestNote.BackColor = System.Drawing.Color.Empty;
+            tbGrowingNote.BackColor = System.Drawing.Color.Empty;
+            tbCommonProblems.BackColor = System.Drawing.Color.Empty;
         }
 
         private void btnSave_Click(object sender, EventArgs e)
@@ -93,12 +111,47 @@ namespace GardenPlanner.Edit
             {
                 MessageBox.Show(ex.ToString());
             }
-            this.Close();
+
+            tbName.Text = "";
+            tbSpecies.Text = "";
+            tbSowStart.Text = "";
+            tbSowEnd.Text = "";
+            tbSowingNote.Text = "";
+            tbHarvestStart.Text = "";
+            tbHarvestEnd.Text = "";
+            tbHarvestNote.Text = "";
+            tbGrowingNote.Text = "";
+            tbCommonProblems.Text = "";
+            btnEdit.Show();
+
+            populateReadonly(temp);
+
         }
 
         private void btnCancle_Click(object sender, EventArgs e)
         {
             this.Close();
+        }
+
+        private void btnEdit_Click(object sender, EventArgs e)
+        {
+            btnSave.Show();
+            btnEdit.Hide();
+
+            tbName.ReadOnly = false;
+            tbSpecies.ReadOnly = false;
+            tbSowStart.ReadOnly = false;
+            tbSowEnd.ReadOnly = false;
+            tbSowingNote.ReadOnly = false;
+            tbSowingNote.BackColor = System.Drawing.Color.White;
+            tbHarvestStart.ReadOnly = false;
+            tbHarvestEnd.ReadOnly = false;
+            tbHarvestNote.ReadOnly = false;
+            tbHarvestNote.BackColor = System.Drawing.Color.White;
+            tbGrowingNote.ReadOnly = false;
+            tbGrowingNote.BackColor = System.Drawing.Color.White;
+            tbCommonProblems.ReadOnly = false;
+            tbCommonProblems.BackColor = System.Drawing.Color.White;
         }
     }
 }

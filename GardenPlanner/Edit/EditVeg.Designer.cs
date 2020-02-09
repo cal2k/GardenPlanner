@@ -52,6 +52,7 @@
             this.tbCommonProblems = new System.Windows.Forms.RichTextBox();
             this.btnSave = new System.Windows.Forms.Button();
             this.btnCancle = new System.Windows.Forms.Button();
+            this.btnEdit = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // tbName
@@ -264,11 +265,22 @@
             this.btnCancle.UseVisualStyleBackColor = true;
             this.btnCancle.Click += new System.EventHandler(this.btnCancle_Click);
             // 
+            // btnEdit
+            // 
+            this.btnEdit.Location = new System.Drawing.Point(220, 344);
+            this.btnEdit.Name = "btnEdit";
+            this.btnEdit.Size = new System.Drawing.Size(75, 23);
+            this.btnEdit.TabIndex = 24;
+            this.btnEdit.Text = "Edit";
+            this.btnEdit.UseVisualStyleBackColor = true;
+            this.btnEdit.Click += new System.EventHandler(this.btnEdit_Click);
+            // 
             // EditVeg
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(522, 379);
+            this.Controls.Add(this.btnEdit);
             this.Controls.Add(this.btnCancle);
             this.Controls.Add(this.btnSave);
             this.Controls.Add(this.label12);
@@ -330,5 +342,6 @@
         private System.Windows.Forms.RichTextBox tbCommonProblems;
         private System.Windows.Forms.Button btnSave;
         private System.Windows.Forms.Button btnCancle;
+        private System.Windows.Forms.Button btnEdit;
     }
 }

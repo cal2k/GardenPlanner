@@ -97,6 +97,7 @@
             this.listBoxSelectedVeg.Size = new System.Drawing.Size(339, 472);
             this.listBoxSelectedVeg.TabIndex = 16;
             this.listBoxSelectedVeg.SelectedIndexChanged += new System.EventHandler(this.listBoxSelectedVeg_SelectedIndexChanged);
+            this.listBoxSelectedVeg.DoubleClick += new System.EventHandler(this.listBoxSelectedVeg_DoubleClick);
             // 
             // btnRemoveVeg
             // 

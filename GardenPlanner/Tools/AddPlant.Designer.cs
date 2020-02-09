@@ -222,11 +222,11 @@
             // 
             // btnAdd
             // 
-            this.btnAdd.Location = new System.Drawing.Point(484, 258);
+            this.btnAdd.Location = new System.Drawing.Point(12, 258);
             this.btnAdd.Name = "btnAdd";
             this.btnAdd.Size = new System.Drawing.Size(75, 23);
             this.btnAdd.TabIndex = 21;
-            this.btnAdd.Text = "Add Plant";
+            this.btnAdd.Text = "Add Veg";
             this.btnAdd.UseVisualStyleBackColor = true;
             this.btnAdd.Click += new System.EventHandler(this.btnAdd_Click);
             // 
