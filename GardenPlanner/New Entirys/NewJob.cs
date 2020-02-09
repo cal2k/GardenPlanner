@@ -9,7 +9,7 @@ namespace GardenPlanner.New_Entirys
     {
         SqL SQL = new SqL();
         string query, currentTag, temp;
-        int userid, contentLimit = 500, contentCurrent = 0, contentRemaining;
+        int userid, contentLimit = 50, contentCurrent = 0, contentRemaining;
         DateTime date;
 
         public NewJob()

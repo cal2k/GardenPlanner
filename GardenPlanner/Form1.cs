@@ -87,6 +87,7 @@ namespace GardenPlanner
         }
         private void loadJournal()
         {
+            btnDeleteJournalPost.Enabled = false;
             listBoxJournal.Items.Clear();
             query = "Select Title FROM Journal WHERE userid = '" + userID + "' and Title is not null ORDER BY date DESC";
             SQL.cmd = new SQLiteCommand(query, SQL.conn);
@@ -130,6 +131,7 @@ namespace GardenPlanner
         }
         private void loadSelected()
         {
+            btnRemoveVeg.Enabled = false;
             listBoxSelectedVeg.Items.Clear();
             query = "Select * From Vegs WHERE id IN(SELECT vegid FROM SelectedVeg WHERE userid = '" + userID + "' and vegid is not null)";
 
@@ -158,6 +160,8 @@ namespace GardenPlanner
         private void loadJobs()
         {
             listBoxJobs.Items.Clear();
+            btnRemoveJob.Enabled = false;
+
             query = "Select job FROM Job where userid = '" + userID + "' and job is not null ORDER BY date DESC";
             SQL.cmd = new SQLiteCommand(query, SQL.conn);
             using (SQL.conn)
@@ -246,9 +250,7 @@ namespace GardenPlanner
         private void disablebtn()
         {
             btnDeleteJournalPost.Enabled = false;
-            btnRemoveJournalTag.Enabled = false;
             btnRemoveVeg.Enabled = false;
-            btnEditJob.Enabled = false;
             btnRemoveJob.Enabled = false;
             btnNewNote.Enabled = false;
             btnEditNote.Enabled = false;
@@ -308,7 +310,7 @@ namespace GardenPlanner
         {
             temp = listBoxJournal.SelectedItem.ToString();
 
-            DialogResult confirmation = MessageBox.Show("Are you sure you want to Delete " + temp, "Confirmation", MessageBoxButtons.YesNo);
+            DialogResult confirmation = MessageBox.Show("Are you sure you want to Delete " + temp + " This is also delete any notes attached to it", "Confirmation", MessageBoxButtons.YesNo);
             if (confirmation == DialogResult.Yes)
             {
                 if (temp.Contains("'"))
@@ -318,7 +320,10 @@ namespace GardenPlanner
 
                 SQL.QUERY = "Delete from Journal where title = '" + temp + "'";
                 SQL.queryExecute();
+                SQL.QUERY = "Delete from Journal where noteid = '" + temp + "'";
+                SQL.queryExecute();
                 loadJournal();
+                loadNotes();
             }
 
 
@@ -333,8 +338,8 @@ namespace GardenPlanner
         private void btnJournalFilterRemove_Click(object sender, EventArgs e)
         {
             cbJournalTags.Text = "Tags";
-            loadJournal();
             btnRemoveJournalTag.Enabled = false;
+            loadJournal();
         }
 
         //Notes
@@ -387,7 +392,6 @@ namespace GardenPlanner
             {
                 listBoxJournal.SelectedIndex = -1;
                 listBoxSelectedVeg.SelectedIndex = -1;
-                btnEditJob.Enabled = true;
                 btnRemoveJob.Enabled = true;
                 btnNewNote.Enabled = true;
                 currentList = "Job";
@@ -411,20 +415,12 @@ namespace GardenPlanner
         {
             loadJobs();
         }
-        private void btnEditJob_Click(object sender, EventArgs e)
-        {
-            Edit.EditJob EditJob = new Edit.EditJob();
-            EditJob.FormClosed += new FormClosedEventHandler(Job_FormClosed);
-            EditJob.populate(listBoxJobs.SelectedItem.ToString());
-            EditJob.Show();
-
-        }
         private void btnRemoveJob_Click(object sender, EventArgs e)
         {
 
             temp = listBoxJobs.SelectedItem.ToString();
 
-            DialogResult confirmation = MessageBox.Show("Are you sure you want to Delete " + temp, "Confirmation", MessageBoxButtons.YesNo);
+            DialogResult confirmation = MessageBox.Show("Are you sure you want to Delete " + temp + " This is also delete any notes attached to it", "Confirmation", MessageBoxButtons.YesNo);
             if (confirmation == DialogResult.Yes)
             {
                 if (temp.Contains("'"))
@@ -434,9 +430,11 @@ namespace GardenPlanner
 
                 SQL.QUERY = "Delete from Job where job = '" + temp + "'";
                 SQL.queryExecute();
-
-                btnRemoveJob.Enabled = false;
+                SQL.QUERY = "Delete from Journal where noteid = '" + temp + "'";
+                SQL.queryExecute();
+                
                 loadJobs();
+                loadNotes();
             }
         }
 
@@ -513,7 +511,7 @@ namespace GardenPlanner
             string[] split = new string[2];
             split = temp.Split('(', ')');
 
-            DialogResult confirmation = MessageBox.Show("Are you sure you want to Delete " + temp, "Confirmation", MessageBoxButtons.YesNo);
+            DialogResult confirmation = MessageBox.Show("Are you sure you want to Delete " + temp + " This is also delete any notes attached to it", "Confirmation", MessageBoxButtons.YesNo);
             if (confirmation == DialogResult.Yes)
             {
 
@@ -544,9 +542,10 @@ namespace GardenPlanner
                 }
                 SQL.QUERY = "Delete from SelectedVeg where vegid = '" + count + "'";
                 SQL.queryExecute();
-                SQL.conn.Close();
-                btnRemoveVeg.Enabled = false;
+                SQL.QUERY = "Delete from Journal where noteid = '" + count + "'";
+                SQL.queryExecute();
                 loadSelected();
+                loadNotes();
             }
         }
     }

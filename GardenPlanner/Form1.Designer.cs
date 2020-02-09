@@ -47,7 +47,6 @@
             this.btnNewNote = new System.Windows.Forms.Button();
             this.btnNewJob = new System.Windows.Forms.Button();
             this.btnSelectVeg = new System.Windows.Forms.Button();
-            this.btnEditJob = new System.Windows.Forms.Button();
             this.btnEditNote = new System.Windows.Forms.Button();
             this.ToolStripUser = new System.Windows.Forms.ToolStrip();
             this.lblUserName = new System.Windows.Forms.ToolStripLabel();
@@ -242,17 +241,6 @@
             this.btnSelectVeg.UseVisualStyleBackColor = true;
             this.btnSelectVeg.Click += new System.EventHandler(this.btnSelectVeg_Click);
             // 
-            // btnEditJob
-            // 
-            this.btnEditJob.Enabled = false;
-            this.btnEditJob.Location = new System.Drawing.Point(1168, 52);
-            this.btnEditJob.Name = "btnEditJob";
-            this.btnEditJob.Size = new System.Drawing.Size(109, 23);
-            this.btnEditJob.TabIndex = 66;
-            this.btnEditJob.Text = "Edit Job Details";
-            this.btnEditJob.UseVisualStyleBackColor = true;
-            this.btnEditJob.Click += new System.EventHandler(this.btnEditJob_Click);
-            // 
             // btnEditNote
             // 
             this.btnEditNote.Enabled = false;
@@ -362,7 +350,6 @@
             this.ClientSize = new System.Drawing.Size(1404, 820);
             this.Controls.Add(this.ToolStripUser);
             this.Controls.Add(this.btnEditNote);
-            this.Controls.Add(this.btnEditJob);
             this.Controls.Add(this.btnSelectVeg);
             this.Controls.Add(this.btnNewJob);
             this.Controls.Add(this.btnNewNote);
@@ -415,7 +402,6 @@
         private System.Windows.Forms.Button btnNewNote;
         private System.Windows.Forms.Button btnNewJob;
         private System.Windows.Forms.Button btnSelectVeg;
-        private System.Windows.Forms.Button btnEditJob;
         private System.Windows.Forms.Button btnEditNote;
         public System.Windows.Forms.ToolStripLabel lblUserName;
         public System.Windows.Forms.ToolStrip ToolStripUser;

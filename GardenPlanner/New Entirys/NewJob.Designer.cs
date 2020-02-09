@@ -59,14 +59,14 @@
             this.lblContentRemaing.AutoSize = true;
             this.lblContentRemaing.Location = new System.Drawing.Point(330, 15);
             this.lblContentRemaing.Name = "lblContentRemaing";
-            this.lblContentRemaing.Size = new System.Drawing.Size(31, 13);
+            this.lblContentRemaing.Size = new System.Drawing.Size(25, 13);
             this.lblContentRemaing.TabIndex = 11;
-            this.lblContentRemaing.Text = "(500)";
+            this.lblContentRemaing.Text = "(50)";
             // 
             // tbContent
             // 
             this.tbContent.Location = new System.Drawing.Point(12, 12);
-            this.tbContent.MaxLength = 500;
+            this.tbContent.MaxLength = 50;
             this.tbContent.Name = "tbContent";
             this.tbContent.Size = new System.Drawing.Size(312, 190);
             this.tbContent.TabIndex = 1;
