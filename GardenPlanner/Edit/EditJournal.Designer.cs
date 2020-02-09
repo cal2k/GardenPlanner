@@ -32,6 +32,10 @@
             this.tbContent = new System.Windows.Forms.RichTextBox();
             this.btnSave = new System.Windows.Forms.Button();
             this.btnCancle = new System.Windows.Forms.Button();
+            this.btnEdit = new System.Windows.Forms.Button();
+            this.cbTags = new System.Windows.Forms.ComboBox();
+            this.lblTag = new System.Windows.Forms.Label();
+            this.btnRemoveTag = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // tbTitle
@@ -51,9 +55,9 @@
             // 
             // btnSave
             // 
-            this.btnSave.Location = new System.Drawing.Point(12, 226);
+            this.btnSave.Location = new System.Drawing.Point(12, 256);
             this.btnSave.Name = "btnSave";
-            this.btnSave.Size = new System.Drawing.Size(75, 23);
+            this.btnSave.Size = new System.Drawing.Size(82, 23);
             this.btnSave.TabIndex = 2;
             this.btnSave.Text = "Save";
             this.btnSave.UseVisualStyleBackColor = true;
@@ -61,19 +65,60 @@
             // 
             // btnCancle
             // 
-            this.btnCancle.Location = new System.Drawing.Point(197, 226);
+            this.btnCancle.Location = new System.Drawing.Point(190, 256);
             this.btnCancle.Name = "btnCancle";
-            this.btnCancle.Size = new System.Drawing.Size(75, 23);
+            this.btnCancle.Size = new System.Drawing.Size(82, 23);
             this.btnCancle.TabIndex = 3;
             this.btnCancle.Text = "Cancle";
             this.btnCancle.UseVisualStyleBackColor = true;
             this.btnCancle.Click += new System.EventHandler(this.btnCancle_Click);
             // 
+            // btnEdit
+            // 
+            this.btnEdit.Location = new System.Drawing.Point(102, 256);
+            this.btnEdit.Name = "btnEdit";
+            this.btnEdit.Size = new System.Drawing.Size(82, 23);
+            this.btnEdit.TabIndex = 4;
+            this.btnEdit.Text = "Edit";
+            this.btnEdit.UseVisualStyleBackColor = true;
+            this.btnEdit.Click += new System.EventHandler(this.btnEdit_Click);
+            // 
+            // cbTags
+            // 
+            this.cbTags.FormattingEnabled = true;
+            this.cbTags.Location = new System.Drawing.Point(12, 226);
+            this.cbTags.Name = "cbTags";
+            this.cbTags.Size = new System.Drawing.Size(172, 21);
+            this.cbTags.TabIndex = 5;
+            // 
+            // lblTag
+            // 
+            this.lblTag.AutoSize = true;
+            this.lblTag.Location = new System.Drawing.Point(12, 229);
+            this.lblTag.Name = "lblTag";
+            this.lblTag.Size = new System.Drawing.Size(35, 13);
+            this.lblTag.TabIndex = 6;
+            this.lblTag.Text = "label1";
+            // 
+            // btnRemoveTag
+            // 
+            this.btnRemoveTag.Location = new System.Drawing.Point(190, 224);
+            this.btnRemoveTag.Name = "btnRemoveTag";
+            this.btnRemoveTag.Size = new System.Drawing.Size(82, 23);
+            this.btnRemoveTag.TabIndex = 7;
+            this.btnRemoveTag.Text = "Remove Tag";
+            this.btnRemoveTag.UseVisualStyleBackColor = true;
+            this.btnRemoveTag.Click += new System.EventHandler(this.btnRemoveTag_Click);
+            // 
             // EditJournal
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(284, 261);
+            this.ClientSize = new System.Drawing.Size(284, 291);
+            this.Controls.Add(this.btnRemoveTag);
+            this.Controls.Add(this.lblTag);
+            this.Controls.Add(this.cbTags);
+            this.Controls.Add(this.btnEdit);
             this.Controls.Add(this.btnCancle);
             this.Controls.Add(this.btnSave);
             this.Controls.Add(this.tbContent);
@@ -94,5 +139,9 @@
         private System.Windows.Forms.RichTextBox tbContent;
         private System.Windows.Forms.Button btnSave;
         private System.Windows.Forms.Button btnCancle;
+        private System.Windows.Forms.Button btnEdit;
+        private System.Windows.Forms.ComboBox cbTags;
+        private System.Windows.Forms.Label lblTag;
+        private System.Windows.Forms.Button btnRemoveTag;
     }
 }

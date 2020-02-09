@@ -47,7 +47,6 @@
             this.btnNewNote = new System.Windows.Forms.Button();
             this.btnNewJob = new System.Windows.Forms.Button();
             this.btnSelectVeg = new System.Windows.Forms.Button();
-            this.btnEditJournal = new System.Windows.Forms.Button();
             this.btnEditJob = new System.Windows.Forms.Button();
             this.btnEditNote = new System.Windows.Forms.Button();
             this.ToolStripUser = new System.Windows.Forms.ToolStrip();
@@ -243,17 +242,6 @@
             this.btnSelectVeg.UseVisualStyleBackColor = true;
             this.btnSelectVeg.Click += new System.EventHandler(this.btnSelectVeg_Click);
             // 
-            // btnEditJournal
-            // 
-            this.btnEditJournal.Enabled = false;
-            this.btnEditJournal.Location = new System.Drawing.Point(130, 52);
-            this.btnEditJournal.Name = "btnEditJournal";
-            this.btnEditJournal.Size = new System.Drawing.Size(109, 23);
-            this.btnEditJournal.TabIndex = 65;
-            this.btnEditJournal.Text = "Edit Journal Details";
-            this.btnEditJournal.UseVisualStyleBackColor = true;
-            this.btnEditJournal.Click += new System.EventHandler(this.btnEditJournal_Click);
-            // 
             // btnEditJob
             // 
             this.btnEditJob.Enabled = false;
@@ -375,7 +363,6 @@
             this.Controls.Add(this.ToolStripUser);
             this.Controls.Add(this.btnEditNote);
             this.Controls.Add(this.btnEditJob);
-            this.Controls.Add(this.btnEditJournal);
             this.Controls.Add(this.btnSelectVeg);
             this.Controls.Add(this.btnNewJob);
             this.Controls.Add(this.btnNewNote);
@@ -428,7 +415,6 @@
         private System.Windows.Forms.Button btnNewNote;
         private System.Windows.Forms.Button btnNewJob;
         private System.Windows.Forms.Button btnSelectVeg;
-        private System.Windows.Forms.Button btnEditJournal;
         private System.Windows.Forms.Button btnEditJob;
         private System.Windows.Forms.Button btnEditNote;
         public System.Windows.Forms.ToolStripLabel lblUserName;

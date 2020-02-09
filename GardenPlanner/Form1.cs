@@ -224,7 +224,7 @@ namespace GardenPlanner
                             while (SQL.reader.Read())
                             {
                                 temp = SQL.reader.GetString(0);
-                                cbJournalTags.Items.Add(temp);
+                                listTags.Add(temp);
                             }
                         }
                     }
@@ -235,11 +235,16 @@ namespace GardenPlanner
             {
                 MessageBox.Show(ex.ToString());
             }
+
+            count = listTags.Count;
+            for(int i = 0; i < count; i++)
+            {
+                cbJournalTags.Items.Add(listTags[i]);
+            }
         }
 
         private void disablebtn()
         {
-            btnEditJournal.Enabled = false;
             btnDeleteJournalPost.Enabled = false;
             btnRemoveJournalTag.Enabled = false;
             btnRemoveVeg.Enabled = false;
@@ -259,8 +264,6 @@ namespace GardenPlanner
             {
                 listBoxJobs.SelectedIndex = -1;
                 listBoxSelectedVeg.SelectedIndex = -1;
-
-                btnEditJournal.Enabled = true;
                 btnDeleteJournalPost.Enabled = true;
                 btnNewNote.Enabled = true;
                 currentList = "Journal";
@@ -280,7 +283,7 @@ namespace GardenPlanner
             {
                 Edit.EditJournal EditJournal = new Edit.EditJournal();
                 EditJournal.FormClosed += new FormClosedEventHandler(Journal_FormClosed);
-                EditJournal.populateReadOnly(listBoxJournal.SelectedItem.ToString());
+                EditJournal.populateReadOnly(listBoxJournal.SelectedItem.ToString(), listTags);
                 EditJournal.Show();
             }
         }
@@ -299,7 +302,6 @@ namespace GardenPlanner
         {
             Edit.EditJournal EditJournal = new Edit.EditJournal();
             EditJournal.FormClosed += new FormClosedEventHandler(Journal_FormClosed);
-            EditJournal.populate(listBoxJournal.SelectedItem.ToString());
             EditJournal.Show();
         }
         private void btnRemoveJournalPost_Click(object sender, EventArgs e)
@@ -323,6 +325,7 @@ namespace GardenPlanner
         }
         private void cbJournalFilterTags_SelectedIndexChanged(object sender, EventArgs e)
         {
+            listBoxJournal.Items.Clear();
             btnRemoveJournalTag.Enabled = true;
             currentTag = cbJournalTags.SelectedItem.ToString();
             loadJournalFilter();
@@ -331,7 +334,7 @@ namespace GardenPlanner
         {
             cbJournalTags.Text = "Tags";
             loadJournal();
-            loadTags();
+            btnRemoveJournalTag.Enabled = false;
         }
 
         //Notes
