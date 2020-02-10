@@ -262,6 +262,7 @@ namespace GardenPlanner
         private void listBoxJournal_SelectedIndexChanged(object sender, EventArgs e)
         {
             disablebtn();
+            btnNewNote.Enabled = true;
             if (listBoxJournal.SelectedIndex > -1)
             {
                 listBoxJobs.SelectedIndex = -1;
@@ -390,6 +391,7 @@ namespace GardenPlanner
         private void listBoxJobs_SelectedIndexChanged(object sender, EventArgs e)
         {
             disablebtn();
+            btnNewNote.Enabled = true;
             if (listBoxJobs.SelectedIndex > -1)
             {
                 listBoxJournal.SelectedIndex = -1;
@@ -444,6 +446,7 @@ namespace GardenPlanner
         private void listBoxSelectedVeg_SelectedIndexChanged(object sender, EventArgs e)
         {
             disablebtn();
+            btnNewNote.Enabled = true;
             if (listBoxSelectedVeg.SelectedIndex > -1)
             {
                 listBoxJournal.SelectedIndex = -1;
