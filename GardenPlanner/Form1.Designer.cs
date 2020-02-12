@@ -33,29 +33,31 @@
             this.listBoxNotes = new System.Windows.Forms.ListBox();
             this.listBoxJobs = new System.Windows.Forms.ListBox();
             this.listBoxSelectedVeg = new System.Windows.Forms.ListBox();
-            this.btnRemoveVeg = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
-            this.btnDeleteJournalPost = new System.Windows.Forms.Button();
             this.btnRemoveNote = new System.Windows.Forms.Button();
-            this.btnRemoveJob = new System.Windows.Forms.Button();
             this.btnAddPlant = new System.Windows.Forms.Button();
             this.btnCreateTag = new System.Windows.Forms.Button();
-            this.btnNewJournal = new System.Windows.Forms.Button();
-            this.btnNewNote = new System.Windows.Forms.Button();
-            this.btnNewJob = new System.Windows.Forms.Button();
-            this.btnSelectVeg = new System.Windows.Forms.Button();
+            this.btnNewNote1 = new System.Windows.Forms.Button();
             this.btnEditNote = new System.Windows.Forms.Button();
             this.ToolStripUser = new System.Windows.Forms.ToolStrip();
-            this.lblUserName = new System.Windows.Forms.ToolStripLabel();
-            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
-            this.toolstripbtnAddPlant = new System.Windows.Forms.ToolStripButton();
-            this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
-            this.toolStripbtnCreateTag = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
-            this.toolStripButton2 = new System.Windows.Forms.ToolStripButton();
+            this.btnNewJournalEntiry = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.btnNewJob = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
+            this.btnNewNote = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSeparator6 = new System.Windows.Forms.ToolStripSeparator();
+            this.btnSelectVegs = new System.Windows.Forms.ToolStripButton();
+            this.btnHelp = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
+            this.toolStripDropDownButton1 = new System.Windows.Forms.ToolStripDropDownButton();
+            this.btnNewVegetable = new System.Windows.Forms.ToolStripMenuItem();
+            this.btnNewCategory = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
+            this.btnDelete = new System.Windows.Forms.ToolStripButton();
             this.btnRemoveJournalTag = new System.Windows.Forms.Button();
             this.cbJournalTags = new System.Windows.Forms.ComboBox();
             this.ToolStripUser.SuspendLayout();
@@ -83,9 +85,9 @@
             // listBoxJobs
             // 
             this.listBoxJobs.FormattingEnabled = true;
-            this.listBoxJobs.Location = new System.Drawing.Point(1053, 81);
+            this.listBoxJobs.Location = new System.Drawing.Point(914, 81);
             this.listBoxJobs.Name = "listBoxJobs";
-            this.listBoxJobs.Size = new System.Drawing.Size(339, 719);
+            this.listBoxJobs.Size = new System.Drawing.Size(339, 472);
             this.listBoxJobs.TabIndex = 11;
             this.listBoxJobs.SelectedIndexChanged += new System.EventHandler(this.listBoxJobs_SelectedIndexChanged);
             // 
@@ -94,21 +96,10 @@
             this.listBoxSelectedVeg.FormattingEnabled = true;
             this.listBoxSelectedVeg.Location = new System.Drawing.Point(708, 81);
             this.listBoxSelectedVeg.Name = "listBoxSelectedVeg";
-            this.listBoxSelectedVeg.Size = new System.Drawing.Size(339, 472);
+            this.listBoxSelectedVeg.Size = new System.Drawing.Size(200, 472);
             this.listBoxSelectedVeg.TabIndex = 16;
             this.listBoxSelectedVeg.SelectedIndexChanged += new System.EventHandler(this.listBoxSelectedVeg_SelectedIndexChanged);
             this.listBoxSelectedVeg.DoubleClick += new System.EventHandler(this.listBoxSelectedVeg_DoubleClick);
-            // 
-            // btnRemoveVeg
-            // 
-            this.btnRemoveVeg.Enabled = false;
-            this.btnRemoveVeg.Location = new System.Drawing.Point(938, 52);
-            this.btnRemoveVeg.Name = "btnRemoveVeg";
-            this.btnRemoveVeg.Size = new System.Drawing.Size(109, 23);
-            this.btnRemoveVeg.TabIndex = 18;
-            this.btnRemoveVeg.Text = "Remove";
-            this.btnRemoveVeg.UseVisualStyleBackColor = true;
-            this.btnRemoveVeg.Click += new System.EventHandler(this.btnRemoveVeg_Click);
             // 
             // label1
             // 
@@ -124,7 +115,7 @@
             // 
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Underline))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.Location = new System.Drawing.Point(1050, 32);
+            this.label3.Location = new System.Drawing.Point(911, 32);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(42, 17);
             this.label3.TabIndex = 21;
@@ -134,7 +125,7 @@
             // 
             this.label4.AutoSize = true;
             this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Underline))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label4.Location = new System.Drawing.Point(704, 32);
+            this.label4.Location = new System.Drawing.Point(705, 32);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(104, 17);
             this.label4.TabIndex = 22;
@@ -150,17 +141,6 @@
             this.label5.TabIndex = 23;
             this.label5.Text = "Notes";
             // 
-            // btnDeleteJournalPost
-            // 
-            this.btnDeleteJournalPost.Enabled = false;
-            this.btnDeleteJournalPost.Location = new System.Drawing.Point(245, 52);
-            this.btnDeleteJournalPost.Name = "btnDeleteJournalPost";
-            this.btnDeleteJournalPost.Size = new System.Drawing.Size(109, 23);
-            this.btnDeleteJournalPost.TabIndex = 29;
-            this.btnDeleteJournalPost.Text = "Remove";
-            this.btnDeleteJournalPost.UseVisualStyleBackColor = true;
-            this.btnDeleteJournalPost.Click += new System.EventHandler(this.btnRemoveJournalPost_Click);
-            // 
             // btnRemoveNote
             // 
             this.btnRemoveNote.Enabled = false;
@@ -170,18 +150,6 @@
             this.btnRemoveNote.TabIndex = 30;
             this.btnRemoveNote.Text = "Remove";
             this.btnRemoveNote.UseVisualStyleBackColor = true;
-            this.btnRemoveNote.Click += new System.EventHandler(this.btnRemoveNote_Click);
-            // 
-            // btnRemoveJob
-            // 
-            this.btnRemoveJob.Enabled = false;
-            this.btnRemoveJob.Location = new System.Drawing.Point(1283, 52);
-            this.btnRemoveJob.Name = "btnRemoveJob";
-            this.btnRemoveJob.Size = new System.Drawing.Size(109, 23);
-            this.btnRemoveJob.TabIndex = 31;
-            this.btnRemoveJob.Text = "Remove";
-            this.btnRemoveJob.UseVisualStyleBackColor = true;
-            this.btnRemoveJob.Click += new System.EventHandler(this.btnRemoveJob_Click);
             // 
             // btnAddPlant
             // 
@@ -201,46 +169,16 @@
             this.btnCreateTag.Text = "Create Tag";
             this.btnCreateTag.UseVisualStyleBackColor = true;
             // 
-            // btnNewJournal
+            // btnNewNote1
             // 
-            this.btnNewJournal.Location = new System.Drawing.Point(15, 52);
-            this.btnNewJournal.Name = "btnNewJournal";
-            this.btnNewJournal.Size = new System.Drawing.Size(109, 23);
-            this.btnNewJournal.TabIndex = 52;
-            this.btnNewJournal.Text = "New Entiry";
-            this.btnNewJournal.UseVisualStyleBackColor = true;
-            this.btnNewJournal.Click += new System.EventHandler(this.btnNewJournal_Click);
-            // 
-            // btnNewNote
-            // 
-            this.btnNewNote.Enabled = false;
-            this.btnNewNote.Location = new System.Drawing.Point(15, 585);
-            this.btnNewNote.Name = "btnNewNote";
-            this.btnNewNote.Size = new System.Drawing.Size(109, 23);
-            this.btnNewNote.TabIndex = 53;
-            this.btnNewNote.Text = "New Note";
-            this.btnNewNote.UseVisualStyleBackColor = true;
-            this.btnNewNote.Click += new System.EventHandler(this.btnNewNote_Click);
-            // 
-            // btnNewJob
-            // 
-            this.btnNewJob.Location = new System.Drawing.Point(1053, 52);
-            this.btnNewJob.Name = "btnNewJob";
-            this.btnNewJob.Size = new System.Drawing.Size(109, 23);
-            this.btnNewJob.TabIndex = 54;
-            this.btnNewJob.Text = "New Job";
-            this.btnNewJob.UseVisualStyleBackColor = true;
-            this.btnNewJob.Click += new System.EventHandler(this.btnNewJob_Click);
-            // 
-            // btnSelectVeg
-            // 
-            this.btnSelectVeg.Location = new System.Drawing.Point(708, 52);
-            this.btnSelectVeg.Name = "btnSelectVeg";
-            this.btnSelectVeg.Size = new System.Drawing.Size(109, 23);
-            this.btnSelectVeg.TabIndex = 56;
-            this.btnSelectVeg.Text = "Select Veg";
-            this.btnSelectVeg.UseVisualStyleBackColor = true;
-            this.btnSelectVeg.Click += new System.EventHandler(this.btnSelectVeg_Click);
+            this.btnNewNote1.Enabled = false;
+            this.btnNewNote1.Location = new System.Drawing.Point(15, 585);
+            this.btnNewNote1.Name = "btnNewNote1";
+            this.btnNewNote1.Size = new System.Drawing.Size(109, 23);
+            this.btnNewNote1.TabIndex = 53;
+            this.btnNewNote1.Text = "New Note";
+            this.btnNewNote1.UseVisualStyleBackColor = true;
+            this.btnNewNote1.Click += new System.EventHandler(this.btnNewNote_Click);
             // 
             // btnEditNote
             // 
@@ -256,74 +194,143 @@
             // ToolStripUser
             // 
             this.ToolStripUser.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.lblUserName,
-            this.toolStripSeparator1,
-            this.toolstripbtnAddPlant,
-            this.toolStripButton1,
-            this.toolStripbtnCreateTag,
             this.toolStripSeparator2,
-            this.toolStripButton2});
+            this.btnNewJournalEntiry,
+            this.toolStripSeparator1,
+            this.btnNewJob,
+            this.toolStripSeparator5,
+            this.btnNewNote,
+            this.toolStripSeparator6,
+            this.btnSelectVegs,
+            this.btnHelp,
+            this.toolStripSeparator3,
+            this.toolStripDropDownButton1,
+            this.toolStripSeparator4,
+            this.btnDelete});
             this.ToolStripUser.Location = new System.Drawing.Point(0, 0);
             this.ToolStripUser.Name = "ToolStripUser";
-            this.ToolStripUser.Size = new System.Drawing.Size(1404, 25);
+            this.ToolStripUser.Size = new System.Drawing.Size(1263, 25);
             this.ToolStripUser.TabIndex = 69;
             this.ToolStripUser.Text = "toolStrip";
-            // 
-            // lblUserName
-            // 
-            this.lblUserName.Name = "lblUserName";
-            this.lblUserName.Size = new System.Drawing.Size(68, 22);
-            this.lblUserName.Text = "Welcome - ";
-            // 
-            // toolStripSeparator1
-            // 
-            this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 25);
-            // 
-            // toolstripbtnAddPlant
-            // 
-            this.toolstripbtnAddPlant.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.toolstripbtnAddPlant.Image = ((System.Drawing.Image)(resources.GetObject("toolstripbtnAddPlant.Image")));
-            this.toolstripbtnAddPlant.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolstripbtnAddPlant.Name = "toolstripbtnAddPlant";
-            this.toolstripbtnAddPlant.Size = new System.Drawing.Size(55, 22);
-            this.toolstripbtnAddPlant.Text = "Add Veg";
-            this.toolstripbtnAddPlant.Click += new System.EventHandler(this.toolstripbtnAddPlant_Click);
-            // 
-            // toolStripButton1
-            // 
-            this.toolStripButton1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.toolStripButton1.Enabled = false;
-            this.toolStripButton1.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton1.Image")));
-            this.toolStripButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton1.Name = "toolStripButton1";
-            this.toolStripButton1.Size = new System.Drawing.Size(53, 22);
-            this.toolStripButton1.Text = "Edit Veg";
-            // 
-            // toolStripbtnCreateTag
-            // 
-            this.toolStripbtnCreateTag.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.toolStripbtnCreateTag.Image = ((System.Drawing.Image)(resources.GetObject("toolStripbtnCreateTag.Image")));
-            this.toolStripbtnCreateTag.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripbtnCreateTag.Name = "toolStripbtnCreateTag";
-            this.toolStripbtnCreateTag.Size = new System.Drawing.Size(66, 22);
-            this.toolStripbtnCreateTag.Text = "Create Tag";
-            this.toolStripbtnCreateTag.Click += new System.EventHandler(this.toolStripbtnCreateTag_Click);
             // 
             // toolStripSeparator2
             // 
             this.toolStripSeparator2.Name = "toolStripSeparator2";
             this.toolStripSeparator2.Size = new System.Drawing.Size(6, 25);
             // 
-            // toolStripButton2
+            // btnNewJournalEntiry
             // 
-            this.toolStripButton2.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.toolStripButton2.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton2.Image")));
-            this.toolStripButton2.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton2.Name = "toolStripButton2";
-            this.toolStripButton2.Size = new System.Drawing.Size(36, 22);
-            this.toolStripButton2.Text = "Help";
-            this.toolStripButton2.Click += new System.EventHandler(this.toolStripButton2_Click);
+            this.btnNewJournalEntiry.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.btnNewJournalEntiry.Image = ((System.Drawing.Image)(resources.GetObject("btnNewJournalEntiry.Image")));
+            this.btnNewJournalEntiry.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnNewJournalEntiry.Name = "btnNewJournalEntiry";
+            this.btnNewJournalEntiry.Size = new System.Drawing.Size(109, 22);
+            this.btnNewJournalEntiry.Text = "New Journal Entiry";
+            this.btnNewJournalEntiry.Click += new System.EventHandler(this.btnNewJournalEntiry_Click);
+            // 
+            // toolStripSeparator1
+            // 
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 25);
+            // 
+            // btnNewJob
+            // 
+            this.btnNewJob.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.btnNewJob.Image = ((System.Drawing.Image)(resources.GetObject("btnNewJob.Image")));
+            this.btnNewJob.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnNewJob.Name = "btnNewJob";
+            this.btnNewJob.Size = new System.Drawing.Size(56, 22);
+            this.btnNewJob.Text = "New Job";
+            this.btnNewJob.Click += new System.EventHandler(this.btnNewJob_Click);
+            // 
+            // toolStripSeparator5
+            // 
+            this.toolStripSeparator5.Name = "toolStripSeparator5";
+            this.toolStripSeparator5.Size = new System.Drawing.Size(6, 25);
+            // 
+            // btnNewNote
+            // 
+            this.btnNewNote.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.btnNewNote.Image = ((System.Drawing.Image)(resources.GetObject("btnNewNote.Image")));
+            this.btnNewNote.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnNewNote.Name = "btnNewNote";
+            this.btnNewNote.Size = new System.Drawing.Size(64, 22);
+            this.btnNewNote.Text = "New Note";
+            // 
+            // toolStripSeparator6
+            // 
+            this.toolStripSeparator6.Name = "toolStripSeparator6";
+            this.toolStripSeparator6.Size = new System.Drawing.Size(6, 25);
+            // 
+            // btnSelectVegs
+            // 
+            this.btnSelectVegs.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.btnSelectVegs.Image = ((System.Drawing.Image)(resources.GetObject("btnSelectVegs.Image")));
+            this.btnSelectVegs.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnSelectVegs.Name = "btnSelectVegs";
+            this.btnSelectVegs.Size = new System.Drawing.Size(96, 22);
+            this.btnSelectVegs.Text = "Select Vegetable";
+            this.btnSelectVegs.Click += new System.EventHandler(this.btnSelectVegs_Click);
+            // 
+            // btnHelp
+            // 
+            this.btnHelp.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            this.btnHelp.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.btnHelp.Image = ((System.Drawing.Image)(resources.GetObject("btnHelp.Image")));
+            this.btnHelp.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnHelp.Name = "btnHelp";
+            this.btnHelp.Size = new System.Drawing.Size(36, 22);
+            this.btnHelp.Text = "Help";
+            this.btnHelp.Click += new System.EventHandler(this.btnHelp_Click);
+            // 
+            // toolStripSeparator3
+            // 
+            this.toolStripSeparator3.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            this.toolStripSeparator3.Name = "toolStripSeparator3";
+            this.toolStripSeparator3.Size = new System.Drawing.Size(6, 25);
+            // 
+            // toolStripDropDownButton1
+            // 
+            this.toolStripDropDownButton1.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            this.toolStripDropDownButton1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.toolStripDropDownButton1.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.btnNewVegetable,
+            this.btnNewCategory});
+            this.toolStripDropDownButton1.Image = ((System.Drawing.Image)(resources.GetObject("toolStripDropDownButton1.Image")));
+            this.toolStripDropDownButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripDropDownButton1.Name = "toolStripDropDownButton1";
+            this.toolStripDropDownButton1.Size = new System.Drawing.Size(47, 22);
+            this.toolStripDropDownButton1.Text = "Tools";
+            this.toolStripDropDownButton1.ToolTipText = "Tools";
+            // 
+            // btnNewVegetable
+            // 
+            this.btnNewVegetable.Name = "btnNewVegetable";
+            this.btnNewVegetable.Size = new System.Drawing.Size(152, 22);
+            this.btnNewVegetable.Text = "New Vegetable";
+            this.btnNewVegetable.Click += new System.EventHandler(this.btnNewVegetable_Click);
+            // 
+            // btnNewCategory
+            // 
+            this.btnNewCategory.Name = "btnNewCategory";
+            this.btnNewCategory.Size = new System.Drawing.Size(152, 22);
+            this.btnNewCategory.Text = "New  Category";
+            this.btnNewCategory.Click += new System.EventHandler(this.btnNewCategory_Click);
+            // 
+            // toolStripSeparator4
+            // 
+            this.toolStripSeparator4.Name = "toolStripSeparator4";
+            this.toolStripSeparator4.Size = new System.Drawing.Size(6, 25);
+            // 
+            // btnDelete
+            // 
+            this.btnDelete.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.btnDelete.Image = ((System.Drawing.Image)(resources.GetObject("btnDelete.Image")));
+            this.btnDelete.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnDelete.Name = "btnDelete";
+            this.btnDelete.Size = new System.Drawing.Size(44, 22);
+            this.btnDelete.Text = "Delete";
+            this.btnDelete.Click += new System.EventHandler(this.btnDelete_Click);
             // 
             // btnRemoveJournalTag
             // 
@@ -349,25 +356,19 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1404, 820);
+            this.ClientSize = new System.Drawing.Size(1263, 820);
             this.Controls.Add(this.ToolStripUser);
             this.Controls.Add(this.btnEditNote);
-            this.Controls.Add(this.btnSelectVeg);
-            this.Controls.Add(this.btnNewJob);
-            this.Controls.Add(this.btnNewNote);
-            this.Controls.Add(this.btnNewJournal);
+            this.Controls.Add(this.btnNewNote1);
             this.Controls.Add(this.btnRemoveJournalTag);
             this.Controls.Add(this.cbJournalTags);
             this.Controls.Add(this.btnCreateTag);
             this.Controls.Add(this.btnAddPlant);
-            this.Controls.Add(this.btnRemoveJob);
             this.Controls.Add(this.btnRemoveNote);
-            this.Controls.Add(this.btnDeleteJournalPost);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label1);
-            this.Controls.Add(this.btnRemoveVeg);
             this.Controls.Add(this.listBoxSelectedVeg);
             this.Controls.Add(this.listBoxJobs);
             this.Controls.Add(this.listBoxNotes);
@@ -390,31 +391,33 @@
         private System.Windows.Forms.ListBox listBoxNotes;
         private System.Windows.Forms.ListBox listBoxJobs;
         private System.Windows.Forms.ListBox listBoxSelectedVeg;
-        private System.Windows.Forms.Button btnRemoveVeg;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.Button btnDeleteJournalPost;
         private System.Windows.Forms.Button btnRemoveNote;
-        private System.Windows.Forms.Button btnRemoveJob;
         private System.Windows.Forms.Button btnAddPlant;
         private System.Windows.Forms.Button btnCreateTag;
-        private System.Windows.Forms.Button btnNewJournal;
-        private System.Windows.Forms.Button btnNewNote;
-        private System.Windows.Forms.Button btnNewJob;
-        private System.Windows.Forms.Button btnSelectVeg;
+        private System.Windows.Forms.Button btnNewNote1;
         private System.Windows.Forms.Button btnEditNote;
-        public System.Windows.Forms.ToolStripLabel lblUserName;
         public System.Windows.Forms.ToolStrip ToolStripUser;
-        private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
-        private System.Windows.Forms.ToolStripButton toolstripbtnAddPlant;
-        private System.Windows.Forms.ToolStripButton toolStripbtnCreateTag;
-        private System.Windows.Forms.ToolStripButton toolStripButton1;
         private System.Windows.Forms.Button btnRemoveJournalTag;
         private System.Windows.Forms.ComboBox cbJournalTags;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
-        private System.Windows.Forms.ToolStripButton toolStripButton2;
+        private System.Windows.Forms.ToolStripButton btnHelp;
+        private System.Windows.Forms.ToolStripButton btnNewNote;
+        private System.Windows.Forms.ToolStripButton btnNewJournalEntiry;
+        private System.Windows.Forms.ToolStripButton btnNewJob;
+        private System.Windows.Forms.ToolStripButton btnSelectVegs;
+        private System.Windows.Forms.ToolStripDropDownButton toolStripDropDownButton1;
+        private System.Windows.Forms.ToolStripMenuItem btnNewVegetable;
+        private System.Windows.Forms.ToolStripMenuItem btnNewCategory;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator5;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator6;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
+        private System.Windows.Forms.ToolStripButton btnDelete;
     }
 }
 
