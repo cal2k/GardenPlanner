@@ -50,6 +50,36 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Details\Job.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Details\Job.Designer.cs">
+      <DependentUpon>Job.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Details\Journal.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Details\Journal.Designer.cs">
+      <DependentUpon>Journal.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Details\Note.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Details\Note.Designer.cs">
+      <DependentUpon>Note.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Details\Veg.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Details\Veg.Designer.cs">
+      <DependentUpon>Veg.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Details\VegSelected.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Details\VegSelected.Designer.cs">
+      <DependentUpon>VegSelected.cs</DependentUpon>
+    </Compile>
     <Compile Include="Edit\EditJournal.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -119,6 +149,9 @@
     <Compile Include="Tools\Help.Designer.cs">
       <DependentUpon>Help.cs</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="Details\Journal.resx">
+      <DependentUpon>Journal.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Edit\EditJournal.resx">
       <DependentUpon>EditJournal.cs</DependentUpon>
     </EmbeddedResource>

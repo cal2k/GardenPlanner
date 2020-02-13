@@ -15,7 +15,12 @@ namespace GardenPlanner
     public partial class Form1 : Form
     {
         SqL SQL = new SqL();
-        New_Entirys.NewJournal NewJournal = new New_Entirys.NewJournal();
+        Details.Job Job = new Details.Job();
+        Details.Journal Journal = new Details.Journal();
+        Details.Note Note = new Details.Note();
+        Details.Veg Veg = new Details.Veg();
+        Details.VegSelected VegSelected = new Details.VegSelected();
+        
 
         private int vegid;
         private string userName, query, temp, SelectedVegName, SelectedVegSpecies, currentTag, currentList, currentItem;
@@ -58,29 +63,32 @@ namespace GardenPlanner
         //Menu
         private void btnNewJournalEntiry_Click(object sender, EventArgs e)
         {
+            count = 0;
             New_Entirys.NewJournal Journal = new New_Entirys.NewJournal();
-            Journal.FormClosed += new FormClosedEventHandler(Journal_FormClosed);
+            Journal.FormClosed += new FormClosedEventHandler(formClosed);
             Journal.setUserID(userID);
             Journal.Show();
         }
         private void btnNewJob_Click(object sender, EventArgs e)
         {
-            New_Entirys.NewJob Note = new New_Entirys.NewJob();
-            Note.FormClosed += new FormClosedEventHandler(Job_FormClosed);
-            Note.setUserID(userID);
-            Note.Show();
+            count = 2;
+            New_Entirys.NewJob job = new New_Entirys.NewJob();
+            job.FormClosed += new FormClosedEventHandler(formClosed);
+            job.setUserID(userID);
+            job.Show();
         }
         private void btnNewNote_Click(object sender, EventArgs e)
         {
             New_Entirys.NewNote Note = new New_Entirys.NewNote();
-            Note.FormClosed += new FormClosedEventHandler(Note_FormClosed);
+            Note.FormClosed += new FormClosedEventHandler(formClosed);
             Note.setUserID(userID, currentList, currentItem);
             Note.Show();
         }
         private void btnSelectVegs_Click(object sender, EventArgs e)
         {
+            count = 1;
             New_Entirys.NewSelectedVeg NewSelectedVeg = new New_Entirys.NewSelectedVeg();
-            NewSelectedVeg.FormClosed += new FormClosedEventHandler(SelectedVeg_FormClosed);
+            NewSelectedVeg.FormClosed += new FormClosedEventHandler(formClosed);
             NewSelectedVeg.setUserID(userID);
             NewSelectedVeg.Show();
         }
@@ -319,9 +327,6 @@ namespace GardenPlanner
 
         private void disablebtn()
         {
-            btnNewNote1.Enabled = false;
-            btnEditNote.Enabled = false;
-            btnRemoveNote.Enabled = false;
 
         }
 
@@ -340,17 +345,41 @@ namespace GardenPlanner
             }
         }
 
+        private void formClosed(object sender, FormClosedEventArgs e)
+        {
+            switch(count)
+            {
+                case 0:
+                    loadJournal();
+                    break;
+                case 1:
+                    loadSelected();
+                    break;
+                case 2:
+                    loadJobs();
+                    break;
+                case 3:
+                    loadNotes();
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        
+
+
+
         //Journal
         private void listBoxJournal_SelectedIndexChanged(object sender, EventArgs e)
         {
             count = 0;
             disablebtn();
-            btnNewNote1.Enabled = true;
             if (listBoxJournal.SelectedIndex > -1)
             {
                 listBoxJobs.SelectedIndex = -1;
                 listBoxSelectedVeg.SelectedIndex = -1;
-                btnNewNote1.Enabled = true;
+
                 currentList = "Journal";
                 temp = listBoxJournal.SelectedItem.ToString();
                 replaceIN();
@@ -363,15 +392,12 @@ namespace GardenPlanner
         {
             if (listBoxJournal.SelectedIndex > -1)
             {
+                count = 0;
                 Edit.EditJournal EditJournal = new Edit.EditJournal();
-                EditJournal.FormClosed += new FormClosedEventHandler(Journal_FormClosed);
+                EditJournal.FormClosed += new FormClosedEventHandler(formClosed);
                 EditJournal.populateReadOnly(listBoxJournal.SelectedItem.ToString(), listTags);
                 EditJournal.Show();
             }
-        }
-        private void Journal_FormClosed(object sender, FormClosedEventArgs e)
-        {
-            loadJournal();
         }
         private void cbJournalFilterTags_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -395,19 +421,15 @@ namespace GardenPlanner
             {
                 count = 3;
                 temp = listBoxNotes.SelectedItem.ToString();
-                btnEditNote.Enabled = true;
                 btnDelete.Enabled = true;
             }
         }
-        private void Note_FormClosed(object sender, FormClosedEventArgs e)
+        private void listBoxNotes_DoubleClick(object sender, EventArgs e)
         {
-            loadNotes();
-        }
-        private void btnEditNote_Click(object sender, EventArgs e)
-        {
+            count = 3;
             Edit.EditNote EditNote = new Edit.EditNote();
-            EditNote.FormClosed += new FormClosedEventHandler(Note_FormClosed);
-            EditNote.populate(userID, currentList, currentItem);
+            EditNote.FormClosed += new FormClosedEventHandler(formClosed);
+            EditNote.populate(userID, currentList, currentItem, temp);
             EditNote.Show();
         }
         
@@ -415,14 +437,12 @@ namespace GardenPlanner
         private void listBoxJobs_SelectedIndexChanged(object sender, EventArgs e)
         {
             disablebtn();
-            btnNewNote1.Enabled = true;
             if (listBoxJobs.SelectedIndex > -1)
             {
                 temp = listBoxJobs.SelectedItem.ToString();
                 count = 2;
                 listBoxJournal.SelectedIndex = -1;
                 listBoxSelectedVeg.SelectedIndex = -1;
-                btnNewNote1.Enabled = true;
                 currentList = "Job";
                 temp = listBoxJobs.SelectedItem.ToString();
                 replaceIN();
@@ -430,17 +450,12 @@ namespace GardenPlanner
                 loadNotes();
             }
         }
-        private void Job_FormClosed(object sender, FormClosedEventArgs e)
-        {
-            loadJobs();
-        }
 
         //Selected
         private void listBoxSelectedVeg_SelectedIndexChanged(object sender, EventArgs e)
         {
             count = 1;
             disablebtn();
-            btnNewNote1.Enabled = true;
             if (listBoxSelectedVeg.SelectedIndex > -1)
             {
                 temp = listBoxSelectedVeg.SelectedItem.ToString();
@@ -450,7 +465,6 @@ namespace GardenPlanner
 
                 listBoxJournal.SelectedIndex = -1;
                 listBoxJobs.SelectedIndex = -1;
-                btnNewNote1.Enabled = true;
 
                 currentList = "SelectedVeg";
 
@@ -468,6 +482,7 @@ namespace GardenPlanner
                                 while (SQL.reader.Read())
                                 {
                                     vegid = SQL.reader.GetInt32(0);
+                                    currentItem = vegid.ToString();
                                 }
                             }
                         }
@@ -485,16 +500,14 @@ namespace GardenPlanner
         {
             if (listBoxSelectedVeg.SelectedIndex > -1)
             {
+                count = 1;
                 Edit.EditVeg EditVeg = new Edit.EditVeg();
-                EditVeg.FormClosed += new FormClosedEventHandler(SelectedVeg_FormClosed);
+                EditVeg.FormClosed += new FormClosedEventHandler(formClosed);
                 EditVeg.populateReadonly(listBoxSelectedVeg.SelectedItem.ToString());
                 EditVeg.Show();
             }
         }
-        private void SelectedVeg_FormClosed(object sender, FormClosedEventArgs e)
-        {
-            loadSelected();
-        }
+        
         
     }
 }

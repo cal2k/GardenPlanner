@@ -37,11 +37,8 @@
             this.label3 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
-            this.btnRemoveNote = new System.Windows.Forms.Button();
             this.btnAddPlant = new System.Windows.Forms.Button();
             this.btnCreateTag = new System.Windows.Forms.Button();
-            this.btnNewNote1 = new System.Windows.Forms.Button();
-            this.btnEditNote = new System.Windows.Forms.Button();
             this.ToolStripUser = new System.Windows.Forms.ToolStrip();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.btnNewJournalEntiry = new System.Windows.Forms.ToolStripButton();
@@ -81,6 +78,7 @@
             this.listBoxNotes.Size = new System.Drawing.Size(1032, 186);
             this.listBoxNotes.TabIndex = 6;
             this.listBoxNotes.SelectedIndexChanged += new System.EventHandler(this.listBoxNotes_SelectedIndexChanged);
+            this.listBoxNotes.DoubleClick += new System.EventHandler(this.listBoxNotes_DoubleClick);
             // 
             // listBoxJobs
             // 
@@ -141,16 +139,6 @@
             this.label5.TabIndex = 23;
             this.label5.Text = "Notes";
             // 
-            // btnRemoveNote
-            // 
-            this.btnRemoveNote.Enabled = false;
-            this.btnRemoveNote.Location = new System.Drawing.Point(245, 585);
-            this.btnRemoveNote.Name = "btnRemoveNote";
-            this.btnRemoveNote.Size = new System.Drawing.Size(109, 23);
-            this.btnRemoveNote.TabIndex = 30;
-            this.btnRemoveNote.Text = "Remove";
-            this.btnRemoveNote.UseVisualStyleBackColor = true;
-            // 
             // btnAddPlant
             // 
             this.btnAddPlant.Location = new System.Drawing.Point(1541, 4);
@@ -168,28 +156,6 @@
             this.btnCreateTag.TabIndex = 45;
             this.btnCreateTag.Text = "Create Tag";
             this.btnCreateTag.UseVisualStyleBackColor = true;
-            // 
-            // btnNewNote1
-            // 
-            this.btnNewNote1.Enabled = false;
-            this.btnNewNote1.Location = new System.Drawing.Point(15, 585);
-            this.btnNewNote1.Name = "btnNewNote1";
-            this.btnNewNote1.Size = new System.Drawing.Size(109, 23);
-            this.btnNewNote1.TabIndex = 53;
-            this.btnNewNote1.Text = "New Note";
-            this.btnNewNote1.UseVisualStyleBackColor = true;
-            this.btnNewNote1.Click += new System.EventHandler(this.btnNewNote_Click);
-            // 
-            // btnEditNote
-            // 
-            this.btnEditNote.Enabled = false;
-            this.btnEditNote.Location = new System.Drawing.Point(130, 585);
-            this.btnEditNote.Name = "btnEditNote";
-            this.btnEditNote.Size = new System.Drawing.Size(109, 23);
-            this.btnEditNote.TabIndex = 68;
-            this.btnEditNote.Text = "Edit Note Details";
-            this.btnEditNote.UseVisualStyleBackColor = true;
-            this.btnEditNote.Click += new System.EventHandler(this.btnEditNote_Click);
             // 
             // ToolStripUser
             // 
@@ -256,6 +222,7 @@
             this.btnNewNote.Name = "btnNewNote";
             this.btnNewNote.Size = new System.Drawing.Size(64, 22);
             this.btnNewNote.Text = "New Note";
+            this.btnNewNote.Click += new System.EventHandler(this.btnNewNote_Click);
             // 
             // toolStripSeparator6
             // 
@@ -358,13 +325,10 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1263, 820);
             this.Controls.Add(this.ToolStripUser);
-            this.Controls.Add(this.btnEditNote);
-            this.Controls.Add(this.btnNewNote1);
             this.Controls.Add(this.btnRemoveJournalTag);
             this.Controls.Add(this.cbJournalTags);
             this.Controls.Add(this.btnCreateTag);
             this.Controls.Add(this.btnAddPlant);
-            this.Controls.Add(this.btnRemoveNote);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.label3);
@@ -395,11 +359,8 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.Button btnRemoveNote;
         private System.Windows.Forms.Button btnAddPlant;
         private System.Windows.Forms.Button btnCreateTag;
-        private System.Windows.Forms.Button btnNewNote1;
-        private System.Windows.Forms.Button btnEditNote;
         public System.Windows.Forms.ToolStrip ToolStripUser;
         private System.Windows.Forms.Button btnRemoveJournalTag;
         private System.Windows.Forms.ComboBox cbJournalTags;

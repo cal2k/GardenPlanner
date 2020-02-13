@@ -7,18 +7,20 @@ namespace GardenPlanner.Edit
     public partial class EditNote : Form
     {
         SqL SQL = new SqL();
-        string query, title, oldTitle, content, list, item;
+        string query, title, noteid, content, list, item;
         int userid;
 
         public EditNote()
         {
             InitializeComponent();
         }
-        public void populate(int i, string t, string tt)
+        public void populate(int i, string t, string tt, string ttt)
         {
             userid = i;
             list = t;
             item = tt;
+            noteid = ttt;
+            MessageBox.Show(userid + " " + list + " " + item + " " + noteid);
             if(item.Contains("'"))
             {
                 item = item.Replace("'", "*A*");
@@ -29,7 +31,7 @@ namespace GardenPlanner.Edit
                 {
                     SQL.conn.Open();
 
-                    query = "Select note from '" + list + "' Where noteid = '" + item + "' and userid = '" + userid + "'";
+                    query = "Select note from '" + list + "' Where noteid = '" + item + "' and userid = '" + userid + "' and note = '" + noteid + "'";
                     SQL.cmd = new SQLiteCommand(query, SQL.conn);
 
 
@@ -60,7 +62,7 @@ namespace GardenPlanner.Edit
         private void btnSave_Click(object sender, EventArgs e)
         {
             content = tbContent.Text.Replace("'", "*A*");
-            query = "update '" + list + "' set note = '" + content + "' Where noteid = '" + item + "'";
+            query = "update '" + list + "' set note = '" + content + "' Where noteid = '" + item + "' and note ='" + noteid + "'";
             SQL.cmd = new SQLiteCommand(query, SQL.conn);
 
             using (SQL.conn)
