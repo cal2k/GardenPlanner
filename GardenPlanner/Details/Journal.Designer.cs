@@ -46,6 +46,7 @@
             this.btnRemoveTag.TabIndex = 15;
             this.btnRemoveTag.Text = "Remove Tag";
             this.btnRemoveTag.UseVisualStyleBackColor = true;
+            this.btnRemoveTag.Click += new System.EventHandler(this.btnRemoveTag_Click);
             // 
             // lblTag
             // 
@@ -72,6 +73,7 @@
             this.btnEdit.TabIndex = 12;
             this.btnEdit.Text = "Edit";
             this.btnEdit.UseVisualStyleBackColor = true;
+            this.btnEdit.Click += new System.EventHandler(this.btnEdit_Click);
             // 
             // btnCancle
             // 
@@ -81,6 +83,7 @@
             this.btnCancle.TabIndex = 11;
             this.btnCancle.Text = "Cancle";
             this.btnCancle.UseVisualStyleBackColor = true;
+            this.btnCancle.Click += new System.EventHandler(this.btnCancle_Click);
             // 
             // btnSave
             // 
@@ -90,6 +93,7 @@
             this.btnSave.TabIndex = 10;
             this.btnSave.Text = "Save";
             this.btnSave.UseVisualStyleBackColor = true;
+            this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
             // 
             // tbContent
             // 

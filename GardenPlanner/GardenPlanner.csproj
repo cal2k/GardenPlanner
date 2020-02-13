@@ -14,7 +14,7 @@
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
+    <PlatformTarget>x86</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -80,12 +80,6 @@
     <Compile Include="Details\VegSelected.Designer.cs">
       <DependentUpon>VegSelected.cs</DependentUpon>
     </Compile>
-    <Compile Include="Edit\EditJournal.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Edit\EditJournal.Designer.cs">
-      <DependentUpon>EditJournal.cs</DependentUpon>
-    </Compile>
     <Compile Include="Edit\EditNote.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -129,12 +123,6 @@
     <Compile Include="New Entirys\NewJob.Designer.cs">
       <DependentUpon>NewJob.cs</DependentUpon>
     </Compile>
-    <Compile Include="New Entirys\NewJournal.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="New Entirys\NewJournal.Designer.cs">
-      <DependentUpon>NewJournal.cs</DependentUpon>
-    </Compile>
     <Compile Include="New Entirys\NewNote.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -151,9 +139,6 @@
     </Compile>
     <EmbeddedResource Include="Details\Journal.resx">
       <DependentUpon>Journal.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Edit\EditJournal.resx">
-      <DependentUpon>EditJournal.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Edit\EditNote.resx">
       <DependentUpon>EditNote.cs</DependentUpon>
@@ -175,9 +160,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="New Entirys\NewJob.resx">
       <DependentUpon>NewJob.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="New Entirys\NewJournal.resx">
-      <DependentUpon>NewJournal.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="New Entirys\NewNote.resx">
       <DependentUpon>NewNote.cs</DependentUpon>

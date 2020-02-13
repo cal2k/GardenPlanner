@@ -16,7 +16,6 @@ namespace GardenPlanner
     {
         SqL SQL = new SqL();
         Details.Job Job = new Details.Job();
-        Details.Journal Journal = new Details.Journal();
         Details.Note Note = new Details.Note();
         Details.Veg Veg = new Details.Veg();
         Details.VegSelected VegSelected = new Details.VegSelected();
@@ -64,9 +63,9 @@ namespace GardenPlanner
         private void btnNewJournalEntiry_Click(object sender, EventArgs e)
         {
             count = 0;
-            New_Entirys.NewJournal Journal = new New_Entirys.NewJournal();
+            Details.Journal Journal = new Details.Journal();
             Journal.FormClosed += new FormClosedEventHandler(formClosed);
-            Journal.setUserID(userID);
+            Journal.New(listTags, userID);
             Journal.Show();
         }
         private void btnNewJob_Click(object sender, EventArgs e)
@@ -383,7 +382,6 @@ namespace GardenPlanner
                 currentList = "Journal";
                 temp = listBoxJournal.SelectedItem.ToString();
                 replaceIN();
-                currentItem = temp;
                 loadNotes();
 
             }
@@ -393,10 +391,10 @@ namespace GardenPlanner
             if (listBoxJournal.SelectedIndex > -1)
             {
                 count = 0;
-                Edit.EditJournal EditJournal = new Edit.EditJournal();
-                EditJournal.FormClosed += new FormClosedEventHandler(formClosed);
-                EditJournal.populateReadOnly(listBoxJournal.SelectedItem.ToString(), listTags);
-                EditJournal.Show();
+                Details.Journal Journal = new Details.Journal();
+                Journal.FormClosed += new FormClosedEventHandler(formClosed);
+                Journal.View(temp, listTags, userID);
+                Journal.Show();
             }
         }
         private void cbJournalFilterTags_SelectedIndexChanged(object sender, EventArgs e)

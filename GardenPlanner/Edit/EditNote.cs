@@ -7,7 +7,7 @@ namespace GardenPlanner.Edit
     public partial class EditNote : Form
     {
         SqL SQL = new SqL();
-        string query, title, noteid, content, list, item;
+        string query, noteid, content, list, item;
         int userid;
 
         public EditNote()
