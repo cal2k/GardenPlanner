@@ -19,7 +19,7 @@ namespace GardenPlanner
         
 
         private int vegid;
-        private string userName, query, temp, SelectedVegName, SelectedVegSpecies, currentTag, currentList, currentItem;
+        private string userName, query, temp, SelectedVegName, SelectedVegSpecies, currentTag, currentList, currentItem, currentnote;
         private bool tutorialRun = true;
 
         
@@ -300,9 +300,9 @@ namespace GardenPlanner
                     {
                         while(SQL.reader.Read())
                         {
-                            temp = SQL.reader.GetString(0);
+                            currentnote = SQL.reader.GetString(0);
                             replaceOUT();
-                            listBoxNotes.Items.Add(temp);
+                            listBoxNotes.Items.Add(currentnote);
                         }
                     }
                         SQL.conn.Close();
@@ -413,9 +413,7 @@ namespace GardenPlanner
                     break;
             }
         }
-
         
-
         //Journal
         private void listBoxJournal_SelectedIndexChanged(object sender, EventArgs e)
         {

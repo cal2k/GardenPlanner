@@ -34,6 +34,8 @@ namespace GardenPlanner.Details
             btnAddSelectedVeg.Hide();
             userid = i;
             temp = t;
+
+            MessageBox.Show(userid + temp);
             try
             {
                 using (SQL.conn)
