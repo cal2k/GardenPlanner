@@ -57,6 +57,8 @@
             this.btnDelete = new System.Windows.Forms.ToolStripButton();
             this.btnRemoveJournalTag = new System.Windows.Forms.Button();
             this.cbJournalTags = new System.Windows.Forms.ComboBox();
+            this.btnRemoveJobTag = new System.Windows.Forms.Button();
+            this.cbJobTag = new System.Windows.Forms.ComboBox();
             this.ToolStripUser.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -322,11 +324,33 @@
             this.cbJournalTags.Text = "Tags";
             this.cbJournalTags.SelectedIndexChanged += new System.EventHandler(this.cbJournalFilterTags_SelectedIndexChanged);
             // 
+            // btnRemoveJobTag
+            // 
+            this.btnRemoveJobTag.Location = new System.Drawing.Point(1147, 52);
+            this.btnRemoveJobTag.Name = "btnRemoveJobTag";
+            this.btnRemoveJobTag.Size = new System.Drawing.Size(104, 23);
+            this.btnRemoveJobTag.TabIndex = 71;
+            this.btnRemoveJobTag.Text = "Remove Filter";
+            this.btnRemoveJobTag.UseVisualStyleBackColor = true;
+            this.btnRemoveJobTag.Click += new System.EventHandler(this.btnRemoveJobTag_Click);
+            // 
+            // cbJobTag
+            // 
+            this.cbJobTag.FormattingEnabled = true;
+            this.cbJobTag.Location = new System.Drawing.Point(914, 54);
+            this.cbJobTag.Name = "cbJobTag";
+            this.cbJobTag.Size = new System.Drawing.Size(227, 21);
+            this.cbJobTag.TabIndex = 70;
+            this.cbJobTag.Text = "Tags";
+            this.cbJobTag.SelectedIndexChanged += new System.EventHandler(this.cbJobTag_SelectedIndexChanged);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1263, 820);
+            this.Controls.Add(this.btnRemoveJobTag);
+            this.Controls.Add(this.cbJobTag);
             this.Controls.Add(this.ToolStripUser);
             this.Controls.Add(this.btnRemoveJournalTag);
             this.Controls.Add(this.cbJournalTags);
@@ -384,6 +408,8 @@
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator6;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
         private System.Windows.Forms.ToolStripButton btnDelete;
+        private System.Windows.Forms.Button btnRemoveJobTag;
+        private System.Windows.Forms.ComboBox cbJobTag;
     }
 }
 

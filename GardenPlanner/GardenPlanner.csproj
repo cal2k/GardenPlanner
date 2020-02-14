@@ -117,12 +117,6 @@
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
-    <Compile Include="New Entirys\NewJob.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="New Entirys\NewJob.Designer.cs">
-      <DependentUpon>NewJob.cs</DependentUpon>
-    </Compile>
     <Compile Include="New Entirys\NewNote.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -143,6 +137,9 @@
     <EmbeddedResource Include="Details\Journal.resx">
       <DependentUpon>Journal.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Details\Veg.resx">
+      <DependentUpon>Veg.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Edit\EditNote.resx">
       <DependentUpon>EditNote.cs</DependentUpon>
     </EmbeddedResource>
@@ -160,9 +157,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="New Entirys\NewJob.resx">
-      <DependentUpon>NewJob.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="New Entirys\NewNote.resx">
       <DependentUpon>NewNote.cs</DependentUpon>

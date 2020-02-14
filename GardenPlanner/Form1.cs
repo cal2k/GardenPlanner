@@ -16,7 +16,6 @@ namespace GardenPlanner
     {
         SqL SQL = new SqL();
         Details.Note Note = new Details.Note();
-        Details.Veg Veg = new Details.Veg();
         Details.VegSelected VegSelected = new Details.VegSelected();
         
 
@@ -85,17 +84,21 @@ namespace GardenPlanner
         }
         private void btnSelectVegs_Click(object sender, EventArgs e)
         {
+            Details.Veg Veg = new Details.Veg();
+
             count = 1;
-            New_Entirys.NewSelectedVeg NewSelectedVeg = new New_Entirys.NewSelectedVeg();
-            NewSelectedVeg.FormClosed += new FormClosedEventHandler(formClosed);
-            NewSelectedVeg.setUserID(userID);
-            NewSelectedVeg.Show();
+            Veg.FormClosed += new FormClosedEventHandler(formClosed);
+            Veg.select(userID);
+            Veg.Size = new System.Drawing.Size(352, 142);
+            Veg.Show();
         }
         private void btnDelete_Click(object sender, EventArgs e)
         {
+
             DialogResult confirmation = MessageBox.Show("Are you sure you want to Delete " + temp + " This is also delete any notes attached to it", "Confirmation", MessageBoxButtons.YesNo);
             if (confirmation == DialogResult.Yes)
             {
+                btnDelete.Enabled = false;
                 replaceIN();
                 switch (count)
                 {
@@ -165,6 +168,7 @@ namespace GardenPlanner
 
         private void loadJournal()
         {
+            btnRemoveJournalTag.Enabled = false;
             listBoxJournal.Items.Clear();
             query = "Select Title FROM Journal WHERE userid = '" + userID + "' and Title is not null ORDER BY date DESC";
             SQL.cmd = new SQLiteCommand(query, SQL.conn);
@@ -238,9 +242,32 @@ namespace GardenPlanner
         }
         private void loadJobs()
         {
+            btnRemoveJobTag.Enabled = false;
             listBoxJobs.Items.Clear();
 
-            query = "Select job FROM Job where userid = '" + userID + "' and job is not null ORDER BY date DESC";
+            query = "Select job FROM Job where userid = '" + userID + "' and job is not null ORDER BY job ASC";
+            SQL.cmd = new SQLiteCommand(query, SQL.conn);
+            using (SQL.conn)
+            {
+                SQL.conn.Open();
+                using (SQL.cmd)
+                {
+                    using (SQL.reader = SQL.cmd.ExecuteReader())
+                    {
+                        while (SQL.reader.Read())
+                        {
+                            temp = SQL.reader.GetString(0);
+                            replaceOUT();
+                            listBoxJobs.Items.Add(temp);
+                        }
+                    }
+                }
+                SQL.conn.Close();
+            }
+        }
+        private void loadJobFilter()
+        {
+            query = "Select job from Job where tag = '" + currentTag + "';";
             SQL.cmd = new SQLiteCommand(query, SQL.conn);
             using (SQL.conn)
             {
@@ -290,6 +317,9 @@ namespace GardenPlanner
         private void loadTags()
         {
             listTags.Clear();
+            cbJobTag.Items.Clear();
+            cbJournalTags.Items.Clear();
+
             query = "Select tag FROM Tags where userid = '" + userID + "'";
             SQL.cmd = new SQLiteCommand(query, SQL.conn);
             try
@@ -321,6 +351,7 @@ namespace GardenPlanner
             for(int i = 0; i < count; i++)
             {
                 cbJournalTags.Items.Add(listTags[i]);
+                cbJobTag.Items.Add(listTags[i]);
             }
         }
 
@@ -393,6 +424,7 @@ namespace GardenPlanner
             if (listBoxJournal.SelectedIndex > -1)
             {
                 count = 0;
+                btnDelete.Enabled = true;
                 cleanup();
                 currentList = "Journal";
                 temp = listBoxJournal.SelectedItem.ToString();
@@ -450,6 +482,7 @@ namespace GardenPlanner
             if (listBoxJobs.SelectedIndex > -1)
             {
                 count = 2;
+                btnDelete.Enabled = true;
                 cleanup();
                 currentList = "Job";
                 temp = listBoxJobs.SelectedItem.ToString();
@@ -467,6 +500,19 @@ namespace GardenPlanner
             Job.setup(userID, i, listTags, currentItem);
             Job.Show();
         }
+        private void cbJobTag_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            listBoxJobs.Items.Clear();
+            btnRemoveJobTag.Enabled = true;
+            currentTag = cbJobTag.SelectedItem.ToString();
+            loadJobFilter();
+        }
+        private void btnRemoveJobTag_Click(object sender, EventArgs e)
+        {
+            cbJournalTags.Text = "Tags";
+            btnRemoveJobTag.Enabled = false;
+            loadJobs();
+        }
 
         //Selected
         private void listBoxSelectedVeg_SelectedIndexChanged(object sender, EventArgs e)
@@ -475,6 +521,7 @@ namespace GardenPlanner
             if (listBoxSelectedVeg.SelectedIndex > -1)
             {
                 count = 1;
+                btnDelete.Enabled = true;
                 cleanup();
                 temp = listBoxSelectedVeg.SelectedItem.ToString();
                 string[] split = new string[2];
@@ -518,10 +565,10 @@ namespace GardenPlanner
         {
             if (listBoxSelectedVeg.SelectedIndex > -1)
             {
-                Edit.EditVeg EditVeg = new Edit.EditVeg();
-                EditVeg.FormClosed += new FormClosedEventHandler(formClosed);
-                EditVeg.populateReadonly(listBoxSelectedVeg.SelectedItem.ToString());
-                EditVeg.Show();
+                Details.Veg Veg = new Details.Veg();
+                Veg.FormClosed += new FormClosedEventHandler(formClosed);
+                Veg.View(userID, temp);
+                Veg.Show();
             }
         }
     }
