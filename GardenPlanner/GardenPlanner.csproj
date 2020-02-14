@@ -137,6 +137,9 @@
     <Compile Include="Tools\Help.Designer.cs">
       <DependentUpon>Help.cs</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="Details\Job.resx">
+      <DependentUpon>Job.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Details\Journal.resx">
       <DependentUpon>Journal.cs</DependentUpon>
     </EmbeddedResource>

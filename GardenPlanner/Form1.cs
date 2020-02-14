@@ -15,7 +15,6 @@ namespace GardenPlanner
     public partial class Form1 : Form
     {
         SqL SQL = new SqL();
-        Details.Job Job = new Details.Job();
         Details.Note Note = new Details.Note();
         Details.Veg Veg = new Details.Veg();
         Details.VegSelected VegSelected = new Details.VegSelected();
@@ -71,10 +70,11 @@ namespace GardenPlanner
         private void btnNewJob_Click(object sender, EventArgs e)
         {
             count = 2;
-            New_Entirys.NewJob job = new New_Entirys.NewJob();
-            job.FormClosed += new FormClosedEventHandler(formClosed);
-            job.setUserID(userID);
-            job.Show();
+            int i = 0;
+            Details.Job Job = new Details.Job();
+            Job.FormClosed += new FormClosedEventHandler(formClosed);
+            Job.setup(userID, i, listTags, currentItem);
+            Job.Show();
         }
         private void btnNewNote_Click(object sender, EventArgs e)
         {
@@ -324,9 +324,28 @@ namespace GardenPlanner
             }
         }
 
-        private void disablebtn()
+        private void cleanup()
         {
-
+            switch(count)
+            {
+                case 0:
+                    listBoxJobs.SelectedIndex = -1;
+                    listBoxSelectedVeg.SelectedIndex = -1;
+                    listBoxNotes.SelectedIndex = -1;
+                    break;
+                case 1:
+                    listBoxJobs.SelectedIndex = -1;
+                    listBoxJournal.SelectedIndex = -1;
+                    listBoxNotes.SelectedIndex = -1;
+                    break;
+                case 2:
+                    listBoxJournal.SelectedIndex = -1;
+                    listBoxSelectedVeg.SelectedIndex = -1;
+                    listBoxNotes.SelectedIndex = -1;
+                    break;
+                default:
+                    break;
+            }
         }
 
         private void replaceIN()
@@ -367,18 +386,14 @@ namespace GardenPlanner
 
         
 
-
-
         //Journal
         private void listBoxJournal_SelectedIndexChanged(object sender, EventArgs e)
         {
-            count = 0;
-            disablebtn();
+            
             if (listBoxJournal.SelectedIndex > -1)
             {
-                listBoxJobs.SelectedIndex = -1;
-                listBoxSelectedVeg.SelectedIndex = -1;
-
+                count = 0;
+                cleanup();
                 currentList = "Journal";
                 temp = listBoxJournal.SelectedItem.ToString();
                 replaceIN();
@@ -390,7 +405,6 @@ namespace GardenPlanner
         {
             if (listBoxJournal.SelectedIndex > -1)
             {
-                count = 0;
                 Details.Journal Journal = new Details.Journal();
                 Journal.FormClosed += new FormClosedEventHandler(formClosed);
                 Journal.View(temp, listTags, userID);
@@ -424,7 +438,6 @@ namespace GardenPlanner
         }
         private void listBoxNotes_DoubleClick(object sender, EventArgs e)
         {
-            count = 3;
             Edit.EditNote EditNote = new Edit.EditNote();
             EditNote.FormClosed += new FormClosedEventHandler(formClosed);
             EditNote.populate(userID, currentList, currentItem, temp);
@@ -434,13 +447,10 @@ namespace GardenPlanner
         //Jobs
         private void listBoxJobs_SelectedIndexChanged(object sender, EventArgs e)
         {
-            disablebtn();
             if (listBoxJobs.SelectedIndex > -1)
             {
-                temp = listBoxJobs.SelectedItem.ToString();
                 count = 2;
-                listBoxJournal.SelectedIndex = -1;
-                listBoxSelectedVeg.SelectedIndex = -1;
+                cleanup();
                 currentList = "Job";
                 temp = listBoxJobs.SelectedItem.ToString();
                 replaceIN();
@@ -448,14 +458,24 @@ namespace GardenPlanner
                 loadNotes();
             }
         }
+        private void listBoxJobs_DoubleClick(object sender, EventArgs e)
+        {
+            count = 2;
+            int i = 1;
+            Details.Job Job = new Details.Job();
+            Job.FormClosed += new FormClosedEventHandler(formClosed);
+            Job.setup(userID, i, listTags, currentItem);
+            Job.Show();
+        }
 
         //Selected
         private void listBoxSelectedVeg_SelectedIndexChanged(object sender, EventArgs e)
         {
-            count = 1;
-            disablebtn();
+            
             if (listBoxSelectedVeg.SelectedIndex > -1)
             {
+                count = 1;
+                cleanup();
                 temp = listBoxSelectedVeg.SelectedItem.ToString();
                 string[] split = new string[2];
                 split = temp.Split('(', ')');
@@ -498,15 +518,12 @@ namespace GardenPlanner
         {
             if (listBoxSelectedVeg.SelectedIndex > -1)
             {
-                count = 1;
                 Edit.EditVeg EditVeg = new Edit.EditVeg();
                 EditVeg.FormClosed += new FormClosedEventHandler(formClosed);
                 EditVeg.populateReadonly(listBoxSelectedVeg.SelectedItem.ToString());
                 EditVeg.Show();
             }
         }
-        
-        
     }
 }
 

@@ -88,6 +88,7 @@
             this.listBoxJobs.Size = new System.Drawing.Size(339, 472);
             this.listBoxJobs.TabIndex = 11;
             this.listBoxJobs.SelectedIndexChanged += new System.EventHandler(this.listBoxJobs_SelectedIndexChanged);
+            this.listBoxJobs.DoubleClick += new System.EventHandler(this.listBoxJobs_DoubleClick);
             // 
             // listBoxSelectedVeg
             // 
@@ -159,6 +160,7 @@
             // 
             // ToolStripUser
             // 
+            this.ToolStripUser.BackColor = System.Drawing.SystemColors.ControlLight;
             this.ToolStripUser.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripSeparator2,
             this.btnNewJournalEntiry,
@@ -292,6 +294,7 @@
             // btnDelete
             // 
             this.btnDelete.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.btnDelete.Enabled = false;
             this.btnDelete.Image = ((System.Drawing.Image)(resources.GetObject("btnDelete.Image")));
             this.btnDelete.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnDelete.Name = "btnDelete";
