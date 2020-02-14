@@ -15,8 +15,7 @@ namespace GardenPlanner
     public partial class Form1 : Form
     {
         SqL SQL = new SqL();
-        Details.Note Note = new Details.Note();
-        Details.VegSelected VegSelected = new Details.VegSelected();
+        
         
 
         private int vegid;
@@ -77,7 +76,7 @@ namespace GardenPlanner
         }
         private void btnNewNote_Click(object sender, EventArgs e)
         {
-            New_Entirys.NewNote Note = new New_Entirys.NewNote();
+            Details.Note Note = new Details.Note();
             Note.FormClosed += new FormClosedEventHandler(formClosed);
             Note.setUserID(userID, currentList, currentItem);
             Note.Show();
@@ -470,10 +469,10 @@ namespace GardenPlanner
         }
         private void listBoxNotes_DoubleClick(object sender, EventArgs e)
         {
-            Edit.EditNote EditNote = new Edit.EditNote();
-            EditNote.FormClosed += new FormClosedEventHandler(formClosed);
-            EditNote.populate(userID, currentList, currentItem, temp);
-            EditNote.Show();
+            Details.Note Note = new Details.Note();
+            Note.FormClosed += new FormClosedEventHandler(formClosed);
+            Note.populate(userID, currentList, currentItem, temp);
+            Note.Show();
         }
         
         //Jobs
