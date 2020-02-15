@@ -1,1 +1,1 @@
-Update dbVerson set number = 2 where id = 1;
+Update dbVersion set number = 2 where id = 1;
