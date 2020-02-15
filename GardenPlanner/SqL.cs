@@ -125,7 +125,7 @@ namespace GardenPlanner
 
         public void checkVersion()
         {
-            query = "SELECT number FROM Version";
+            query = "SELECT number FROM dbVersion";
             queryCount();
             currentVersion = count;
             
