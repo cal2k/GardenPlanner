@@ -17,8 +17,9 @@ namespace GardenPlanner
         public bool tutorial = true;
 
         private string query, temp, userName;
-        private int count, userID;
-
+        private int count, userID, currentVersion, nextVersion, dbVersion = 2;
+        
+        
         public string QUERY
         {
             set { query = value; }
@@ -94,6 +95,10 @@ namespace GardenPlanner
                 System.IO.Directory.CreateDirectory(path + @"\CGP");
                 File.Copy(fileToCopy, pathComplete);
             }
+            else
+            {
+                checkVersion();
+            }
         }
         public void gatherusername()
         {
@@ -116,6 +121,41 @@ namespace GardenPlanner
             query = "select ID from users where username = '" + userName + "'";
             queryCount();
             userID = count;
+        }
+
+        public void checkVersion()
+        {
+            query = "SELECT number FROM Version";
+            queryCount();
+            currentVersion = count;
+            
+            while (currentVersion < dbVersion)
+            {
+                try
+                {
+                    applyUpdate();
+                }
+                catch (Exception exception)
+                {
+                    Console.WriteLine("The updates didn't apply: " + exception.ToString());
+                    break;
+                }
+            }
+
+        }
+
+        private void applyUpdate()
+        {
+            nextVersion = currentVersion + 1;
+            string upgradeFile = "update_" + currentVersion + "_to_" + nextVersion + ".sql";
+
+            if (!System.IO.File.Exists(upgradeFile))
+            {
+                throw new Exception("Update file " + upgradeFile + " does not exist");
+            }
+            string upgradeSQL = System.IO.File.ReadAllText(upgradeFile);
+            query = upgradeSQL;
+            queryExecute();
         }
         //Startup END
     }
