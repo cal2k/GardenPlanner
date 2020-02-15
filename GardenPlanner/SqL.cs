@@ -17,9 +17,11 @@ namespace GardenPlanner
         public bool tutorial = true;
 
         private string query, temp, userName;
-        private int count, userID, currentVersion, nextVersion, dbVersion = 2;
-        
-        
+        private int count, userID, currentVersion, nextVersion;
+        public static int dbV = 2;
+
+
+
         public string QUERY
         {
             set { query = value; }
@@ -129,7 +131,7 @@ namespace GardenPlanner
             queryCount();
             currentVersion = count;
             
-            while (currentVersion < dbVersion)
+            while (currentVersion < dbV)
             {
                 try
                 {
@@ -151,11 +153,15 @@ namespace GardenPlanner
 
             if (!System.IO.File.Exists(upgradeFile))
             {
-                throw new Exception("Update file " + upgradeFile + " does not exist");
+                MessageBox.Show("Update file " + upgradeFile + " does not exist");
             }
             string upgradeSQL = System.IO.File.ReadAllText(upgradeFile);
             query = upgradeSQL;
             queryExecute();
+
+            query = "SELECT number FROM dbVersion";
+            queryCount();
+            currentVersion = count;
         }
         //Startup END
     }
