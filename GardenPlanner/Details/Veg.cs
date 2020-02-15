@@ -14,7 +14,7 @@ namespace GardenPlanner.Details
     public partial class Veg : Form
     {
         SqL SQL = new SqL();
-        string temp, query;
+        string temp, query, currentVeg, name, species;
         string[] split = new string[2];
         int count, userid, currentVegID ;
 
@@ -27,21 +27,34 @@ namespace GardenPlanner.Details
         {
             userid = i;
         }
+        private void replaceIN()
+        {
+            if (temp.Contains("'"))
+            {
+                temp = temp.Replace("'", "*A*");
+            }
+        }
+        private void replaceOUT()
+        {
+            if (temp.Contains("*A*"))
+            {
+                temp = temp.Replace("*A*", "'");
+            }
+        }
         public void View(int i,string t)
         {
             cbVegName.Hide();
             cbVegSpecies.Hide();
             btnAddSelectedVeg.Hide();
             userid = i;
-            temp = t;
-
-            MessageBox.Show(userid + temp);
+            currentVeg = t;
+            
             try
             {
                 using (SQL.conn)
                 {
                     SQL.conn.Open();
-                    query = "Select Name, Species, Sowing, Growing, Harvest, CommonProblems from Vegs where Species = '" + temp + "'";
+                    query = "Select Name, Species, Sowing, Growing, Harvest, CommonProblems from Vegs where Species = '" + currentVeg + "'";
                     SQL.cmd = new SQLiteCommand(query, SQL.conn);
 
                     using (SQL.cmd)
@@ -50,17 +63,35 @@ namespace GardenPlanner.Details
                         {
                             while (SQL.reader.Read())
                             {
-                                tbName.Text = SQL.reader.GetString(0);
-                                tbSpecies.Text = SQL.reader.GetString(1);
-                                tbSowingNote.Text = SQL.reader.GetString(2);
-                                tbGrowingNote.Text = SQL.reader.GetString(3);
-                                tbHarvestNote.Text = SQL.reader.GetString(4);
-                                tbCommonProblems.Text = SQL.reader.GetString(5);
+                                temp = SQL.reader.GetString(0);
+                                replaceOUT();
+                                tbName.Text = temp;
+
+                                temp = SQL.reader.GetString(1);
+                                replaceOUT();
+                                tbSpecies.Text = temp;
+
+                                temp = SQL.reader.GetString(2);
+                                replaceOUT();
+                                tbSowingNote.Text = temp;
+
+                                temp = SQL.reader.GetString(3);
+                                replaceOUT();
+                                tbGrowingNote.Text = temp;
+
+                                temp = SQL.reader.GetString(4);
+                                replaceOUT();
+                                tbHarvestNote.Text = temp;
+                                
+                                temp = SQL.reader.GetString(5);
+                                replaceOUT();
+                                tbCommonProblems.Text = temp;
+
                             }
                         }
                     }
 
-                    query = "Select SowStart, SowEnd, HarvestStart, HarvestEnd from Vegs Where Species = '" + temp + "'";
+                    query = "Select SowStart, SowEnd, HarvestStart, HarvestEnd from Vegs Where Species = '" + currentVeg + "'";
                     SQL.cmd = new SQLiteCommand(query, SQL.conn);
 
 
@@ -141,6 +172,7 @@ namespace GardenPlanner.Details
                             while (SQL.reader.Read())
                             {
                                 temp = SQL.reader.GetString(0);
+                                replaceOUT();
                                 cbVegName.Items.Add(temp);
                             }
 
@@ -158,8 +190,10 @@ namespace GardenPlanner.Details
         private void cbVegName_SelectedIndexChanged(object sender, EventArgs e)
         {
             cbVegSpecies.Items.Clear();
-
-            query = "Select Species FROM Vegs Where Name = '" + cbVegName.SelectedItem.ToString() + "'";
+            temp = cbVegName.SelectedItem.ToString();
+            replaceIN();
+            name = temp;
+            query = "Select Species FROM Vegs Where Name = '" + name + "'";
             SQL.cmd = new SQLiteCommand(query, SQL.conn);
             try
             {
@@ -173,6 +207,7 @@ namespace GardenPlanner.Details
                             while (SQL.reader.Read())
                             {
                                 temp = SQL.reader.GetString(0);
+                                replaceOUT();
                                 cbVegSpecies.Items.Add(temp);
                                 cbVegSpecies.Enabled = true;
                             }
@@ -194,7 +229,9 @@ namespace GardenPlanner.Details
 
         private void btnAddSelectedVeg_Click(object sender, EventArgs e)
         {
-            query = "select id from Vegs where Species = '" + cbVegSpecies.SelectedItem.ToString() + "'";
+            temp = cbVegSpecies.SelectedItem.ToString();
+            replaceIN();
+            query = "select id from Vegs where Species = '" + species + "'";
             SQL.cmd = new SQLiteCommand(query, SQL.conn);
             try
             {
@@ -283,10 +320,37 @@ namespace GardenPlanner.Details
 
         private void btnSave_Click(object sender, EventArgs e)
         {
-                    query = "update Vegs set Name = '" + tbName.Text + "', Species = '" + tbSpecies.Text + "', SowStart = '" + tbSowStart.Text +
-                "', SowEnd = '" + tbSowEnd.Text + "', Sowing = '" + tbSowingNote.Text + "', Growing = '" + tbGrowingNote.Text +
-                "', HarvestStart = '" + tbHarvestStart.Text + "', HarvestEnd = '" + tbHarvestEnd.Text + "', Harvest = '" + tbHarvestNote.Text +
-                "', CommonProblems = '" + tbCommonProblems.Text + "'  Where Species = '" + temp + "'";
+            string name = tbName.Text, species = tbSpecies.Text, sowing = tbSowingNote.Text, growing = tbGrowingNote.Text, harvest = tbHarvestNote.Text, common = tbCommonProblems.Text;
+
+            temp = name;
+            replaceIN();
+            name = temp;
+
+            temp = species;
+            replaceIN();
+            species = temp;
+
+            temp = sowing;
+            replaceIN();
+            sowing = temp;
+
+            temp = growing;
+            replaceIN();
+            growing = temp;
+
+            temp = harvest;
+            replaceIN();
+            harvest = temp;
+
+            temp = common;
+            replaceIN();
+            common = temp;
+
+
+            query = "update Vegs set Name = '" + name + "', Species = '" + species + "', SowStart = '" + tbSowStart.Text +
+                "', SowEnd = '" + tbSowEnd.Text + "', Sowing = '" + sowing + "', Growing = '" + growing +
+                "', HarvestStart = '" + tbHarvestStart.Text + "', HarvestEnd = '" + tbHarvestEnd.Text + "', Harvest = '" + harvest +
+                "', CommonProblems = '" + common + "'  Where Species = '" + temp + "'";
                     SQL.cmd = new SQLiteCommand(query, SQL.conn);
 
                     try

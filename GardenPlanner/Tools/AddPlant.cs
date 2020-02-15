@@ -14,7 +14,7 @@ namespace GardenPlanner
     public partial class AddPlant : Form
     {
         SqL SQL = new SqL();
-        string name, species, sowingnote, harvestnote, growingnote, common, special, compaion;
+        string name, species, sowingnote, harvestnote, growingnote, common, special, compaion, temp;
         
         int required, sowingStart, sowingEnd, harvestStart, harvestEnd;
 
@@ -54,17 +54,50 @@ namespace GardenPlanner
                 item.textbox.BackColor = Color.White;
             }
             name = tbName.Text;
-            special = tbSpecial.Text;
+            temp = name;
+            checktext();
+            name = temp;
+
+            species = tbSpecial.Text;
+            temp = species;
+            checktext();
+            species = temp;
+
             sowingStart = Convert.ToInt32(tbSowingStart.Text);
             sowingEnd = Convert.ToInt32(tbSowingEnd.Text);
+
             sowingnote = tbSowingNotes.Text;
+            temp = sowingnote;
+            checktext();
+            sowingnote = temp;
+
             growingnote = tbGrowingNotes.Text;
+            temp = growingnote;
+            checktext();
+            growingnote = temp;
+
             harvestStart = Convert.ToInt32(tbHarvestStart.Text);
             harvestEnd = Convert.ToInt32(tbHarvestEnd.Text);
+
             harvestnote = tbHarvestNotes.Text;
+            temp = harvestnote;
+            checktext();
+            harvestnote = temp;
+
             common = tbCommonProblems.Text;
-            species = tbSpecial.Text;
+            temp = common;
+            checktext();
+            common = temp;
+
+            special = tbSpecial.Text;
+            temp = special;
+            checktext();
+            special = temp;
+
             compaion = tbCompanions.Text;
+            temp = compaion;
+            checktext();
+            compaion = temp;
 
             if (CheckValid())
             {
@@ -75,6 +108,13 @@ namespace GardenPlanner
                 SQL.queryExecute();
 
                 this.Close();
+            }
+        }
+        private void checktext()
+        {
+            if(temp.Contains("'"))
+            {
+                temp = temp.Replace("'", "*A*");
             }
         }
 

@@ -230,7 +230,15 @@ namespace GardenPlanner
                         while (SQL.reader.Read())
                         {
                             SelectedVegName = SQL.reader.GetString(1);
+                            temp = SelectedVegName;
+                            replaceOUT();
+                            SelectedVegName = temp;
+                            
                             SelectedVegSpecies = SQL.reader.GetString(2);
+                            temp = SelectedVegSpecies;
+                            replaceOUT();
+                            SelectedVegSpecies = temp;
+
                             temp = SelectedVegName + " (" + SelectedVegSpecies + ")";
                             listBoxSelectedVeg.Items.Add(temp);
                         }
@@ -521,9 +529,11 @@ namespace GardenPlanner
                 btnDelete.Enabled = true;
                 cleanup();
                 temp = listBoxSelectedVeg.SelectedItem.ToString();
+                
                 string[] split = new string[2];
                 split = temp.Split('(', ')');
                 temp = split[1];
+                replaceIN();
 
                 listBoxJournal.SelectedIndex = -1;
                 listBoxJobs.SelectedIndex = -1;
